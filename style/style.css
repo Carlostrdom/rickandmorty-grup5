@@ -45,54 +45,7 @@ footer {
   text-shadow: 0 0 5px #0ff;
 }
 
-@media screen and (max-width: 600px) {
-  .table-responsive {
-      border: 0;
-  }
-  
-  .table-responsive table {
-      border: 0;
-  }
-  
-  .table-responsive table caption {
-      font-size: 1.3em;
-  }
-  
-  .table-responsive table thead {
-      border: none;
-      clip: rect(0 0 0 0);
-      height: 1px;
-      margin: -1px;
-      overflow: hidden;
-      padding: 0;
-      position: absolute;
-      width: 1px;
-  }
-  
-  .table-responsive table tr {
-      border-bottom: 3px solid #0ff;
-      display: block;
-      margin-bottom: .625em;
-  }
-  
-  .table-responsive table td {
-      border-bottom: 1px solid #0ff;
-      display: block;
-      font-size: .8em;
-      text-align: right;
-  }
-  
-  .table-responsive table td::before {
-      content: attr(data-label);
-      float: left;
-      font-weight: bold;
-      text-transform: uppercase;
-  }
-  
-  .table-responsive table td:last-child {
-      border-bottom: 0;
-  }
-}
+
 
 .stars {
   position: fixed;

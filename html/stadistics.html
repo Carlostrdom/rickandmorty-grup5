@@ -68,71 +68,75 @@
         </div>
 
         <!-- Botón para abrir el modal -->
-        <button @click="$refs.modal.showModal()" class="btn btn-primary mb-4">Ver Seleccionados ({{ selectedCharacters.length }})</button>
+        <button @click="$refs.modal.showModal()" class="btn btn-primary mb-4">Ver Seleccionados ({{
+            selectedCharacters.length }})</button>
 
-<!-- Modal con clases únicas -->
-<dialog ref="modal" class="rm-modal p-4 rounded">
-    <button @click="$refs.modal.close()" class="rm-modal-close-btn">
-        X
-    </button>
-    
-    <h2 class="rm-modal-title mb-4">Personajes Seleccionados</h2>
-    <div v-if="selectedCharacters.length === 0" class="text-center">
-        <p>No hay personajes seleccionados.</p>
-    </div>
-    <div v-else class="row row-cols-1 row-cols-md-2 g-4">
-        <div v-for="character in selectedCharacters" :key="character.id" class="col">
-            <div class="rm-character-card card h-100">
-                <div class="card-body">
-                    <div class="d-flex justify-content-between align-items-center mb-3">
-                        <div class="d-flex align-items-center">
-                            <img :src="character.image" :alt="character.name" class="character-image me-3" style="width: 50px; height: 50px; border-radius: 50%;">
-                            <h5 class="card-title mb-0 rm-modal-title">{{ character.name }}</h5>
-                        </div>
-                        <button @click="removeCharacter(character)" class="btn btn-danger btn-sm">Eliminar</button>
-                    </div>
-                    <p class="card-text"><strong>Especie:</strong> {{ character.species }}</p>
-                    <p class="card-text"><strong>Estado:</strong> {{ character.status }}</p>
-                    <div class="mb-2">
-                        <div class="stat-label">Inteligencia:</div>
-                        <div class="progress rm-stat-bar">
-                            <div class="progress-bar" :class="getProgressBarColor(character.intelligence)"
-                                role="progressbar" :style="{ width: character.intelligence + '%' }"
-                                :aria-valuenow="character.intelligence" aria-valuemin="0" aria-valuemax="100">
-                                {{ character.intelligence }}%
+        <!-- Modal con clases únicas -->
+        <dialog ref="modal" class="rm-modal p-4 rounded">
+            <button @click="$refs.modal.close()" class="rm-modal-close-btn">
+                X
+            </button>
+
+            <h2 class="rm-modal-title mb-4">Personajes Seleccionados</h2>
+            <div v-if="selectedCharacters.length === 0" class="text-center">
+                <p>No hay personajes seleccionados.</p>
+            </div>
+            <div v-else class="row row-cols-1 row-cols-md-2 g-4">
+                <div v-for="character in selectedCharacters" :key="character.id" class="col">
+                    <div class="rm-character-card card h-100">
+                        <div class="card-body">
+                            <div class="d-flex justify-content-between align-items-center mb-3">
+                                <div class="d-flex align-items-center">
+                                    <img :src="character.image" :alt="character.name" class="character-image me-3"
+                                        style="width: 50px; height: 50px; border-radius: 50%;">
+                                    <h5 class="card-title mb-0 rm-modal-title">{{ character.name }}</h5>
+                                </div>
+                                <button @click="removeCharacter(character)"
+                                    class="btn btn-danger btn-sm">Eliminar</button>
                             </div>
-                        </div>
-                    </div>
-                    <div class="mb-2">
-                        <div class="stat-label">Caos:</div>
-                        <div class="progress rm-stat-bar">
-                            <div class="progress-bar" :class="getProgressBarColor(character.chaosLevel)"
-                                role="progressbar" :style="{ width: character.chaosLevel + '%' }"
-                                :aria-valuenow="character.chaosLevel" aria-valuemin="0" aria-valuemax="100">
-                                {{ character.chaosLevel }}%
+                            <p class="card-text"><strong>Especie:</strong> {{ character.species }}</p>
+                            <p class="card-text"><strong>Estado:</strong> {{ character.status }}</p>
+                            <div class="mb-2">
+                                <div class="stat-label">Inteligencia:</div>
+                                <div class="progress rm-stat-bar">
+                                    <div class="progress-bar" :class="getProgressBarColor(character.intelligence)"
+                                        role="progressbar" :style="{ width: character.intelligence + '%' }"
+                                        :aria-valuenow="character.intelligence" aria-valuemin="0" aria-valuemax="100">
+                                        {{ character.intelligence }}%
+                                    </div>
+                                </div>
                             </div>
-                        </div>
-                    </div>
-                    <div class="mb-2">
-                        <div class="stat-label">Popularidad:</div>
-                        <div class="progress rm-stat-bar">
-                            <div class="progress-bar" :class="getProgressBarColor(character.popularity)"
-                                role="progressbar" :style="{ width: character.popularity + '%' }"
-                                :aria-valuenow="character.popularity" aria-valuemin="0" aria-valuemax="100">
-                                {{ character.popularity }}%
+                            <div class="mb-2">
+                                <div class="stat-label">Caos:</div>
+                                <div class="progress rm-stat-bar">
+                                    <div class="progress-bar" :class="getProgressBarColor(character.chaosLevel)"
+                                        role="progressbar" :style="{ width: character.chaosLevel + '%' }"
+                                        :aria-valuenow="character.chaosLevel" aria-valuemin="0" aria-valuemax="100">
+                                        {{ character.chaosLevel }}%
+                                    </div>
+                                </div>
                             </div>
+                            <div class="mb-2">
+                                <div class="stat-label">Popularidad:</div>
+                                <div class="progress rm-stat-bar">
+                                    <div class="progress-bar" :class="getProgressBarColor(character.popularity)"
+                                        role="progressbar" :style="{ width: character.popularity + '%' }"
+                                        :aria-valuenow="character.popularity" aria-valuemin="0" aria-valuemax="100">
+                                        {{ character.popularity }}%
+                                    </div>
+                                </div>
+                            </div>
+                            <p class="card-text mt-2"><strong>Dimensiones Visitadas:</strong> {{
+                                character.dimensionsVisited }}</p>
                         </div>
                     </div>
-                    <p class="card-text mt-2"><strong>Dimensiones Visitadas:</strong> {{ character.dimensionsVisited }}</p>
                 </div>
             </div>
-        </div>
-    </div>
-    <div class="mt-4 text-center">
-        <button @click="clearSelectedCharacters" class="btn btn-danger me-2">Limpiar Todos</button>
-        <button @click="$refs.modal.close()" class="btn btn-secondary">Cerrar</button>
-    </div>
-</dialog>
+            <div class="mt-4 text-center">
+                <button @click="clearSelectedCharacters" class="btn btn-danger me-2">Limpiar Todos</button>
+                <button @click="$refs.modal.close()" class="btn btn-secondary">Cerrar</button>
+            </div>
+        </dialog>
 
         <div v-if="loading" class="alert alert-info neon-border">Cargando...</div>
         <div v-else>
@@ -232,45 +236,29 @@
             </div>
         </div>
     </div>
-    <footer
-    class="container-fluid d-flex bg-dark text-white justify-content-between mt-3 p-4"
-  >
-    <div class="container-fluid">
-      <div class="row">
-        <div class="col-lg-10 col-md-9 d-flex align-items-center">
-          <a class="navbar-brand ml-3 mr-3" href="/index.html">
-            <img
-              src="./assets/Recursos_Amazing_Events_Task_1/facebook.png"
-              class="logo"
-              alt="facebook"
-            />
-            Facebook
-          </a>
-          <a class="navbar-brand ml-3 mr-3" href="/index.html">
-            <img
-              src="./assets/Recursos_Amazing_Events_Task_1/instagram.png"
-              class="logo"
-              alt="instagram"
-            />
-            Instagram
-          </a>
-          <a class="navbar-brand ml-3" href="/index.html">
-            <img
-              src="./assets/Recursos_Amazing_Events_Task_1/whatsapp.png"
-              class="logo"
-              alt="whatsapp"
-            />
-            WhatsApp
-          </a>
+    <footer class="container-fluid d-flex bg-dark text-white justify-content-between mt-3 p-4">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-lg-10 col-md-9 d-flex align-items-center">
+                    <a class="navbar-brand ml-3 mr-3" href="/index.html">
+                        <img src="./assets/Recursos_Amazing_Events_Task_1/facebook.png" class="logo" alt="facebook" />
+                        Facebook
+                    </a>
+                    <a class="navbar-brand ml-3 mr-3" href="/index.html">
+                        <img src="./assets/Recursos_Amazing_Events_Task_1/instagram.png" class="logo" alt="instagram" />
+                        Instagram
+                    </a>
+                    <a class="navbar-brand ml-3" href="/index.html">
+                        <img src="./assets/Recursos_Amazing_Events_Task_1/whatsapp.png" class="logo" alt="whatsapp" />
+                        WhatsApp
+                    </a>
+                </div>
+                <div class="col-lg-2 col-md-3 d-flex align-items-center justify-content-end">
+                    <h5 class="text-uppercase font-weight-bold">COHORT</h5>
+                </div>
+            </div>
         </div>
-        <div
-          class="col-lg-2 col-md-3 d-flex align-items-center justify-content-end"
-        >
-          <h5 class="text-uppercase font-weight-bold">COHORT</h5>
-        </div>
-      </div>
-    </div>
-  </footer>
+    </footer>
 
     <script type="module" src="/script/stadistics.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
