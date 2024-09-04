@@ -14,6 +14,8 @@ const app = createApp({
         this.fetchCharacters()
     },
     methods: {
+
+
         fetchCharacters() {
             fetch(apiUrl)
                 .then(response => response.json())
