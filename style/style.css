@@ -54,3 +54,51 @@ html, body {
     border-color: #007BFF; /* Azul brillante */
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Sombra para dar efecto de elevación */
   }
+
+
+  
+body {
+  background: linear-gradient(45deg, #0f0c29, #302b63, #24243e);
+  background-size: 400% 400%;
+  animation: gradientBG 15s ease infinite;
+  color: #fff;
+  font-family: 'Arial', sans-serif;
+}
+@keyframes gradientBG {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+.neon-text {
+  color: #fff;
+  text-shadow: 0 0 5px #fff, 0 0 10px #fff, 0 0 15px #fff, 0 0 20px #ff00de, 0 0 35px #ff00de, 0 0 40px #ff00de;
+}
+.neon-border {
+  border: 2px solid #0ff;
+  box-shadow: 0 0 5px #0ff, 0 0 10px #0ff, inset 0 0 5px #0ff, inset 0 0 10px #0ff;
+}
+.navbar {
+  background-color: rgba(15, 12, 41, 0.8);
+  backdrop-filter: blur(10px);
+}
+.navbar-brand, .nav-link {
+  color: #0ff !important;
+  text-shadow: 0 0 5px #0ff, 0 0 10px #0ff;
+  transition: all 0.3s ease;
+}
+.navbar-brand:hover, .nav-link:hover {
+  color: #fff !important;
+  text-shadow: 0 0 5px #fff, 0 0 10px #fff, 0 0 15px #ff00de, 0 0 20px #ff00de;
+}
+.main-image {
+  max-width: 100%;
+  height: auto;
+  border-radius: 15px;
+  box-shadow: 0 0 15px #0ff, 0 0 30px #0ff;
+}
+footer {
+  background-color: rgba(15, 12, 41, 0.8);
+  backdrop-filter: blur(10px);
+  color: #0ff;
+  text-shadow: 0 0 5px #0ff;
+}
