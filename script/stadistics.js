@@ -1,5 +1,4 @@
 new Vue({
-    //objeto data
     el: '#app',
     data: {
         characters: [],
@@ -8,36 +7,24 @@ new Vue({
             species: [],
             status: []
         },
-        //array para almacenar los personajes seleccionados
-        selectedCharacters: []
+        selectedCharacters: [],
+        generatedStats: {} // Nuevo objeto para almacenar las estadísticas generadas
     },
     computed: {
         charactersWithStats() {
             return this.characters.map(c => ({
-                //operador spread, permite copiar todas las propiedades a un nuevo objeto
                 ...c,
-                //
-                intelligence: this.getRandomStat(100),
-                chaosLevel: this.getRandomStat(100),
-                popularity: this.getRandomStat(100),
-                dimensionsVisited: this.getRandomStat(50)
+                ...this.getOrGenerateStats(c.id)
             }));
         },
         filteredCharacters() {
-            //filtramos y utilizamos el operador and (&&)
             return this.charactersWithStats.filter(c => 
-                //filtramos y utilizamos el operador or (||)
-                //sino hay filtrador, devuelve todos los personajes
-                //includes y c.especies devuelve un nuevo array con las especies que coincidan con el filtro
                 (!this.filters.species.length || this.filters.species.includes(c.species)) &&
                 (!this.filters.status.length || this.filters.status.includes(c.status))
             );
         },
         speciesComparison() {
             const calc = arr => ({
-                //recorremos el array y retornamos un objeto
-                //con las propiedades good, bad y total
-                //filtramos , y contamos cuantos personajes hay vivos, cuantos muertos. array antes del filter
                 good: this.getPercentage(arr.filter(c => c.status === "Alive").length, arr.length),
                 bad: this.getPercentage(arr.filter(c => c.status !== "Alive").length, arr.length),
                 total: this.getPercentage(arr.length, this.filteredCharacters.length),
@@ -63,12 +50,34 @@ new Vue({
             .then(data => {
                 this.characters = data.data.characters.results;
                 this.loading = false;
+                this.loadGeneratedStats(); // Cargar estadísticas generadas
                 this.loadSelectedCharacters();
             })
             .catch(err => {
                 console.error('Error fetching data:', err);
                 this.loading = false;
             });
+        },
+        getOrGenerateStats(characterId) {
+            if (!this.generatedStats[characterId]) {
+                this.generatedStats[characterId] = {
+                    intelligence: this.getRandomStat(100),
+                    chaosLevel: this.getRandomStat(100),
+                    popularity: this.getRandomStat(100),
+                    dimensionsVisited: this.getRandomStat(50)
+                };
+                this.saveGeneratedStats(); // Guardar las nuevas estadísticas generadas
+            }
+            return this.generatedStats[characterId];
+        },
+        saveGeneratedStats() {
+            localStorage.setItem('generatedStats', JSON.stringify(this.generatedStats));
+        },
+        loadGeneratedStats() {
+            const saved = localStorage.getItem('generatedStats');
+            if (saved) {
+                this.generatedStats = JSON.parse(saved);
+            }
         },
         getRandomStat: max => Math.floor(Math.random() * max) + 1,
         getProgressBarColor: v => v < 30 ? 'bg-danger' : v < 70 ? 'bg-warning' : 'bg-success',
@@ -90,7 +99,6 @@ new Vue({
             }
             this.saveSelectedCharacters();
         },
-    
         saveSelectedCharacters() {
             localStorage.setItem('selectedCharacters', JSON.stringify(this.selectedCharacters));
         },
