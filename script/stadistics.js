@@ -8,7 +8,13 @@ new Vue({
             status: []
         },
         selectedCharacters: [],
-        generatedStats: {} // Nuevo objeto para almacenar las estadísticas generadas
+        generatedStats: {},
+        pagination: {
+            count: 0,
+            pages: 0,
+            next: null,
+            prev: null
+        }
     },
     computed: {
         charactersWithStats() {
@@ -40,23 +46,36 @@ new Vue({
         }
     },
     methods: {
-        fetchCharacters() {
-            fetch('https://rickandmortyapi.com/graphql', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ query: 'query { characters(page: 1) { results { id name species status image } } }' }),
-            })
-            .then(res => res.json())
-            .then(data => {
-                this.characters = data.data.characters.results;
-                this.loading = false;
-                this.loadGeneratedStats(); // Cargar estadísticas generadas
-                this.loadSelectedCharacters();
-            })
-            .catch(err => {
-                console.error('Error fetching data:', err);
-                this.loading = false;
-            });
+        fetchCharacters(url = 'https://rickandmortyapi.com/api/character') {
+            this.loading = true;
+            fetch(url)
+                .then(res => res.json())
+                .then(data => {
+                    this.characters = data.results;
+                    this.pagination = {
+                        count: data.info.count,
+                        pages: data.info.pages,
+                        next: data.info.next,
+                        prev: data.info.prev
+                    };
+                    this.loading = false;
+                    this.loadGeneratedStats();
+                    this.loadSelectedCharacters();
+                })
+                .catch(err => {
+                    console.error('Error fetching data:', err);
+                    this.loading = false;
+                });
+        },
+        loadNextPage() {
+            if (this.pagination.next) {
+                this.fetchCharacters(this.pagination.next);
+            }
+        },
+        loadPrevPage() {
+            if (this.pagination.prev) {
+                this.fetchCharacters(this.pagination.prev);
+            }
         },
         getOrGenerateStats(characterId) {
             if (!this.generatedStats[characterId]) {
@@ -66,7 +85,7 @@ new Vue({
                     popularity: this.getRandomStat(100),
                     dimensionsVisited: this.getRandomStat(50)
                 };
-                this.saveGeneratedStats(); // Guardar las nuevas estadísticas generadas
+                this.saveGeneratedStats();
             }
             return this.generatedStats[characterId];
         },

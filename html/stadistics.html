@@ -68,70 +68,71 @@
         </div>
 
         <!-- Botón para abrir el modal -->
-        <button @click="$refs.modal.showModal()" class="btn btn-primary mb-4">Ver Seleccionados ({{
-            selectedCharacters.length }})</button>
+        <button @click="$refs.modal.showModal()" class="btn btn-primary mb-4">Ver Seleccionados ({{ selectedCharacters.length }})</button>
 
-        <!-- Reemplaza el contenido del modal existente con esto -->
-        <dialog ref="modal" class="p-4 rounded neon-border" style="max-width: 80%; max-height: 80%; overflow-y: auto;">
-            <h2 class="neon-text mb-4">Personajes Seleccionados</h2>
-            <div v-if="selectedCharacters.length === 0" class="text-center">
-                <p>No hay personajes seleccionados.</p>
-            </div>
-            <div v-else class="row row-cols-1 row-cols-md-2 g-4">
-                <div v-for="character in selectedCharacters" :key="character.id" class="col">
-                    <div class="card h-100 neon-border">
-                        <div class="card-body">
-                            <div class="d-flex justify-content-between align-items-center mb-3">
-                                <div class="d-flex align-items-center">
-                                    <img :src="character.image" :alt="character.name" class="character-image me-3">
-                                    <h5 class="card-title mb-0 neon-text">{{ character.name }}</h5>
-                                </div>
-                                <button @click="removeCharacter(character)"
-                                    class="btn btn-danger btn-sm">Eliminar</button>
+<!-- Modal con clases únicas -->
+<dialog ref="modal" class="rm-modal p-4 rounded">
+    <button @click="$refs.modal.close()" class="rm-modal-close-btn">
+        X
+    </button>
+    
+    <h2 class="rm-modal-title mb-4">Personajes Seleccionados</h2>
+    <div v-if="selectedCharacters.length === 0" class="text-center">
+        <p>No hay personajes seleccionados.</p>
+    </div>
+    <div v-else class="row row-cols-1 row-cols-md-2 g-4">
+        <div v-for="character in selectedCharacters" :key="character.id" class="col">
+            <div class="rm-character-card card h-100">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <div class="d-flex align-items-center">
+                            <img :src="character.image" :alt="character.name" class="character-image me-3" style="width: 50px; height: 50px; border-radius: 50%;">
+                            <h5 class="card-title mb-0 rm-modal-title">{{ character.name }}</h5>
+                        </div>
+                        <button @click="removeCharacter(character)" class="btn btn-danger btn-sm">Eliminar</button>
+                    </div>
+                    <p class="card-text"><strong>Especie:</strong> {{ character.species }}</p>
+                    <p class="card-text"><strong>Estado:</strong> {{ character.status }}</p>
+                    <div class="mb-2">
+                        <div class="stat-label">Inteligencia:</div>
+                        <div class="progress rm-stat-bar">
+                            <div class="progress-bar" :class="getProgressBarColor(character.intelligence)"
+                                role="progressbar" :style="{ width: character.intelligence + '%' }"
+                                :aria-valuenow="character.intelligence" aria-valuemin="0" aria-valuemax="100">
+                                {{ character.intelligence }}%
                             </div>
-                            <p class="card-text"><strong>Especie:</strong> {{ character.species }}</p>
-                            <p class="card-text"><strong>Estado:</strong> {{ character.status }}</p>
-                            <div class="mb-2">
-                                <div class="stat-label">Inteligencia:</div>
-                                <div class="progress neon-border">
-                                    <div class="progress-bar" :class="getProgressBarColor(character.intelligence)"
-                                        role="progressbar" :style="{ width: character.intelligence + '%' }"
-                                        :aria-valuenow="character.intelligence" aria-valuemin="0" aria-valuemax="100">
-                                        {{ character.intelligence }}%
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="mb-2">
-                                <div class="stat-label">Caos:</div>
-                                <div class="progress neon-border">
-                                    <div class="progress-bar" :class="getProgressBarColor(character.chaosLevel)"
-                                        role="progressbar" :style="{ width: character.chaosLevel + '%' }"
-                                        :aria-valuenow="character.chaosLevel" aria-valuemin="0" aria-valuemax="100">
-                                        {{ character.chaosLevel }}%
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="mb-2">
-                                <div class="stat-label">Popularidad:</div>
-                                <div class="progress neon-border">
-                                    <div class="progress-bar" :class="getProgressBarColor(character.popularity)"
-                                        role="progressbar" :style="{ width: character.popularity + '%' }"
-                                        :aria-valuenow="character.popularity" aria-valuemin="0" aria-valuemax="100">
-                                        {{ character.popularity }}%
-                                    </div>
-                                </div>
-                            </div>
-                            <p class="card-text mt-2"><strong>Dimensiones Visitadas:</strong> {{
-                                character.dimensionsVisited }}</p>
                         </div>
                     </div>
+                    <div class="mb-2">
+                        <div class="stat-label">Caos:</div>
+                        <div class="progress rm-stat-bar">
+                            <div class="progress-bar" :class="getProgressBarColor(character.chaosLevel)"
+                                role="progressbar" :style="{ width: character.chaosLevel + '%' }"
+                                :aria-valuenow="character.chaosLevel" aria-valuemin="0" aria-valuemax="100">
+                                {{ character.chaosLevel }}%
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mb-2">
+                        <div class="stat-label">Popularidad:</div>
+                        <div class="progress rm-stat-bar">
+                            <div class="progress-bar" :class="getProgressBarColor(character.popularity)"
+                                role="progressbar" :style="{ width: character.popularity + '%' }"
+                                :aria-valuenow="character.popularity" aria-valuemin="0" aria-valuemax="100">
+                                {{ character.popularity }}%
+                            </div>
+                        </div>
+                    </div>
+                    <p class="card-text mt-2"><strong>Dimensiones Visitadas:</strong> {{ character.dimensionsVisited }}</p>
                 </div>
             </div>
-            <div class="mt-4 text-center">
-                <button @click="clearSelectedCharacters" class="btn btn-danger me-2">Limpiar Todos</button>
-                <button @click="$refs.modal.close()" class="btn btn-secondary">Cerrar</button>
-            </div>
-        </dialog>
+        </div>
+    </div>
+    <div class="mt-4 text-center">
+        <button @click="clearSelectedCharacters" class="btn btn-danger me-2">Limpiar Todos</button>
+        <button @click="$refs.modal.close()" class="btn btn-secondary">Cerrar</button>
+    </div>
+</dialog>
 
         <div v-if="loading" class="alert alert-info neon-border">Cargando...</div>
         <div v-else>
