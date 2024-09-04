@@ -1,118 +1,278 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>statistics</title>
-    <link
-      rel="shortcut icon"
-      href="./assets/Recursos_Amazing_Events_Task_1/favicon.png"
-      type="image/x-icon"
-    />
-    <link
-      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
-      rel="stylesheet"
-      integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
-      crossorigin="anonymous"
-    />
 
-    <link rel="stylesheet" href="../style/style.css" />
-  </head>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pagina de inicio</title>
+    <link rel="stylesheet" href="/style/style.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+        crossorigin="anonymous"></script>
+</head>
 
-  <body>
-    <header>
-      <nav class="navbar navbar-expand-md">
-        <div class="container-fluid d-flex">
-          <a class="navbar-brand" href="/index.html"
-            ><img
-              src="./assets/Recursos_Amazing_Events_Task_1/amazing_brand.png"
-              class="logo"
-              alt=""
-          /></a>
-
-          <button
-            class="navbar-toggler"
-            type="button"
-            data-bs-toggle="collapse"
-            data-bs-target="#navbarNav"
-            aria-controls="navbarNav"
-            aria-expanded="false"
-            aria-label="Toggle navigation"
-          >
-            <span class="navbar-toggler-icon"></span>
-          </button>
-
-          <div
-            class="collapse fw-semibold navbar-collapse justify-content-end"
-            id="navbarNav"
-          >
-            <div class="navbar-nav gap-1">
-              <a class="nav-item">
-                <a
-                  class="nav-link active text-white bg-dark bg-opacity-50 p-2 rounded"
-                  aria-current="page"
-                  href="./index.html"
-                  >HOME</a
-                >
-              </a>
-              <a class="nav-item">
-                <a
-                  class="nav-link text-white bg-dark bg-opacity-50 p-2 rounded"
-                  aria-current="page"
-                  href="../html/statistics.html"
-                  >STATISTICS</a
-                >
-              </a>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark neon-border mb-4">
+        <div class="container">
+            <a class="navbar-brand" href="#">Rick and Morty</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/html/index.html">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Stats</a>
+                    </li>
+                </ul>
             </div>
-          </div>
         </div>
-      </nav>
-    </header>
-    <main></main>
+    </nav>
+
+    <!-- fondo de pantalla -->
+    <div class="stars"></div>
+    <!-- llamado de la aplicación -->
+    <div id="app" class="container-fluid py-4 content">
+        <h1 class="text-center mb-5 neon-text">Estadísticas de Rick and Morty</h1>
+
+
+        <div class="filters mb-4 neon-border p-4 rounded">
+            <h3 class="neon-text mb-4">Filtros</h3>
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <h4 class="neon-text-subtle mb-3">Especie:</h4>
+                    <div class="d-flex flex-wrap">
+                        <label v-for="species in ['Human', 'Alien']" :key="species" class="me-3 mb-2 neon-checkbox">
+                            <input type="checkbox" :value="species" v-model="filters.species">
+                            <span class="checkmark"></span>
+                            <span class="label-text">{{ species }}</span>
+                        </label>
+                    </div>
+                </div>
+                <div class="col-md-6 mb-3">
+                    <h4 class="neon-text-subtle mb-3">Estado:</h4>
+                    <div class="d-flex flex-wrap">
+                        <label v-for="status in ['Alive', 'Dead']" :key="status" class="me-3 mb-2 neon-checkbox">
+                            <input type="checkbox" :value="status" v-model="filters.status">
+                            <span class="checkmark"></span>
+                            <span class="label-text">{{ status }}</span>
+                        </label>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Botón para abrir el modal -->
+        <button @click="$refs.modal.showModal()" class="btn btn-primary mb-4">Ver Seleccionados ({{
+            selectedCharacters.length }})</button>
+
+        <!-- Reemplaza el contenido del modal existente con esto -->
+        <dialog ref="modal" class="p-4 rounded neon-border" style="max-width: 80%; max-height: 80%; overflow-y: auto;">
+            <h2 class="neon-text mb-4">Personajes Seleccionados</h2>
+            <div v-if="selectedCharacters.length === 0" class="text-center">
+                <p>No hay personajes seleccionados.</p>
+            </div>
+            <div v-else class="row row-cols-1 row-cols-md-2 g-4">
+                <div v-for="character in selectedCharacters" :key="character.id" class="col">
+                    <div class="card h-100 neon-border">
+                        <div class="card-body">
+                            <div class="d-flex justify-content-between align-items-center mb-3">
+                                <div class="d-flex align-items-center">
+                                    <img :src="character.image" :alt="character.name" class="character-image me-3">
+                                    <h5 class="card-title mb-0 neon-text">{{ character.name }}</h5>
+                                </div>
+                                <button @click="removeCharacter(character)"
+                                    class="btn btn-danger btn-sm">Eliminar</button>
+                            </div>
+                            <p class="card-text"><strong>Especie:</strong> {{ character.species }}</p>
+                            <p class="card-text"><strong>Estado:</strong> {{ character.status }}</p>
+                            <div class="mb-2">
+                                <div class="stat-label">Inteligencia:</div>
+                                <div class="progress neon-border">
+                                    <div class="progress-bar" :class="getProgressBarColor(character.intelligence)"
+                                        role="progressbar" :style="{ width: character.intelligence + '%' }"
+                                        :aria-valuenow="character.intelligence" aria-valuemin="0" aria-valuemax="100">
+                                        {{ character.intelligence }}%
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="mb-2">
+                                <div class="stat-label">Caos:</div>
+                                <div class="progress neon-border">
+                                    <div class="progress-bar" :class="getProgressBarColor(character.chaosLevel)"
+                                        role="progressbar" :style="{ width: character.chaosLevel + '%' }"
+                                        :aria-valuenow="character.chaosLevel" aria-valuemin="0" aria-valuemax="100">
+                                        {{ character.chaosLevel }}%
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="mb-2">
+                                <div class="stat-label">Popularidad:</div>
+                                <div class="progress neon-border">
+                                    <div class="progress-bar" :class="getProgressBarColor(character.popularity)"
+                                        role="progressbar" :style="{ width: character.popularity + '%' }"
+                                        :aria-valuenow="character.popularity" aria-valuemin="0" aria-valuemax="100">
+                                        {{ character.popularity }}%
+                                    </div>
+                                </div>
+                            </div>
+                            <p class="card-text mt-2"><strong>Dimensiones Visitadas:</strong> {{
+                                character.dimensionsVisited }}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="mt-4 text-center">
+                <button @click="clearSelectedCharacters" class="btn btn-danger me-2">Limpiar Todos</button>
+                <button @click="$refs.modal.close()" class="btn btn-secondary">Cerrar</button>
+            </div>
+        </dialog>
+
+        <div v-if="loading" class="alert alert-info neon-border">Cargando...</div>
+        <div v-else>
+            <h2 class="mt-5 mb-4 text-center neon-text">Comparación Detallada de Especies</h2>
+            <div class="table-responsive neon-border">
+                <table class="table table-dark table-hover table-sm">
+                    <thead>
+                        <tr>
+                            <th>Especie</th>
+                            <th>Buenos</th>
+                            <th>Malos</th>
+                            <th>Total</th>
+                            <th>Intel. Prom.</th>
+                            <th>Caos Prom.</th>
+                            <th>Pop. Prom.</th>
+                            <th>Dim. Visit.</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td data-label="Especie">Humanos</td>
+                            <td data-label="Buenos">{{ speciesComparison.humans.good }}%</td>
+                            <td data-label="Malos">{{ speciesComparison.humans.bad }}%</td>
+                            <td data-label="Total">{{ speciesComparison.humans.total }}%</td>
+                            <td data-label="Intel. Prom.">{{ speciesComparison.humans.avgIntelligence }}</td>
+                            <td data-label="Caos Prom.">{{ speciesComparison.humans.avgChaosLevel }}</td>
+                            <td data-label="Pop. Prom.">{{ speciesComparison.humans.avgPopularity }}</td>
+                            <td data-label="Dim. Visit.">{{ speciesComparison.humans.avgDimensions }}</td>
+                        </tr>
+                        <tr>
+                            <td data-label="Especie">Extraterrestres</td>
+                            <td data-label="Buenos">{{ speciesComparison.aliens.good }}%</td>
+                            <td data-label="Malos">{{ speciesComparison.aliens.bad }}%</td>
+                            <td data-label="Total">{{ speciesComparison.aliens.total }}%</td>
+                            <td data-label="Intel. Prom.">{{ speciesComparison.aliens.avgIntelligence }}</td>
+                            <td data-label="Caos Prom.">{{ speciesComparison.aliens.avgChaosLevel }}</td>
+                            <td data-label="Pop. Prom.">{{ speciesComparison.aliens.avgPopularity }}</td>
+                            <td data-label="Dim. Visit.">{{ speciesComparison.aliens.avgDimensions }}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4 mb-5">
+            <div v-for="character in filteredCharacters" :key="character.id" class="col">
+                <div class="card h-100 neon-border">
+                    <div class="card-body">
+                        <div class="d-flex align-items-center mb-3">
+                            <img :src="character.image" :alt="character.name" class="character-image me-3">
+                            <h5 class="card-title mb-0 neon-text">{{ character.name }}</h5>
+                        </div>
+                        <p class="card-text"><strong class="text-info">Especie:</strong> {{ character.species }}</p>
+                        <p class="card-text"><strong class="text-info">Estado:</strong> {{ character.status }}</p>
+                        <div class="mb-2">
+                            <div class="stat-label">Inteligencia:</div>
+                            <div class="progress neon-border">
+                                <div class="progress-bar" :class="getProgressBarColor(character.intelligence)"
+                                    role="progressbar" :style="{ width: character.intelligence + '%' }"
+                                    :aria-valuenow="character.intelligence" aria-valuemin="0" aria-valuemax="100">
+                                    {{ character.intelligence }}%
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mb-2">
+                            <div class="stat-label">Caos:</div>
+                            <div class="progress neon-border">
+                                <div class="progress-bar" :class="getProgressBarColor(character.chaosLevel)"
+                                    role="progressbar" :style="{ width: character.chaosLevel + '%' }"
+                                    :aria-valuenow="character.chaosLevel" aria-valuemin="0" aria-valuemax="100">
+                                    {{ character.chaosLevel }}%
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mb-2">
+                            <div class="stat-label">Popularidad:</div>
+                            <div class="progress neon-border">
+                                <div class="progress-bar" :class="getProgressBarColor(character.popularity)"
+                                    role="progressbar" :style="{ width: character.popularity + '%' }"
+                                    :aria-valuenow="character.popularity" aria-valuemin="0" aria-valuemax="100">
+                                    {{ character.popularity }}%
+                                </div>
+                            </div>
+                        </div>
+                        <p class="card-text mt-2"><strong class="text-info">Dimensiones Visitadas:</strong> {{
+                            character.dimensionsVisited }}</p>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" :id="'character-' + character.id"
+                                :checked="selectedCharacters.some(c => c.id === character.id)"
+                                @change="toggleCharacterSelection(character)">
+                            <label class="form-check-label" :for="'character-' + character.id">
+                                Seleccionar
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
     <footer
-      class="container-fluid d-flex bg-dark text-white justify-content-between mt-3 p-4"
-    >
-      <div class="container-fluid">
-        <div class="row">
-          <div class="col-lg-10 col-md-9 d-flex align-items-center">
-            <a class="navbar-brand ml-3 mr-3" href="/index.html">
-              <img
-                src="./assets/Recursos_Amazing_Events_Task_1/facebook.png"
-                class="logo"
-                alt="facebook"
-              />
-              Facebook
-            </a>
-            <a class="navbar-brand ml-3 mr-3" href="/index.html">
-              <img
-                src="./assets/Recursos_Amazing_Events_Task_1/instagram.png"
-                class="logo"
-                alt="instagram"
-              />
-              Instagram
-            </a>
-            <a class="navbar-brand ml-3" href="/index.html">
-              <img
-                src="./assets/Recursos_Amazing_Events_Task_1/whatsapp.png"
-                class="logo"
-                alt="whatsapp"
-              />
-              WhatsApp
-            </a>
-          </div>
-          <div
-            class="col-lg-2 col-md-3 d-flex align-items-center justify-content-end"
-          >
-            <h5 class="text-uppercase font-weight-bold">COHORT</h5>
-          </div>
+    class="container-fluid d-flex bg-dark text-white justify-content-between mt-3 p-4"
+  >
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-lg-10 col-md-9 d-flex align-items-center">
+          <a class="navbar-brand ml-3 mr-3" href="/index.html">
+            <img
+              src="./assets/Recursos_Amazing_Events_Task_1/facebook.png"
+              class="logo"
+              alt="facebook"
+            />
+            Facebook
+          </a>
+          <a class="navbar-brand ml-3 mr-3" href="/index.html">
+            <img
+              src="./assets/Recursos_Amazing_Events_Task_1/instagram.png"
+              class="logo"
+              alt="instagram"
+            />
+            Instagram
+          </a>
+          <a class="navbar-brand ml-3" href="/index.html">
+            <img
+              src="./assets/Recursos_Amazing_Events_Task_1/whatsapp.png"
+              class="logo"
+              alt="whatsapp"
+            />
+            WhatsApp
+          </a>
+        </div>
+        <div
+          class="col-lg-2 col-md-3 d-flex align-items-center justify-content-end"
+        >
+          <h5 class="text-uppercase font-weight-bold">COHORT</h5>
         </div>
       </div>
-    </footer>
+    </div>
+  </footer>
 
-    <script
-      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
-      integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
-      crossorigin="anonymous"
-    ></script>
-  </body>
+    <script type="module" src="/script/stadistics.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
+</body>
+
 </html>
