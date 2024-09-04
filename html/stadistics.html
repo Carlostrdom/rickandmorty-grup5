@@ -34,208 +34,36 @@
         </div>
     </nav>
 
-    <!-- fondo de pantalla -->
-    <div class="stars"></div>
-    <!-- llamado de la aplicación -->
-    <div id="app" class="container-fluid py-4 content">
-        <h1 class="text-center mb-5 neon-text">Estadísticas de Rick and Morty</h1>
-
-
-        <div class="filters mb-4 neon-border p-4 rounded">
-            <h3 class="neon-text mb-4">Filtros</h3>
-            <div class="row">
-                <div class="col-md-6 mb-3">
-                    <h4 class="neon-text-subtle mb-3">Especie:</h4>
-                    <div class="d-flex flex-wrap">
-                        <label v-for="species in ['Human', 'Alien']" :key="species" class="me-3 mb-2 neon-checkbox">
-                            <input type="checkbox" :value="species" v-model="filters.species">
-                            <span class="checkmark"></span>
-                            <span class="label-text">{{ species }}</span>
-                        </label>
-                    </div>
-                </div>
-                <div class="col-md-6 mb-3">
-                    <h4 class="neon-text-subtle mb-3">Estado:</h4>
-                    <div class="d-flex flex-wrap">
-                        <label v-for="status in ['Alive', 'Dead']" :key="status" class="me-3 mb-2 neon-checkbox">
-                            <input type="checkbox" :value="status" v-model="filters.status">
-                            <span class="checkmark"></span>
-                            <span class="label-text">{{ status }}</span>
-                        </label>
-                    </div>
-                </div>
-            </div>
+    <main class="container-fluid" id="appStadistics">
+        <h1 class="mb-4">Personajes de Rick and Morty</h1>
+        
+        <!-- Filtro de personajes -->
+        <div class="mb-4">
+            <input v-model="searchTerm" @input="filterCharacters" class="form-control" placeholder="Buscar por nombre">
         </div>
 
-        <!-- Botón para abrir el modal -->
-        <button @click="$refs.modal.showModal()" class="btn btn-primary mb-4">Ver Seleccionados ({{
-            selectedCharacters.length }})</button>
-
-        <!-- Modal con clases únicas -->
-        <dialog ref="modal" class="rm-modal p-4 rounded">
-            <button @click="$refs.modal.close()" class="rm-modal-close-btn">
-                X
-            </button>
-
-            <h2 class="rm-modal-title mb-4">Personajes Seleccionados</h2>
-            <div v-if="selectedCharacters.length === 0" class="text-center">
-                <p>No hay personajes seleccionados.</p>
-            </div>
-            <div v-else class="row row-cols-1 row-cols-md-2 g-4">
-                <div v-for="character in selectedCharacters" :key="character.id" class="col">
-                    <div class="rm-character-card card h-100">
-                        <div class="card-body">
-                            <div class="d-flex justify-content-between align-items-center mb-3">
-                                <div class="d-flex align-items-center">
-                                    <img :src="character.image" :alt="character.name" class="character-image me-3"
-                                        style="width: 50px; height: 50px; border-radius: 50%;">
-                                    <h5 class="card-title mb-0 rm-modal-title">{{ character.name }}</h5>
-                                </div>
-                                <button @click="removeCharacter(character)"
-                                    class="btn btn-danger btn-sm">Eliminar</button>
-                            </div>
-                            <p class="card-text"><strong>Especie:</strong> {{ character.species }}</p>
-                            <p class="card-text"><strong>Estado:</strong> {{ character.status }}</p>
-                            <div class="mb-2">
-                                <div class="stat-label">Inteligencia:</div>
-                                <div class="progress rm-stat-bar">
-                                    <div class="progress-bar" :class="getProgressBarColor(character.intelligence)"
-                                        role="progressbar" :style="{ width: character.intelligence + '%' }"
-                                        :aria-valuenow="character.intelligence" aria-valuemin="0" aria-valuemax="100">
-                                        {{ character.intelligence }}%
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="mb-2">
-                                <div class="stat-label">Caos:</div>
-                                <div class="progress rm-stat-bar">
-                                    <div class="progress-bar" :class="getProgressBarColor(character.chaosLevel)"
-                                        role="progressbar" :style="{ width: character.chaosLevel + '%' }"
-                                        :aria-valuenow="character.chaosLevel" aria-valuemin="0" aria-valuemax="100">
-                                        {{ character.chaosLevel }}%
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="mb-2">
-                                <div class="stat-label">Popularidad:</div>
-                                <div class="progress rm-stat-bar">
-                                    <div class="progress-bar" :class="getProgressBarColor(character.popularity)"
-                                        role="progressbar" :style="{ width: character.popularity + '%' }"
-                                        :aria-valuenow="character.popularity" aria-valuemin="0" aria-valuemax="100">
-                                        {{ character.popularity }}%
-                                    </div>
-                                </div>
-                            </div>
-                            <p class="card-text mt-2"><strong>Dimensiones Visitadas:</strong> {{
-                                character.dimensionsVisited }}</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="mt-4 text-center">
-                <button @click="clearSelectedCharacters" class="btn btn-danger me-2">Limpiar Todos</button>
-                <button @click="$refs.modal.close()" class="btn btn-secondary">Cerrar</button>
-            </div>
-        </dialog>
-
-        <div v-if="loading" class="alert alert-info neon-border">Cargando...</div>
-        <div v-else>
-            <h2 class="mt-5 mb-4 text-center neon-text">Comparación Detallada de Especies</h2>
-            <div class="table-responsive neon-border">
-                <table class="table table-dark table-hover table-sm">
-                    <thead>
-                        <tr>
-                            <th>Especie</th>
-                            <th>Buenos</th>
-                            <th>Malos</th>
-                            <th>Total</th>
-                            <th>Intel. Prom.</th>
-                            <th>Caos Prom.</th>
-                            <th>Pop. Prom.</th>
-                            <th>Dim. Visit.</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td data-label="Especie">Humanos</td>
-                            <td data-label="Buenos">{{ speciesComparison.humans.good }}%</td>
-                            <td data-label="Malos">{{ speciesComparison.humans.bad }}%</td>
-                            <td data-label="Total">{{ speciesComparison.humans.total }}%</td>
-                            <td data-label="Intel. Prom.">{{ speciesComparison.humans.avgIntelligence }}</td>
-                            <td data-label="Caos Prom.">{{ speciesComparison.humans.avgChaosLevel }}</td>
-                            <td data-label="Pop. Prom.">{{ speciesComparison.humans.avgPopularity }}</td>
-                            <td data-label="Dim. Visit.">{{ speciesComparison.humans.avgDimensions }}</td>
-                        </tr>
-                        <tr>
-                            <td data-label="Especie">Extraterrestres</td>
-                            <td data-label="Buenos">{{ speciesComparison.aliens.good }}%</td>
-                            <td data-label="Malos">{{ speciesComparison.aliens.bad }}%</td>
-                            <td data-label="Total">{{ speciesComparison.aliens.total }}%</td>
-                            <td data-label="Intel. Prom.">{{ speciesComparison.aliens.avgIntelligence }}</td>
-                            <td data-label="Caos Prom.">{{ speciesComparison.aliens.avgChaosLevel }}</td>
-                            <td data-label="Pop. Prom.">{{ speciesComparison.aliens.avgPopularity }}</td>
-                            <td data-label="Dim. Visit.">{{ speciesComparison.aliens.avgDimensions }}</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
-
-        <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4 mb-5">
-            <div v-for="character in filteredCharacters" :key="character.id" class="col">
-                <div class="card h-100 neon-border">
-                    <div class="card-body">
-                        <div class="d-flex align-items-center mb-3">
-                            <img :src="character.image" :alt="character.name" class="character-image me-3">
-                            <h5 class="card-title mb-0 neon-text">{{ character.name }}</h5>
-                        </div>
-                        <p class="card-text"><strong class="text-info">Especie:</strong> {{ character.species }}</p>
-                        <p class="card-text"><strong class="text-info">Estado:</strong> {{ character.status }}</p>
-                        <div class="mb-2">
-                            <div class="stat-label">Inteligencia:</div>
-                            <div class="progress neon-border">
-                                <div class="progress-bar" :class="getProgressBarColor(character.intelligence)"
-                                    role="progressbar" :style="{ width: character.intelligence + '%' }"
-                                    :aria-valuenow="character.intelligence" aria-valuemin="0" aria-valuemax="100">
-                                    {{ character.intelligence }}%
-                                </div>
-                            </div>
-                        </div>
-                        <div class="mb-2">
-                            <div class="stat-label">Caos:</div>
-                            <div class="progress neon-border">
-                                <div class="progress-bar" :class="getProgressBarColor(character.chaosLevel)"
-                                    role="progressbar" :style="{ width: character.chaosLevel + '%' }"
-                                    :aria-valuenow="character.chaosLevel" aria-valuemin="0" aria-valuemax="100">
-                                    {{ character.chaosLevel }}%
-                                </div>
-                            </div>
-                        </div>
-                        <div class="mb-2">
-                            <div class="stat-label">Popularidad:</div>
-                            <div class="progress neon-border">
-                                <div class="progress-bar" :class="getProgressBarColor(character.popularity)"
-                                    role="progressbar" :style="{ width: character.popularity + '%' }"
-                                    :aria-valuenow="character.popularity" aria-valuemin="0" aria-valuemax="100">
-                                    {{ character.popularity }}%
-                                </div>
-                            </div>
-                        </div>
-                        <p class="card-text mt-2"><strong class="text-info">Dimensiones Visitadas:</strong> {{
-                            character.dimensionsVisited }}</p>
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" :id="'character-' + character.id"
-                                :checked="selectedCharacters.some(c => c.id === character.id)"
-                                @change="toggleCharacterSelection(character)">
-                            <label class="form-check-label" :for="'character-' + character.id">
-                                Seleccionar
-                            </label>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+        <!-- Tabla de personajes -->
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Imagen</th>
+                    <th>Nombre</th>
+                    <th>Origen</th>
+                    <th>Estado</th>
+                    <th>Imagen</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr v-for="character in filteredCharacters" :key="character.id">
+                    <td><img :src="character.image" :alt="character.name" class="character-image"></td>
+                    <td>{{ character.name }}</td>
+                    <td>{{ character.species }}</td>
+                    <td>{{ character.status }}</td>
+                    <td>{{ character.origin.name }}</td>
+                </tr>
+            </tbody>
+        </table>
+    </main>
     <footer class="container-fluid d-flex bg-dark text-white justify-content-between mt-3 p-4">
         <div class="container-fluid">
             <div class="row">
@@ -261,7 +89,7 @@
     </footer>
 
     <script type="module" src="/script/stadistics.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
 </body>
 
 </html>

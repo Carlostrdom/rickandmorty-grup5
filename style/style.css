@@ -1,237 +1,37 @@
-
 body {
+  margin: 0;
+  padding: 0;
+  min-height: 100vh; /* Asegura que el body cubra al menos el 100% de la altura de la ventana */
   background: linear-gradient(45deg, #0f0c29, #302b63, #24243e);
-  background-size: 400% 400%;
+  background-size: cover;
   animation: gradientBG 15s ease infinite;
   color: #fff;
   font-family: 'Arial', sans-serif;
 }
-@keyframes gradientBG {
-  0% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
-  100% { background-position: 0% 50%; }
+header{
+  min-height: 10vh;
 }
-.neon-text {
-  color: #fff;
-  text-shadow: 0 0 5px #fff, 0 0 10px #fff, 0 0 15px #fff, 0 0 20px #ff00de, 0 0 35px #ff00de, 0 0 40px #ff00de;
-}
-.neon-border {
-  border: 2px solid #0ff;
-  box-shadow: 0 0 5px #0ff, 0 0 10px #0ff, inset 0 0 5px #0ff, inset 0 0 10px #0ff;
-}
-.navbar {
-  background-color: rgba(15, 12, 41, 0.8);
-  backdrop-filter: blur(10px);
-}
-.navbar-brand, .nav-link {
-  color: #0ff !important;
-  text-shadow: 0 0 5px #0ff, 0 0 10px #0ff;
-  transition: all 0.3s ease;
-}
-.navbar-brand:hover, .nav-link:hover {
-  color: #fff !important;
-  text-shadow: 0 0 5px #fff, 0 0 10px #fff, 0 0 15px #ff00de, 0 0 20px #ff00de;
-}
-.main-image {
-  max-width: 100%;
-  height: auto;
-  border-radius: 15px;
-  box-shadow: 0 0 15px #0ff, 0 0 30px #0ff;
-}
+
+
+main {
+    min-height:71vh;
+    padding-bottom: 60px; }
+
+
+
 footer {
+  min-height:5vh;
   background-color: rgba(15, 12, 41, 0.8);
   backdrop-filter: blur(10px);
   color: #0ff;
-  text-shadow: 0 0 5px #0ff;
-}
-
-
-
-.stars {
-  position: fixed;
-  top: 0;
-  left: 0;
+  text-shadow: 0 0 5px #0ff;  position: relative;
+  bottom: 0;
   width: 100%;
-  height: 100%;
-  pointer-events: none;
-  background-image: 
-      radial-gradient(2px 2px at 20px 30px, #eee, rgba(0,0,0,0)),
-      radial-gradient(2px 2px at 40px 70px, #fff, rgba(0,0,0,0)),
-      radial-gradient(2px 2px at 50px 160px, #ddd, rgba(0,0,0,0)),
-      radial-gradient(2px 2px at 90px 40px, #fff, rgba(0,0,0,0)),
-      radial-gradient(2px 2px at 130px 80px, #fff, rgba(0,0,0,0)),
-      radial-gradient(2px 2px at 160px 120px, #ddd, rgba(0,0,0,0));
-  background-repeat: repeat;
-  background-size: 200px 200px;
-  animation: twinkle 5s infinite;
 }
-@keyframes twinkle {
-  0% { opacity: 0.7; }
-  50% { opacity: 0.3; }
-  100% { opacity: 0.7; }
-}
-.content {
-  position: relative;
-  z-index: 1;
-}
-.neon-text {
-  text-shadow: 0 0 5px #fff, 0 0 10px #fff, 0 0 15px #fff, 0 0 20px #ff00de, 0 0 35px #ff00de, 0 0 40px #ff00de, 0 0 50px #ff00de, 0 0 75px #ff00de;
-}
-.neon-border {
-  border: 2px solid #0ff;
-  box-shadow: 0 0 5px #0ff, 0 0 10px #0ff, inset 0 0 5px #0ff, inset 0 0 10px #0ff;
-}
-.card {
-  background-color: rgba(20, 20, 20, 0.8);
-  border: none;
-  transition: all 0.3s ease;
-}
-.card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 0 15px #0ff;
-}
-.progress {
-  height: 15px;
-  background-color: #333;
-}
-.progress-bar {
-  transition: width 0.5s ease-in-out;
-}
-.character-image {
-  width: 60px;
-  height: 60px;
+
+.character-image{
+  width: 90px;
+  height: 90px;
   object-fit: cover;
   border-radius: 50%;
-  border: 2px solid #0ff;
-  box-shadow: 0 0 10px #0ff;
-}
-.stat-label {
-  color: #0ff;
-  font-weight: bold;
-  margin-bottom: 0.2rem;
-}
-table {
-  background-color: rgba(20, 20, 20, 0.8);
-}
-th {
-  color: #0ff;
-}
-
-  .filters {
-      background-color: rgba(15, 12, 41, 0.8);
-      backdrop-filter: blur(10px);
-  }
-
-  .neon-text-subtle {
-      color: #0ff;
-      text-shadow: 0 0 5px #0ff, 0 0 10px #0ff;
-  }
-
-  .neon-checkbox {
-      display: inline-flex;
-      align-items: center;
-      cursor: pointer;
-      user-select: none;
-  }
-
-  .neon-checkbox input {
-      position: absolute;
-      opacity: 0;
-      cursor: pointer;
-      height: 0;
-      width: 0;
-  }
-
-  .checkmark {
-      position: relative;
-      height: 25px;
-      width: 25px;
-      background-color: #111;
-      border: 2px solid #0ff;
-      border-radius: 5px;
-      margin-right: 10px;
-      transition: all 0.3s ease;
-  }
-
-  .neon-checkbox:hover input ~ .checkmark {
-      background-color: #222;
-      box-shadow: 0 0 5px #0ff, 0 0 10px #0ff;
-  }
-
-  .neon-checkbox input:checked ~ .checkmark {
-      background-color: #0ff;
-      box-shadow: 0 0 5px #0ff, 0 0 10px #0ff, 0 0 15px #0ff;
-  }
-
-  .checkmark:after {
-      content: "";
-      position: absolute;
-      display: none;
-  }
-
-  .neon-checkbox input:checked ~ .checkmark:after {
-      display: block;
-  }
-
-  .neon-checkbox .checkmark:after {
-      left: 9px;
-      top: 5px;
-      width: 5px;
-      height: 10px;
-      border: solid #000;
-      border-width: 0 3px 3px 0;
-      transform: rotate(45deg);
-  }
-
-  .label-text {
-      color: #fff;
-      font-size: 1.1em;
-      transition: all 0.3s ease;
-  }
-
-  .neon-checkbox:hover .label-text {
-      color: #0ff;
-      text-shadow: 0 0 5px #0ff, 0 0 10px #0ff;
-  }
-
-  .rm-modal {
-    max-width: 80%;
-    max-height: 80%;
-    overflow-y: auto;
-    position: relative;
-    background-color: #1a1a1a;
-    color: #fff;
-    border: 2px solid #00ff00;
-    box-shadow: 0 0 10px #00ff00;
-}
-
-.rm-modal-close-btn {
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    background-color: #ff0000;
-    color: white;
-    border: none;
-    border-radius: 50%;
-    width: 30px;
-    height: 30px;
-    font-size: 20px;
-    line-height: 1;
-    cursor: pointer;
-    box-shadow: 0 0 10px #ff0000;
-    z-index: 1000;
-}
-
-.rm-modal-title {
-    color: #00ff00;
-    text-shadow: 0 0 5px #00ff00;
-}
-
-.rm-character-card {
-    background-color: #2a2a2a;
-    border: 1px solid #00ff00;
-}
-
-.rm-stat-bar {
-    background-color: #333;
 }
