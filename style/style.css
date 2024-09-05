@@ -11,6 +11,7 @@ body {
 
 header{
   min-height: 10vh;
+  padding-bottom: 60px;
 }
 
 
@@ -25,10 +26,14 @@ footer {
   background-color: rgba(15, 12, 41, 0.8);
   backdrop-filter: blur(10px);
   color: #0ff;
-  text-shadow: 0 0 5px #0ff;  position: relative;
+  text-shadow: 0 0 5px #0ff;  
+  position: relative;
   bottom: 0;
   width: 100%;
 }
+
+
+/* class border de las cards */
 .neon-border {
   border: 2px solid #0ff;
   box-shadow: 0 0 5px #0ff, 0 0 10px #0ff, inset 0 0 5px #0ff, inset 0 0 10px #0ff;
@@ -47,10 +52,7 @@ footer {
   text-shadow: 0 0 5px #fff, 0 0 10px #fff, 0 0 15px #ff00de, 0 0 20px #ff00de;
 }
 
-.card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 0 15px #0ff;
-}
+
 
 .character-image {
   width: 60px;
@@ -63,3 +65,22 @@ footer {
 
 
 
+.card-img-top {
+    height: 100px;
+} 
+
+
+.caur-img{
+  height: 200px;
+ 
+}
+
+.card{
+
+  width: 200px;
+  padding: 2px;
+}
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 0 15px #0ff;
+} 

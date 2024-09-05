@@ -44,71 +44,121 @@
     </header>
     <main id="appHome">
       <div class="container-fluid p-2">
-        <!-- Search bar -->
-        <div class="input-group mb-3">
-          <input
-            type="text"
-            class="form-control"
-            placeholder="Search"
-            aria-label="Search"
-            v-model="textSearch"
-          />
+        <!-- Barra de búsqueda y filtros -->
+        <div
+          class="d-flex justify-content-between align-items-center bg-dark rounded-3 text-white mt-3 mb-3 p-3"
+        >
+          <!-- Filtros de estado y especies -->
+          <div class="d-flex align-items-center">
+            <!-- Checkboxes para estado -->
+            <div class="form-check form-check-inline">
+              <input
+                class="form-check-input"
+                type="checkbox"
+                id="alive"
+                value="Alive"
+                v-model="statusFilter"
+              />
+              <label class="form-check-label text-white" for="alive"
+                >Vivo</label
+              >
+            </div>
+            <div class="form-check form-check-inline">
+              <input
+                class="form-check-input"
+                type="checkbox"
+                id="dead"
+                value="Dead"
+                v-model="statusFilter"
+              />
+              <label class="form-check-label text-white" for="dead"
+                >Muerto</label
+              >
+            </div>
+
+            <!-- Dropdown para especies -->
+            <label for="species-select" class="text-white me-2"
+              >Especies:</label
+            >
+            <select
+              id="species-select"
+              class="form-select"
+              v-model="speciesFilter"
+              multiple
+            >
+              <option
+                v-for="species in allSpecies"
+                :key="species"
+                :value="species"
+              >
+                {{ species }}
+              </option>
+            </select>
+          </div>
+
+          <!-- Barra de búsqueda (a la derecha) -->
+          <div class="input-group w-auto">
+            <input
+              type="text"
+              class="form-control form-control-sm"
+              placeholder="Search"
+              aria-label="Search"
+              v-model="textSearch"
+            />
+            <button class="btn btn-outline-secondary bg-dark bg-gradient">
+              Search
+            </button>
+          </div>
         </div>
 
-        <!-- Characters Section -->
-        <h2 class="text-center text-white">personajes</h2>
-        <div class="container-fluid d-flex flex-wrap justify-content-center">
+        <!-- Botones de paginación -->
+        <div class="d-flex justify-content-center align-items-center mt-4">
+          <button
+            class="btn btn-primary m-2"
+            @click="fetchRickAndMortyData(prevPage)"
+            :disabled="!prevPage"
+          >
+            Anterior
+          </button>
+
+          <!-- Enumeración de páginas -->
+          <span class="text-white mx-2">
+            Página {{ currentPage }} de {{ totalPages }}
+          </span>
+
+          <button
+            class="btn btn-primary m-2"
+            @click="fetchRickAndMortyData(nextPage)"
+            :disabled="!nextPage"
+          >
+            Siguiente
+          </button>
+        </div>
+
+        <!-- Sección de personajes -->
+        <h2 class="text-center text-white">Personajes</h2>
+        <div
+          class="gap-2 container-fluid d-flex mt-2 flex-wrap justify-content-center"
+        >
           <div
-            class="card m-2"
+            class="card text-white bg-dark mb-3"
             v-for="character in filteredCharacters"
             :key="character.id"
           >
             <img
               :src="character.image"
-              class="card-img-top"
+              class="card-img-top caur-img"
               :alt="character.name"
-              style="object-fit: cover"
             />
-            <div class="card-body" style="background-color: #e3f2fd">
-              <h5 class="card-title">{{ character.name }}</h5>
-              <p class="card-text">{{ character.species }}</p>
-              <p class="card-text">{{ character.status }}</p>
+            <div class="card-body">
+              <h5 class="card-title">Personaje: {{ character.name }}</h5>
+              <p class="card-text">Especies: {{ character.species }}</p>
+              <p class="card-text">Estado: {{ character.status }}</p>
+              <p class="card-text">Dimensión: {{ character.origin.name }}</p>
               <div class="d-flex justify-content-between align-items-center">
-                <p>Price: $${evento.price}</p>
-                <a
-                  href="./details.html?id=${evento._id}"
-                  class="btn btn-primary"
-                  >Details</a
-                >
+                <p>Sígueme a mi</p>
+                <a :href="character.url" class="btn btn-primary">Perfil</a>
               </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Episodes Section -->
-        <h2 class="text-center text-white">Episodes</h2>
-        <div class="container-fluid d-flex flex-wrap justify-content-center">
-          <div
-            class="card m-2"
-            v-for="episode in filteredEpisodes"
-            :key="episode"
-          >
-            <div class="card-body">
-              <h5 class="card-title">{{ episode }}</h5>
-            </div>
-          </div>
-        </div>
-
-        <!-- Locations Section -->
-        <h2 class="text-center text-white">Locations</h2>
-        <div class="container-fluid d-flex flex-wrap justify-content-center">
-          <div
-            class="card m-2"
-            v-for="location in filteredLocations"
-            :key="location"
-          >
-            <div class="card-body">
-              <h5 class="card-title">{{ location }}</h5>
             </div>
           </div>
         </div>
