@@ -29,13 +29,14 @@ footer {
   bottom: 0;
   width: 100%;
 }
+
 .neon-border {
   border: 2px solid #0ff;
   box-shadow: 0 0 5px #0ff, 0 0 10px #0ff, inset 0 0 5px #0ff, inset 0 0 10px #0ff;
 }
 .navbar {
-  background-color: rgba(15, 12, 41, 0.8);
-  backdrop-filter: blur(10px);
+  
+  background: linear-gradient(to bottom, rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0)); 
 }
 
 
@@ -57,13 +58,47 @@ footer {
     width: 80px;
 }
 .logo{
+  width: 150px;
+}
+
+
+.carrouselImg{
+  width: 100%;
+  height: 50vh;
+}
+
+#navbar{
+  position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        z-index: 1000;
+}
+
+.navAnchor{
+  font-size: 200px;
+}
+.neonDescription{
+  font-size: larger;
+  color: #0ff;
+  text-shadow: 0 0 5px #0ff;  position: relative;
+  padding-left: 10px;
+  padding-right: 10px;
+}
+
+.home{
   width: 110px;
 }
 
-navbar{
-  position:sticky;
-  top:0;
-  height:auto;
-  min-height:70px;
-  z-index:1
-}
+
+/* 
+@media (max-width: 720px) {
+  #footer{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+   
+  }
+} */
+
