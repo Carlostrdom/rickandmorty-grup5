@@ -26,6 +26,9 @@ const app = createApp({
 
     methods: {
         fetchData(url) {
+            // Limpiar el filtro de especies cuando se cambie de página
+            this.speciesFilter = [];
+
             fetch(url)
                 .then(response => response.json())
                 .then(data => {
