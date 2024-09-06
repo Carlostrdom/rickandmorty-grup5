@@ -48,10 +48,15 @@
         <div
           class="d-flex justify-content-between align-items-center bg-dark rounded-3 text-white mt-3 mb-3 p-3"
         >
-          <!-- Filtros de estado y especies -->
-          <div class="d-flex align-items-center">
+          <!-- Botón para alternar entre personajes y episodios -->
+          <button class="btn btn-outline-secondary me-2" @click="toggleData">
+            Ver {{ isCharacters ? 'Episodios' : 'Personajes' }}
+          </button>
+
+          <!-- Filtros de estado y especies para personajes -->
+          <div v-if="isCharacters" class="d-flex align-items-center">
             <!-- Checkboxes para estado -->
-            <label for="species-dropdown" class="text-white me-2"
+            <label for="status-filter" class="text-white me-2"
               >Estado de Personajes:</label
             >
             <div class="form-check form-check-inline">
@@ -80,7 +85,6 @@
             </div>
 
             <!-- Dropdown para especies -->
-
             <label for="species-dropdown" class="text-white me-2"
               >Especies:</label
             >
@@ -100,7 +104,7 @@
                     type="checkbox"
                     :value="species"
                     v-model="speciesFilter"
-                    id="species-{{ species }}"
+                    :id="'species-' + species"
                   />
                   <label class="form-check-label" :for="'species-' + species">
                     {{ species }}
@@ -129,20 +133,29 @@
         <div class="d-flex justify-content-center align-items-center mt-4">
           <button
             class="btn btn-primary m-2"
-            @click="fetchRickAndMortyData(prevPage)"
+            @click="fetchData(prevPage)"
             :disabled="!prevPage"
           >
             Anterior
           </button>
 
-          <!-- Enumeración de páginas -->
+          <!-- Enumeración de páginas y campo de entrada -->
           <span class="text-white mx-2">
-            Página {{ currentPage }} de {{ totalPages }}
+            Página
+            <input
+              type="number"
+              v-model.number="currentPage"
+              min="1"
+              :max="totalPages"
+              @change="goToPage(currentPage)"
+              class="form-control form-control-sm d-inline-block w-auto"
+            />
+            de {{ totalPages }}
           </span>
 
           <button
             class="btn btn-primary m-2"
-            @click="fetchRickAndMortyData(nextPage)"
+            @click="fetchData(nextPage)"
             :disabled="!nextPage"
           >
             Siguiente
@@ -150,28 +163,57 @@
         </div>
 
         <!-- Sección de personajes -->
-        <h2 class="text-center text-white">Personajes</h2>
-        <div
-          class="gap-2 container-fluid d-flex mt-2 flex-wrap justify-content-center"
-        >
+        <div v-if="isCharacters">
+          <h2 class="text-center text-white">Personajes</h2>
           <div
-            class="card text-white bg-dark mb-3"
-            v-for="character in filteredCharacters"
-            :key="character.id"
+            class="gap-2 container-fluid d-flex mt-2 flex-wrap justify-content-center"
           >
-            <img
-              :src="character.image"
-              class="card-img-top caur-img"
-              :alt="character.name"
-            />
-            <div class="card-body">
-              <h5 class="card-title">Personaje: {{ character.name }}</h5>
-              <p class="card-text">Especies: {{ character.species }}</p>
-              <p class="card-text">Estado: {{ character.status }}</p>
-              <p class="card-text">Dimensión: {{ character.origin.name }}</p>
-              <div class="d-flex justify-content-between align-items-center">
-                <p>Sígueme a mi</p>
-                <a :href="character.url" class="btn btn-primary">Perfil</a>
+            <div
+              class="card text-white bg-dark mb-3"
+              v-for="character in filteredData"
+              :key="character.id"
+            >
+              <img
+                :src="character.image"
+                class="card-img-top caur-img"
+                :alt="character.name"
+              />
+              <div class="card-body">
+                <h5 class="card-title">Personaje: {{ character.name }}</h5>
+                <p class="card-text">Especies: {{ character.species }}</p>
+                <p class="card-text">Estado: {{ character.status }}</p>
+                <p class="card-text">Dimensión: {{ character.origin.name }}</p>
+                <div class="d-flex justify-content-between align-items-center">
+                  <p>Sígueme a mi</p>
+                  <a :href="character.url" class="btn btn-primary">Perfil</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Sección de episodios -->
+        <div v-if="!isCharacters">
+          <h2 class="text-center text-white">Episodios</h2>
+          <div
+            class="gap-2 container-fluid d-flex mt-2 flex-wrap justify-content-center"
+          >
+            <div
+              class="card text-white bg-dark mb-3"
+              v-for="episode in filteredData"
+              :key="episode.id"
+            >
+              <img
+                :src="getEpisodeImage(episode.id)"
+                class="card-img-top"
+                :alt="episode.name"
+              />
+              <div class="card-body">
+                <h5 class="card-title">Episodio: {{ episode.name }}</h5>
+                <p class="card-text">Temporada: {{ episode.episode }}</p>
+                <p class="card-text">
+                  Fecha de emisión: {{ episode.air_date }}
+                </p>
               </div>
             </div>
           </div>
