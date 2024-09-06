@@ -51,6 +51,9 @@
           <!-- Filtros de estado y especies -->
           <div class="d-flex align-items-center">
             <!-- Checkboxes para estado -->
+            <label for="species-dropdown" class="text-white me-2"
+              >Estado de Personajes:</label
+            >
             <div class="form-check form-check-inline">
               <input
                 class="form-check-input"
@@ -77,23 +80,34 @@
             </div>
 
             <!-- Dropdown para especies -->
-            <label for="species-select" class="text-white me-2"
+
+            <label for="species-dropdown" class="text-white me-2"
               >Especies:</label
             >
-            <select
-              id="species-select"
-              class="form-select"
-              v-model="speciesFilter"
-              multiple
+            <button
+              type="button"
+              class="btn btn-outline-secondary dropdown-toggle"
+              data-bs-toggle="dropdown"
+              aria-expanded="false"
             >
-              <option
-                v-for="species in allSpecies"
-                :key="species"
-                :value="species"
-              >
-                {{ species }}
-              </option>
-            </select>
+              Seleccionar Especies
+            </button>
+            <ul class="dropdown-menu" id="species-dropdown">
+              <li v-for="species in allSpecies" :key="species">
+                <div class="form-check">
+                  <input
+                    class="form-check-input"
+                    type="checkbox"
+                    :value="species"
+                    v-model="speciesFilter"
+                    id="species-{{ species }}"
+                  />
+                  <label class="form-check-label" :for="'species-' + species">
+                    {{ species }}
+                  </label>
+                </div>
+              </li>
+            </ul>
           </div>
 
           <!-- Barra de búsqueda (a la derecha) -->

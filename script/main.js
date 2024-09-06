@@ -59,7 +59,7 @@ const app = createApp({
             nextPage: null,
             prevPage: null,
             currentPage: 1,
-            totalPages: 1,
+            totalPages: 0,
         };
     },
 
@@ -75,15 +75,27 @@ const app = createApp({
                     this.characters = data.results;
                     this.nextPage = data.info.next;
                     this.prevPage = data.info.prev;
-                    this.currentPage = data.info.page || 1; // Ajustar si la API proporciona el número de página
-                    this.totalPages = Math.ceil(data.info.count / 20); // Calcular el total de páginas
+
+                    // Si nextPage es null, estamos en la última página, por lo que usamos prevPage para deducir la actual
+                    if (this.nextPage) {
+                        const urlParams = new URLSearchParams(this.nextPage.split('?')[1]);
+                        this.currentPage = parseInt(urlParams.get('page')) - 1;
+                    } else if (this.prevPage) {
+                        const urlParams = new URLSearchParams(this.prevPage.split('?')[1]);
+                        this.currentPage = parseInt(urlParams.get('page')) + 1;
+                    } else {
+                        this.currentPage = 1; // Si no hay prev ni next, es la primera página
+                    }
+
+                    this.totalPages = Math.ceil(data.info.count / 20); // Ajuste según la cantidad total de personajes
 
                     // Obtener todas las especies únicas
                     const speciesSet = new Set(this.characters.map(character => character.species));
                     this.allSpecies = Array.from(speciesSet);
                 });
         }
-    },
+    }
+    ,
 
     computed: {
         filteredCharacters() {
