@@ -33,6 +33,16 @@ footer {
   border: 2px solid #0ff;
   box-shadow: 0 0 5px #0ff, 0 0 10px #0ff, inset 0 0 5px #0ff, inset 0 0 10px #0ff;
 }
+
+.neontitle {
+  text-shadow: 0 0 5px #0ff, 0 0 10px #0ff, 0 0 15px #ff00de, 0 0 20px #ff00de;
+}
+.neon-text{
+  text-shadow: 0 0 5px #0ff, 0 0 10px #0ff, 0 0 15px #ff00de, 0 0 20px #ff00de;}
+.checkbox {
+  color: #0ff;
+  text-shadow: 0 0 5px #0ff, 0 0 10px #0ff;
+}
 .navbar {
   background-color: rgba(15, 12, 41, 0.8);
   backdrop-filter: blur(10px);
@@ -52,6 +62,7 @@ footer {
   box-shadow: 0 0 15px #0ff;
 }
 
+
 .character-image {
   width: 60px;
   height: 60px;
@@ -62,4 +73,9 @@ footer {
 }
 
 
+.card-img {
+  width: 200px;
+  height: 200px;
+  object-fit: cover; 
+}
 
