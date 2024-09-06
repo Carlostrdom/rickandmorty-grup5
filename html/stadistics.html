@@ -179,12 +179,21 @@
                     </div>
                 </div>
             </div>
-
-            <div class="d-flex justify-content-between mb-4">
-                <button @click="goToPrevPage" class="btn btn-secondary" :disabled="currentPage === 1">Anterior</button>
-                <span>Página {{ currentPage }} de {{ totalPages }}</span>
-                <button @click="goToNextPage" class="btn btn-secondary"
-                    :disabled="currentPage === totalPages">Siguiente</button>
+            <div class="d-flex justify-content-center align-items-center mb-4">
+                <button @click="goToPrevPage" class="btn btn-secondary me-2" :disabled="currentPage === 1">Anterior</button>
+                <div class="dropdown">
+                    <button class="btn btn-secondary dropdown-toggle neon-text" type="button" id="pageDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                        Página {{ currentPage }} de {{ totalPages }}
+                    </button>
+                    <ul class="dropdown-menu" aria-labelledby="pageDropdown" style="max-height: 200px; overflow-y: auto;">
+                        <li v-for="page in totalPages" :key="page">
+                            <a class="dropdown-item" href="#" @click.prevent="goToSpecificPage(page)">
+                                {{ page }}
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+                <button @click="goToNextPage" class="btn btn-secondary ms-2" :disabled="currentPage === totalPages">Siguiente</button>
             </div>
 
             <div class="d-flex flex-wrap justify-content-center">
@@ -238,12 +247,23 @@
                 </div>
             </div>
 
-            <div class="d-flex justify-content-between mt-4">
-                <button @click="goToPrevPage" class="btn btn-secondary" :disabled="currentPage === 1">Anterior</button>
-                <span>Página {{ currentPage }} de {{ totalPages }}</span>
-                <button @click="goToNextPage" class="btn btn-secondary"
-                    :disabled="currentPage === totalPages">Siguiente</button>
+            <div class="d-flex justify-content-center align-items-center mt-4">
+                <button @click="goToPrevPage" class="btn btn-secondary me-2" :disabled="currentPage === 1">Anterior</button>
+                <div class="dropdown">
+                    <button class="btn btn-secondary dropdown-toggle neon-text" type="button" id="pageDropdown2" data-bs-toggle="dropdown" aria-expanded="false">
+                        Página {{ currentPage }} de {{ totalPages }}
+                    </button>
+                    <ul class="dropdown-menu" aria-labelledby="pageDropdown2" style="max-height: 200px; overflow-y: auto;">
+                        <li v-for="page in totalPages" :key="page">
+                            <a class="dropdown-item" href="#" @click.prevent="goToSpecificPage(page)">
+                                {{ page }}
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+                <button @click="goToNextPage" class="btn btn-secondary ms-2" :disabled="currentPage === totalPages">Siguiente</button>
             </div>
+        </div>
         </div>
     </main>
 

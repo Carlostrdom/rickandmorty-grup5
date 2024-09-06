@@ -1,8 +1,8 @@
-let urlCharacters = "https://rickandmortyapi.com/api/character";
+const urlCharacters = "https://rickandmortyapi.com/api/character";
 
 const { createApp } = Vue;
 
-const app = createApp({
+createApp({
     data() {
         return {
             characters: [],
@@ -10,8 +10,6 @@ const app = createApp({
             statusFilter: [],
             speciesFilter: "",
             availableSpecies: [],
-            nextPage: null,
-            prevPage: null,
             currentPage: 1,
             totalPages: 0,
             selectedCharacters: [],
@@ -19,12 +17,14 @@ const app = createApp({
         };
     },
     created() {
-        this.loadState();
-        this.fetchRickAndMortyData(this.urlCharactersWithPage());
+        this.fetchRickAndMortyData();
     },
     methods: {
-        fetchRickAndMortyData(url) {
+        fetchRickAndMortyData() {
             this.loading = true;
+            const url = new URL(urlCharacters);
+            url.searchParams.set('page', this.currentPage);
+
             fetch(url)
                 .then(response => response.json())
                 .then(data => {
@@ -35,15 +35,9 @@ const app = createApp({
                         popularity: this.getRandomStat(100),
                         dimensionsVisited: this.getRandomStat(50)
                     }));
-                    this.nextPage = data.info.next;
-                    this.prevPage = data.info.prev;
                     this.totalPages = data.info.pages;
-                    const urlObj = new URL(url);
-                    const pageParam = urlObj.searchParams.get('page');
-                    this.currentPage = pageParam ? parseInt(pageParam) : this.currentPage;
-                    this.loading = false;
                     this.updateAvailableSpecies();
-                    this.saveState();
+                    this.loading = false;
                 })
                 .catch(error => {
                     console.error('Error al obtener los personajes:', error);
@@ -52,21 +46,24 @@ const app = createApp({
         },
         updateAvailableSpecies() {
             const uniqueSpecies = [...new Set(this.characters.map(char => char.species))];
-            this.availableSpecies = uniqueSpecies.sort((a, b) => a.localeCompare(b));
-        },
-        urlCharactersWithPage() {
-            const url = new URL(urlCharacters);
-            url.searchParams.set('page', this.currentPage);
-            return url.toString();
+            this.availableSpecies = uniqueSpecies.sort();
         },
         goToNextPage() {
-            if (this.nextPage) {
-                this.fetchRickAndMortyData(this.nextPage);
+            if (this.currentPage < this.totalPages) {
+                this.currentPage++;
+                this.fetchRickAndMortyData();
             }
         },
         goToPrevPage() {
-            if (this.prevPage) {
-                this.fetchRickAndMortyData(this.prevPage);
+            if (this.currentPage > 1) {
+                this.currentPage--;
+                this.fetchRickAndMortyData();
+            }
+        },
+        goToSpecificPage(page) {
+            if (page > 0 && page <= this.totalPages) {
+                this.currentPage = page;
+                this.fetchRickAndMortyData();
             }
         },
         getRandomStat(max) {
@@ -84,61 +81,21 @@ const app = createApp({
             } else {
                 this.selectedCharacters.push(character);
             }
-            this.saveState();
         },
         isCharacterSelected(character) {
             return this.selectedCharacters.some(c => c.id === character.id);
         },
-        saveState() {
-            const state = {
-                textSearch: this.textSearch,
-                statusFilter: this.statusFilter,
-                speciesFilter: this.speciesFilter,
-                currentPage: this.currentPage,
-                selectedCharacters: this.selectedCharacters,
-                url: this.urlCharactersWithPage()
-            };
-            localStorage.setItem('appState', JSON.stringify(state));
-        },
-        loadState() {
-            const savedState = localStorage.getItem('appState');
-            if (savedState) {
-                const state = JSON.parse(savedState);
-                this.textSearch = state.textSearch || "";
-                this.statusFilter = state.statusFilter || [];
-                this.speciesFilter = state.speciesFilter || "";
-                this.currentPage = state.currentPage || 1;
-                this.selectedCharacters = state.selectedCharacters || [];
-                urlCharacters = state.url || urlCharacters;
-            }
-        },
         clearSelectedCharacters() {
             this.selectedCharacters = [];
-            localStorage.removeItem('selectedCharacters');
-            this.saveState();
         },
-        calculateStats(characters) {
-            const total = characters.length;
-            const alive = characters.filter(c => c.status === "Alive").length;
-            const dead = total - alive;
-            
-            return {
-                good: this.getPercentage(alive, total),
-                bad: this.getPercentage(dead, total),
-                total: this.getPercentage(total, this.filteredCharacters.length),
-                avgIntelligence: this.calculateAverage(characters, 'intelligence'),
-                avgChaosLevel: this.calculateAverage(characters, 'chaosLevel'),
-                avgPopularity: this.calculateAverage(characters, 'popularity'),
-                avgDimensionsVisited: this.calculateAverage(characters, 'dimensionsVisited'),
-                percentageOfTotal: this.getPercentage(total, this.characters.length)
-            };
+        applyFilters() {
+            this.currentPage = 1;
+            this.fetchRickAndMortyData();
         },
         calculateAverage(characters, stat) {
+            if (characters.length === 0) return 0;
             const sum = characters.reduce((total, character) => total + character[stat], 0);
             return (sum / characters.length).toFixed(2);
-        },
-        getPercentage(part, total) {
-            return ((part / total) * 100).toFixed(2);
         }
     },
     computed: {
@@ -150,18 +107,24 @@ const app = createApp({
             );
         },
         speciesComparison() {
-            const speciesSet = new Set(this.filteredCharacters.map(character => character.species));
             const speciesData = {};
-
-            speciesSet.forEach(species => {
-                speciesData[species] = this.calculateStats(
-                    this.filteredCharacters.filter(character => character.species === species)
-                );
+            this.availableSpecies.forEach(species => {
+                const charactersOfSpecies = this.filteredCharacters.filter(c => c.species === species);
+                const total = charactersOfSpecies.length;
+                const alive = charactersOfSpecies.filter(c => c.status === "Alive").length;
+                
+                speciesData[species] = {
+                    good: ((alive / total) * 100 || 0).toFixed(2),
+                    bad: (((total - alive) / total) * 100 || 0).toFixed(2),
+                    total: total,
+                    avgIntelligence: this.calculateAverage(charactersOfSpecies, 'intelligence'),
+                    avgChaosLevel: this.calculateAverage(charactersOfSpecies, 'chaosLevel'),
+                    avgPopularity: this.calculateAverage(charactersOfSpecies, 'popularity'),
+                    avgDimensionsVisited: this.calculateAverage(charactersOfSpecies, 'dimensionsVisited'),
+                    percentageOfTotal: ((total / this.characters.length) * 100 || 0).toFixed(2)
+                };
             });
-
             return speciesData;
         }
     }
-});
-
-app.mount('#appStadistics');
+}).mount('#appStadistics');
