@@ -88,18 +88,6 @@ footer {
   width: 110px;
 }
 
-
-/* 
-@media (max-width: 720px) {
-  #footer{
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-   
-  }
-} */
-
 .card-img-top {
     height: 100px;
 } 
@@ -109,7 +97,6 @@ footer {
   height: 200px;
  
 }
-
 .card{
 
   width: 200px;
@@ -119,3 +106,7 @@ footer {
   transform: translateY(-5px);
   box-shadow: 0 0 15px #0ff;
 } 
+
+.descriptionImg{
+  width: 250px;
+}

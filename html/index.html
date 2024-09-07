@@ -70,10 +70,12 @@
       </div>
 
       <div class="container-fluid d-flex justify-content-center align-items-center ">
-        <div class="w-80 rick-and-morty-font d-flex justify-content-center align-items-center p-4">
-          <p>Rick and Morty is a groundbreaking animated series that follows the interdimensional adventures of Rick Sanchez, a genius yet reckless scientist, and his anxious grandson, Morty Smith. Known for its sharp wit, dark humor, and philosophical undertones, the show blends absurd science fiction with relatable family dynamics. Through their chaotic journeys across multiple realities, Rick and Morty explores existential questions, societal critiques, and the human condition, all while pushing the limits of animated storytelling.
+        <div class="w-80 rick-and-morty-font d-flex justify-content-center align-items-center p-4 flex-column">
+          <img class="descriptionImg" src="../assets/Description-6-9-2024.png" alt="Description Image">
+            <p style="font-size: large;">Rick and Morty is an innovative animated series that chronicles the unpredictable adventures of Rick Sanchez, a genius but morally ambiguous scientist, and his well-meaning but often overwhelmed grandson, Morty Smith. Combining sharp humor, dark satire, and thought-provoking philosophical themes, the show masterfully blends science fiction with everyday family life. As Rick and Morty travel across dimensions and alternate realities, the series explores deep existential questions, critiques modern society, and reveals the absurdity of the universe—all while maintaining its trademark wit and unpredictability.
 
-          </p>
+            </p>
+          
         </div>
       </div>
 
@@ -221,7 +223,7 @@
                 <p class="card-text">Dimensión: {{ character.origin.name }}</p>
                 <div class="d-flex justify-content-between align-items-center">
                   <p>Sígueme a mi</p>
-                  <a :href="character.url" class="btn btn-primary">Perfil</a>
+                  <a :href="'./details.html?urlDetails='+character.url" class="btn btn-primary">Perfil</a>
                 </div>
               </div>
             </div>

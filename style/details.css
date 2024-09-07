@@ -1,0 +1,36 @@
+
+
+.detailsImg{
+    width: 30vw;
+    border-radius: 5%;
+}
+.meeseeks{
+    width: 12vw;
+}
+.meeseeks2{
+    width: 20vw;
+}
+
+.detailsContainer{
+    border-radius: 5%;
+    background-color: beige;
+}
+
+
+@media (max-width: 768px){
+    .detailsImg{
+        width: 70vw;
+        .meeseeks{
+            width: 10vw;
+
+        }
+    }
+    .meeseeks{
+        width: 35vw;
+
+    }
+    .meeseeks2{
+        width: 60vw;
+
+    }
+}
