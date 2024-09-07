@@ -35,10 +35,24 @@ footer {
   border: 2px solid #0ff;
   box-shadow: 0 0 5px #0ff, 0 0 10px #0ff, inset 0 0 5px #0ff, inset 0 0 10px #0ff;
 }
+
+.neontitle {
+  text-shadow: 0 0 5px #0ff, 0 0 10px #0ff, 0 0 15px #ff00de, 0 0 20px #ff00de;
+}
+.neon-text{
+  text-shadow: 0 0 5px #0ff, 0 0 10px #0ff, 0 0 15px #ff00de, 0 0 20px #ff00de;}
+.neon-busqueda{
+  text-shadow: 0 0 5px #0ff, 0 0 10px #0ff, 0 0 15px #ff00de, 0 0 20px #ff00de;
+}
+.checkbox {
+  color: #0ff;
+  text-shadow: 0 0 5px #0ff, 0 0 10px #0ff;
+}
 .navbar {
   
   background: linear-gradient(to bottom, rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0)); 
 }
+
 
 
 
@@ -59,6 +73,11 @@ footer {
   width: 150px;
 }
 
+.card-img {
+  width: 200px;
+  height: 200px;
+  object-fit: cover; 
+}
 
 .carrouselImg{
   width: 100%;
@@ -106,6 +125,73 @@ footer {
   transform: translateY(-5px);
   box-shadow: 0 0 15px #0ff;
 } 
+
+/* prueba */
+
+.rick-morty-title {
+  color: #00b0c8;
+  text-shadow: 0 0 10px #00b0c8;
+  font-size: 2.5em;
+  font-weight: bold;
+}
+
+.rick-morty-table-wrapper {
+  background: linear-gradient(45deg, #1a1a2e,  #0c0c0c);
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 0 15px #00b0c8;
+}
+
+.rick-morty-table {
+  color: #e94560;
+  border-collapse: separate;
+  border-spacing: 0 10px;
+}
+
+.rick-morty-table thead th {
+  background-color: #0c0c0c;
+  color: #00b0c8;
+  text-transform: uppercase;
+  padding: 15px;
+  text-align: center;
+  border: none;
+}
+
+.rick-morty-table tbody tr {
+  background-color: rgba(15, 52, 96, 0.6);
+  transition: all 0.3s ease;
+}
+
+.rick-morty-table tbody tr:hover {
+  background-color: rgba(15, 52, 96, 0.8);
+  transform: scale(1.02);
+  box-shadow: 0 0 15px #00b0c8;
+}
+
+.stat-value {
+  position: relative;
+}
+
+.neon-card {
+  background: #1f1f1f; /* Fondo oscuro para resaltar el efecto de neón */
+  color: #fff;
+  padding: 20px;
+  border-radius: 15px;
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.7), 0 0 20px rgba(255, 255, 255, 0.5);
+  border: 2px solid #fff;
+  position: relative;
+  overflow: hidden;
+}
+
+
+.textCard{
+  height: 200px;
+}
+.cardContainer{
+  width: 250px;
+}
+
+
 
 .descriptionImg{
   width: 250px;

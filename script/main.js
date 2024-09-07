@@ -16,12 +16,14 @@ const app = createApp({
             totalPages: 0,
             nextPage: null,
             prevPage: null,
-            isCharacters: true // Controla si estamos viendo personajes o episodios
+            isCharacters: true, // Controla si estamos viendo personajes o episodios
+            selectedCharacters: []
         };
     },
 
     created() {
         this.fetchData(urlCharacters);
+        this.loadSelectedCharacters();
     },
 
     methods: {
@@ -96,7 +98,32 @@ const app = createApp({
             }
 
             return 'https://via.placeholder.com/300x200?text=Episode+' + episodeId;
+        },
+        toggleSelection(character) {
+            const index = this.selectedCharacters.findIndex(c => c.id === character.id);
+            if (index === -1) {
+                this.selectedCharacters.push(character);
+            } else {
+                this.selectedCharacters.splice(index, 1);
+            }
+            this.saveSelectedCharacters();
+        },
+
+        isSelected(character) {
+            return this.selectedCharacters.some(c => c.id === character.id);
+        },
+
+        saveSelectedCharacters() {
+            localStorage.setItem('selectedCharacters', JSON.stringify(this.selectedCharacters));
+        },
+
+        loadSelectedCharacters() {
+            const saved = localStorage.getItem('selectedCharacters');
+            if (saved) {
+                this.selectedCharacters = JSON.parse(saved);
+            }
         }
+        
     }
     ,
     computed: {
