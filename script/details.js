@@ -20,7 +20,6 @@ const app = createApp({
         fetchUrl(url){
             fetch(url).then(res => res.json()).then(data => {
                 this.character = data
-                console.log(this.character)
             })
         }
 
