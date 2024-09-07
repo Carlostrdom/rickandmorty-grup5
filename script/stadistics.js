@@ -119,6 +119,9 @@ createApp({
             if (savedPage) {
                 this.currentPage = parseInt(savedPage);
             }
+        },
+        hasNoResults() {
+            return this.filteredCharacters.length === 0 && this.textSearch !== "";
         }
     },
     computed: {

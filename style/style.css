@@ -41,6 +41,9 @@ footer {
 }
 .neon-text{
   text-shadow: 0 0 5px #0ff, 0 0 10px #0ff, 0 0 15px #ff00de, 0 0 20px #ff00de;}
+.neon-busqueda{
+  text-shadow: 0 0 5px #0ff, 0 0 10px #0ff, 0 0 15px #ff00de, 0 0 20px #ff00de;
+}
 .checkbox {
   color: #0ff;
   text-shadow: 0 0 5px #0ff, 0 0 10px #0ff;
@@ -181,4 +184,17 @@ footer {
 .stat-value {
   position: relative;
 }
+
+.neon-card {
+  background: #1f1f1f; /* Fondo oscuro para resaltar el efecto de neón */
+  color: #fff;
+  padding: 20px;
+  border-radius: 15px;
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.7), 0 0 20px rgba(255, 255, 255, 0.5);
+  border: 2px solid #fff;
+  position: relative;
+  overflow: hidden;
+}
+
+
 
