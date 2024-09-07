@@ -4,31 +4,67 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Estadísticas de Rick and Morty</title>
+    <title>Pagina de inicio</title>
     <link rel="stylesheet" href="/style/style.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 
 <body>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark mb-4">
-        <div class="container">
-            <a class="navbar-brand" href="#">Rick and Morty</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
-                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
+    <header class="position-relative">
+        <div id="navbar">
+          <nav class="navbar navbar-expand-md navbar-dark mb-4">
+            <div class="container-fluid d-flex">
+              <a class="navbar-brand " href="#"><img class="logo" src="../assets/rickAndMortyLogo.png" alt=""></a>
+              <button
+                class="navbar-toggler"
+                type="button"
+                data-bs-toggle="collapse"
+                data-bs-target="#navbarNav"
+                aria-controls="navbarNav"
+                aria-expanded="false"
+                aria-label="Toggle navigation"
+              >
+              <span class="navbar-toggler-icon"></span>
+              </button>
+              <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ms-auto">
-                    <li class="nav-item"><a class="nav-link" href="/html/index.html">Home</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#">Stats</a></li>
+                  <li class="nav-item">
+                    <a class="nav-link" style="font-size: larger;" href="../html/index.html"><img class="home" src="../assets/home-sin-animacion.png" alt=""></a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" style="font-size: larger;" href="../html/stadistics.html"><img class="home" src="../assets/Stats-5-9-2024.png" alt=""></a>
+                  </li>
                 </ul>
+              </div> 
+          
+                </div>
             </div>
+          </nav>
         </div>
-    </nav>
-
+  
+  
+        <div id="carouselExampleSlidesOnly" class="carousel slide " data-bs-ride="carousel" data-bs-interval="4000">
+          <div class="carousel-inner">
+            <div class="carousel-item active" data-bs-interval="4000" >
+              <img class="carrouselImg" src="../assets/epic-rick-and-morty.gif" class="d-block w-100" alt="...">
+            </div>
+            <div class="carousel-item" >
+              <img class="carrouselImg" src="../assets/1.gif" class="d-block w-100" alt="...">
+            </div>
+            <div class="carousel-item" >
+              <img class="carrouselImg" src="../assets/2.gif" alt="...">
+            </div>
+            <div class="carousel-item" >
+              <img class="carrouselImg" src="../assets/3.gif" alt="...">
+            </div>
+            <div class="carousel-item" >
+              <img class="carrouselImg" src="../assets/5.gif" alt="...">
+            </div>
+          </div>
+        </div>
+      </header>
+<!-- main -->
     <main class="container-fluid" id="appStadistics">
-        <h1 class="text-center mb-3 text-success fs-2">Estadísticas de Rick and Morty</h1>
-
         <!-- Modal de Personajes Seleccionados -->
         <div class="modal fade" id="selectedCharactersModal" tabindex="-1"
             aria-labelledby="selectedCharactersModalLabel" aria-hidden="true">
@@ -45,7 +81,8 @@
                             <p class="neon-text">No hay personajes seleccionados, por favor selecciona un personaje</p>
                         </div>
                         <div v-else class="d-flex flex-wrap justify-content-center">
-                            <div v-for="character in selectedCharacters" :key="character.id" class="p-2" style="width: 250px;">
+                            <div v-for="character in selectedCharacters" :key="character.id" class="p-2"
+                                style="width: 250px;">
                                 <div class="card bg-secondary h-100">
                                     <img :src="character.image" class="card-img-top" :alt="character.name">
                                     <div class="card-body">
@@ -107,85 +144,123 @@
                 </div>
             </div>
         </div>
+        <!-- Fin Modal de Personajes Seleccionados -->
 
-        <div v-if="loading" class="text-center">
-            <div class="spinner-border" role="status">
-                <span class="visually-hidden">Cargando...</span>
-            </div>
-        </div>
-
-        <div v-else>
-            <h2 class="mt-5 mb-4 text-center">Comparación Detallada de Especies</h2>
-            <div class="table-responsive">
-                <table class="table table-striped">
+        <!-- Comparación Detallada de Especies -->
+        <div v-else class="mt-3">
+            <h2 class="mt-5 mb-4 text-center rick-morty-title">Comparación Interdimensional de Especies</h2>
+            <div class="table-responsive rick-morty-table-wrapper">
+                <table class="table rick-morty-table table-bordered table-striped text-center">
                     <thead>
                         <tr>
                             <th>Especie</th>
                             <th>Buenos</th>
                             <th>Malos</th>
-                            <th>Total</th>
-                            <th>Intel. Prom.</th>
-                            <th>Caos Prom.</th>
-                            <th>Pop. Prom.</th>
-                            <th>Dim. Visit.</th>
-                            <th>% del Total</th>
+                            <th>% del total</th>
+                            <th>Intel. Cósmica</th>
+                            <th>Caos Cuántico</th>
+                            <th>Pop. Galáctica</th>
+                            <th>Dim. Exploradas</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr v-for="(stats, species) in speciesComparison" :key="species">
-                            <td>{{ species }}</td>
-                            <td>{{ stats.good }}%</td>
-                            <td>{{ stats.bad }}%</td>
-                            <td>{{ stats.total }}%</td>
-                            <td>{{ stats.avgIntelligence }}</td>
-                            <td>{{ stats.avgChaosLevel }}</td>
-                            <td>{{ stats.avgPopularity }}</td>
-                            <td>{{ stats.avgDimensionsVisited }}</td>
-                            <td>{{ stats.percentageOfTotal }}%</td>
+                        <tr v-for="(stats, species) in speciesComparison" :key="species" class="species-row">
+                            <td class="species-name">{{ species }}</td>
+                            <td class="good-percentage">{{ stats.good }}%</td>
+                            <td class="bad-percentage">{{ stats.bad }}%</td>
+                            <td class="total-percentage">{{ stats.percentageOfTotal }}%</td>
+                            <td class="stat-value">
+                                <div class="progress" >
+                                    <div class="progress-bar bg-success" role="progressbar" :style="{ width: stats.avgIntelligence + '%' }">
+                                        {{ stats.avgIntelligence }}%
+                                    </div>
+                                </div>
+                            </td>
+                            <td class="stat-value">
+                                <div class="progress" >
+                                    <div class="progress-bar bg-danger" role="progressbar" :style="{ width: stats.avgChaosLevel + '%' }">
+                                        {{ stats.avgChaosLevel }}%
+                                    </div>
+                                </div>
+                            </td>
+                            <td class="stat-value">
+                                <div class="progress">
+                                    <div class="progress-bar bg-info" role="progressbar" :style="{ width: stats.avgPopularity + '%' }">
+                                        {{ stats.avgPopularity }}%
+                                    </div>
+                                </div>
+                            </td>
+                            <td class="stat-value">{{ stats.avgDimensionsVisited }}</td>
                         </tr>
                     </tbody>
                 </table>
             </div>
-
-            <div class="d-flex flex-wrap align-items-center bg-secondary py-2 rounded mb-4">
-                <div class="p-2">
-                    <button type="button" class="btn btn-sm btn-success" data-bs-toggle="modal"
-                        data-bs-target="#selectedCharactersModal">
-                        Ver Seleccionados ({{ selectedCharacters.length }})
-                    </button>
-                </div>
-                <div class="p-2 d-flex align-items-center flex-grow-1 justify-content-center">
-                    <div class="d-flex align-items-center me-2">
-                        <span class="text-success me-2 fw-bold">Estado:</span>
-                        <div class="form-check form-check-inline m-0" v-for="status in ['Alive', 'Dead', 'unknown']">
-                            <input class="form-check-input" type="checkbox" :id="status" :value="status"
-                                v-model="statusFilter">
-                            <label class="form-check-label small" :for="status">{{ status }}</label>
+        </div>
+            <div class="d-flex flex-column flex-lg-row justify-content-between align-items-center bg-dark rounded-3 text-white mt-3 mb-3 p-3">
+                <!-- Botón para ver seleccionados -->
+                <button class="btn btn-outline-secondary me-2 mb-3 mb-lg-0 w-100 w-lg-auto btn-sm" data-bs-toggle="modal"
+                    data-bs-target="#selectedCharactersModal">
+                    Ver Seleccionados ({{ selectedCharacters.length }})
+                </button>
+            
+                <!-- Filtros de estado y especies para personajes -->
+                <div class="d-flex flex-column flex-lg-row align-items-center mb-3 mb-lg-0">
+                    <!-- Checkboxes para estado -->
+                    <label for="status-filter" class="text-white me-2 mb-2 mb-lg-0">Estado de Personajes:</label>
+                    <div class="d-flex mb-2 mb-lg-0">
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="checkbox" id="alive" value="Alive"
+                                v-model="statusFilter" />
+                            <label class="form-check-label text-white" for="alive">Vivo</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="checkbox" id="dead" value="Dead" v-model="statusFilter" />
+                            <label class="form-check-label text-white" for="dead">Muerto</label>
                         </div>
                     </div>
-                    <select class="form-select form-select-sm ms-2" v-model="speciesFilter" style="max-width: 150px;">
-                        <option value="">Todas las especies</option>
-                        <option v-for="species in availableSpecies" :key="species" :value="species">
-                            {{ species }}
-                        </option>
-                    </select>
-                </div>
-                <div class="p-2">
-                    <div class="input-group input-group-sm">
-                        <input v-model="textSearch" type="text" class="form-control" placeholder="Buscar personajes...">
-                        <span class="input-group-text bg-success text-dark">
-                            <i class="bi bi-search"></i>
-                        </span>
+            
+                    <!-- Dropdown para especies -->
+                    <div class="d-flex align-items-center mb-2 mb-lg-0">
+                        <label for="species-dropdown" class="text-white me-2">Especies:</label>
+                        <button type="button" class="btn btn-outline-secondary dropdown-toggle btn-sm" data-bs-toggle="dropdown"
+                            aria-expanded="false">
+                            Seleccionar Especies
+                        </button>
+                        <ul class="dropdown-menu" id="species-dropdown">
+                            <li v-for="species in availableSpecies" :key="species">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" :value="species" v-model="speciesFilter"
+                                        :id="'species-' + species" />
+                                    <label class="form-check-label" :for="'species-' + species">
+                                        {{ species }}
+                                    </label>
+                                </div>
+                            </li>
+                        </ul>
                     </div>
                 </div>
+            
+                <!-- Barra de búsqueda (a la derecha) -->
+                <div class="input-group w-100 w-lg-auto">
+                    <input type="text" class="form-control form-control-sm" placeholder="Search" aria-label="Search"
+                        v-model="textSearch" />
+                    <button class="btn btn-outline-secondary bg-dark bg-gradient btn-sm">
+                        Search
+                    </button>
+                </div>
             </div>
+
+
             <div class="d-flex justify-content-center align-items-center mb-4">
-                <button @click="goToPrevPage" class="btn btn-secondary me-2" :disabled="currentPage === 1">Anterior</button>
+                <button @click="goToPrevPage" class="btn btn-secondary me-2"
+                    :disabled="currentPage === 1">Anterior</button>
                 <div class="dropdown">
-                    <button class="btn btn-secondary dropdown-toggle neon-text" type="button" id="pageDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                    <button class="btn btn-secondary dropdown-toggle neon-text" type="button" id="pageDropdown"
+                        data-bs-toggle="dropdown" aria-expanded="false">
                         Página {{ currentPage }} de {{ totalPages }}
                     </button>
-                    <ul class="dropdown-menu" aria-labelledby="pageDropdown" style="max-height: 200px; overflow-y: auto;">
+                    <ul class="dropdown-menu" aria-labelledby="pageDropdown"
+                        style="max-height: 200px; overflow-y: auto;">
                         <li v-for="page in totalPages" :key="page">
                             <a class="dropdown-item" href="#" @click.prevent="goToSpecificPage(page)">
                                 {{ page }}
@@ -193,14 +268,15 @@
                         </li>
                     </ul>
                 </div>
-                <button @click="goToNextPage" class="btn btn-secondary ms-2" :disabled="currentPage === totalPages">Siguiente</button>
+                <button @click="goToNextPage" class="btn btn-secondary ms-2"
+                    :disabled="currentPage === totalPages">Siguiente</button>
             </div>
 
             <div class="d-flex flex-wrap justify-content-center">
                 <div v-for="character in filteredCharacters" :key="character.id" class="p-2">
                     <div class="card h-100 character-card">
-                        <img :src="character.image" class="card-img-top" :alt="character.name">
-                        <div class="card-body d-flex flex-column">
+                        <img :src="character.image" :alt="character.name">
+                        <div class="card-body d-flex flex-column bg-dark text-white">
                             <h5 class="card-title">{{ character.name }}</h5>
                             <p class="card-text"><strong>Especie:</strong> {{ character.species }}</p>
                             <p class="card-text"><strong>Estado:</strong> {{ character.status }}</p>
@@ -237,8 +313,7 @@
                             </div>
                             <p class="card-text"><strong>Dimensiones Visitadas:</strong> {{ character.dimensionsVisited
                                 }}</p>
-                            <button @click="toggleCharacterSelection(character)"
-                                class="btn mt-auto"
+                            <button @click="toggleCharacterSelection(character)" class="btn mt-auto"
                                 :class="{ 'btn-primary': !isCharacterSelected(character), 'btn-danger': isCharacterSelected(character) }">
                                 {{ isCharacterSelected(character) ? 'Deseleccionar' : 'Seleccionar' }}
                             </button>
@@ -248,12 +323,15 @@
             </div>
 
             <div class="d-flex justify-content-center align-items-center mt-4">
-                <button @click="goToPrevPage" class="btn btn-secondary me-2" :disabled="currentPage === 1">Anterior</button>
+                <button @click="goToPrevPage" class="btn btn-secondary me-2"
+                    :disabled="currentPage === 1">Anterior</button>
                 <div class="dropdown">
-                    <button class="btn btn-secondary dropdown-toggle neon-text" type="button" id="pageDropdown2" data-bs-toggle="dropdown" aria-expanded="false">
+                    <button class="btn btn-secondary dropdown-toggle neon-text" type="button" id="pageDropdown2"
+                        data-bs-toggle="dropdown" aria-expanded="false">
                         Página {{ currentPage }} de {{ totalPages }}
                     </button>
-                    <ul class="dropdown-menu" aria-labelledby="pageDropdown2" style="max-height: 200px; overflow-y: auto;">
+                    <ul class="dropdown-menu" aria-labelledby="pageDropdown2"
+                        style="max-height: 200px; overflow-y: auto;">
                         <li v-for="page in totalPages" :key="page">
                             <a class="dropdown-item" href="#" @click.prevent="goToSpecificPage(page)">
                                 {{ page }}
@@ -261,26 +339,35 @@
                         </li>
                     </ul>
                 </div>
-                <button @click="goToNextPage" class="btn btn-secondary ms-2" :disabled="currentPage === totalPages">Siguiente</button>
+                <button @click="goToNextPage" class="btn btn-secondary ms-2"
+                    :disabled="currentPage === totalPages">Siguiente</button>
             </div>
         </div>
         </div>
     </main>
-
-    <footer class="bg-dark text-white mt-5 py-4">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-10 col-md-9 d-flex align-items-center">
-                    <a href="#" class="text-white me-3">Facebook</a>
-                    <a href="#" class="text-white me-3">Instagram</a>
-                    <a href="#" class="text-white">WhatsApp</a>
-                </div>
-                <div class="col-lg-2 col-md-3 d-flex align-items-center justify-content-end">
-                    <h5 class="mb-0">COHORT</h5>
-                </div>
-            </div>
+    <footer class="p-t-8">
+        <div id="footer" class="container-fluid navbar d-flex flex-md-row flex-column justify-content-between flex-wrap ">
+          <div class="d-flex gap-3 align-items-center justify-content-center  ">
+            
+            <a target="_blank" href="https://www.primevideo.com/detail/Rick-and-Morty/0QG2DSIPHWFT11LTO37WHI8W9V"><img src="../assets/hbo-max-logo-1922879-removebg-preview.png" alt="HBO" class="social"></a>
+            <a target="_blank" href="https://www.max.com/co/es/shows/rick-and-morty/ab553cdc-e15d-4597-b65f-bec9201fd2dd"><img src="../assets/Amazon-Prime-Video-Icon.png" alt="prime icon" class="social"></a>
+            <a target="_blank" href="https://www.youtube.com/watch?v=7vo9vajbXnY"><img src="../assets/youtube-removebg-preview.png" alt="Youtube icon" class="social" href="https://www.youtube.com/watch?v=7vo9vajbXnY"></a>
+            
+          </div>
+          <div class="gap-3 d-flex align-items-center justify-content-center">
+            <span>Gabriel Fernandez</span>
+            <span>Karina Gonzalez</span>
+            <span>Carlos Torreyes</span>
+            <span>Edison Madrid</span>
+          </div>
+          <div class="d-flex align-items-center p-2 justify-content-center">
+            <span>Cohort 5</span>
+          </div>
+            
+          
         </div>
-    </footer>
+      </footer>
+
 
     <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>

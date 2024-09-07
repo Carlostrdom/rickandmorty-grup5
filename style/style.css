@@ -11,6 +11,7 @@ body {
 
 header{
   min-height: 10vh;
+  padding-bottom: 60px;
 }
 
 
@@ -25,7 +26,8 @@ footer {
   background-color: rgba(15, 12, 41, 0.8);
   backdrop-filter: blur(10px);
   color: #0ff;
-  text-shadow: 0 0 5px #0ff;  position: relative;
+  text-shadow: 0 0 5px #0ff;  
+  position: relative;
   bottom: 0;
   width: 100%;
 }
@@ -44,23 +46,12 @@ footer {
   text-shadow: 0 0 5px #0ff, 0 0 10px #0ff;
 }
 .navbar {
-  background-color: rgba(15, 12, 41, 0.8);
-  backdrop-filter: blur(10px);
-}
-.navbar-brand, .nav-link {
-  color: #0ff !important;
-  text-shadow: 0 0 5px #0ff, 0 0 10px #0ff;
-  transition: all 0.3s ease;
-}
-.navbar-brand:hover, .nav-link:hover {
-  color: #fff !important;
-  text-shadow: 0 0 5px #fff, 0 0 10px #fff, 0 0 15px #ff00de, 0 0 20px #ff00de;
+  
+  background: linear-gradient(to bottom, rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0)); 
 }
 
-.card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 0 15px #0ff;
-}
+
+
 
 
 .character-image {
@@ -72,10 +63,122 @@ footer {
   box-shadow: 0 0 10px #0ff;
 }
 
+.social{
+    width: 80px;
+}
+.logo{
+  width: 150px;
+}
 
 .card-img {
   width: 200px;
   height: 200px;
   object-fit: cover; 
+}
+
+.carrouselImg{
+  width: 100%;
+  height: 50vh;
+}
+
+#navbar{
+  position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        z-index: 1000;
+}
+
+.navAnchor{
+  font-size: 200px;
+}
+.neonDescription{
+  font-size: larger;
+  color: #0ff;
+  text-shadow: 0 0 5px #0ff;  position: relative;
+  padding-left: 10px;
+  padding-right: 10px;
+}
+
+.home{
+  width: 110px;
+}
+
+
+/* 
+@media (max-width: 720px) {
+  #footer{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+   
+  }
+} */
+
+.card-img-top {
+    height: 100px;
+} 
+
+
+.caur-img{
+  height: 200px;
+ 
+}
+
+.card{
+
+  width: 200px;
+  padding: 2px;
+}
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 0 15px #0ff;
+} 
+
+/* prueba */
+
+.rick-morty-title {
+  color: #00b0c8;
+  text-shadow: 0 0 10px #00b0c8;
+  font-size: 2.5em;
+  font-weight: bold;
+}
+
+.rick-morty-table-wrapper {
+  background: linear-gradient(45deg, #1a1a2e,  #0c0c0c);
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 0 15px #00b0c8;
+}
+
+.rick-morty-table {
+  color: #e94560;
+  border-collapse: separate;
+  border-spacing: 0 10px;
+}
+
+.rick-morty-table thead th {
+  background-color: #0c0c0c;
+  color: #00b0c8;
+  text-transform: uppercase;
+  padding: 15px;
+  text-align: center;
+  border: none;
+}
+
+.rick-morty-table tbody tr {
+  background-color: rgba(15, 52, 96, 0.6);
+  transition: all 0.3s ease;
+}
+
+.rick-morty-table tbody tr:hover {
+  background-color: rgba(15, 52, 96, 0.8);
+  transform: scale(1.02);
+  box-shadow: 0 0 15px #00b0c8;
+}
+
+.stat-value {
+  position: relative;
 }
 

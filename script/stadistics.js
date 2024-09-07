@@ -1,5 +1,4 @@
 const urlCharacters = "https://rickandmortyapi.com/api/character";
-
 const { createApp } = Vue;
 
 createApp({
@@ -8,22 +7,31 @@ createApp({
             characters: [],
             textSearch: "",
             statusFilter: [],
-            speciesFilter: "",
+            speciesFilter: [],
             availableSpecies: [],
             currentPage: 1,
             totalPages: 0,
             selectedCharacters: [],
-            loading: true
         };
     },
     created() {
+        this.loadFromLocalStorage();
         this.fetchRickAndMortyData();
     },
     methods: {
         fetchRickAndMortyData() {
-            this.loading = true;
             const url = new URL(urlCharacters);
             url.searchParams.set('page', this.currentPage);
+            
+            if (this.statusFilter.length > 0) {
+                url.searchParams.set('status', this.statusFilter.join(','));
+            }
+            if (this.speciesFilter.length > 0) {
+                url.searchParams.set('species', this.speciesFilter.join(','));
+            }
+            if (this.textSearch) {
+                url.searchParams.set('name', this.textSearch);
+            }
 
             fetch(url)
                 .then(response => response.json())
@@ -37,11 +45,10 @@ createApp({
                     }));
                     this.totalPages = data.info.pages;
                     this.updateAvailableSpecies();
-                    this.loading = false;
+                    this.saveToLocalStorage();
                 })
                 .catch(error => {
                     console.error('Error al obtener los personajes:', error);
-                    this.loading = false;
                 });
         },
         updateAvailableSpecies() {
@@ -81,12 +88,14 @@ createApp({
             } else {
                 this.selectedCharacters.push(character);
             }
+            this.saveToLocalStorage();
         },
         isCharacterSelected(character) {
             return this.selectedCharacters.some(c => c.id === character.id);
         },
         clearSelectedCharacters() {
             this.selectedCharacters = [];
+            this.saveToLocalStorage();
         },
         applyFilters() {
             this.currentPage = 1;
@@ -96,32 +105,46 @@ createApp({
             if (characters.length === 0) return 0;
             const sum = characters.reduce((total, character) => total + character[stat], 0);
             return (sum / characters.length).toFixed(2);
+        },
+        saveToLocalStorage() {
+            localStorage.setItem('selectedCharacters', JSON.stringify(this.selectedCharacters));
+            localStorage.setItem('currentPage', this.currentPage.toString());
+        },
+        loadFromLocalStorage() {
+            const savedCharacters = localStorage.getItem('selectedCharacters');
+            if (savedCharacters) {
+                this.selectedCharacters = JSON.parse(savedCharacters);
+            }
+            const savedPage = localStorage.getItem('currentPage');
+            if (savedPage) {
+                this.currentPage = parseInt(savedPage);
+            }
         }
     },
     computed: {
         filteredCharacters() {
             return this.characters.filter(character => 
                 (this.statusFilter.length === 0 || this.statusFilter.includes(character.status)) &&
-                (this.speciesFilter === "" || character.species === this.speciesFilter) &&
+                (this.speciesFilter.length === 0 || this.speciesFilter.includes(character.species)) &&
                 (this.textSearch === "" || character.name.toLowerCase().includes(this.textSearch.toLowerCase()))
             );
         },
         speciesComparison() {
             const speciesData = {};
+            const totalCharacters = this.filteredCharacters.length;
             this.availableSpecies.forEach(species => {
                 const charactersOfSpecies = this.filteredCharacters.filter(c => c.species === species);
-                const total = charactersOfSpecies.length;
+                const speciesCount = charactersOfSpecies.length;
                 const alive = charactersOfSpecies.filter(c => c.status === "Alive").length;
                 
                 speciesData[species] = {
-                    good: ((alive / total) * 100 || 0).toFixed(2),
-                    bad: (((total - alive) / total) * 100 || 0).toFixed(2),
-                    total: total,
+                    good: ((alive / speciesCount) * 100 || 0).toFixed(2),
+                    bad: (((speciesCount - alive) / speciesCount) * 100 || 0).toFixed(2),
                     avgIntelligence: this.calculateAverage(charactersOfSpecies, 'intelligence'),
                     avgChaosLevel: this.calculateAverage(charactersOfSpecies, 'chaosLevel'),
                     avgPopularity: this.calculateAverage(charactersOfSpecies, 'popularity'),
                     avgDimensionsVisited: this.calculateAverage(charactersOfSpecies, 'dimensionsVisited'),
-                    percentageOfTotal: ((total / this.characters.length) * 100 || 0).toFixed(2)
+                    percentageOfTotal: ((speciesCount / totalCharacters) * 100).toFixed(2)
                 };
             });
             return speciesData;
