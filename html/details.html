@@ -73,9 +73,30 @@
         </div>
 
       </header>
-      <main>
-        
-      </main>
+      <div id="app">
+        <div v-if="loading" class="text-center">
+          <p>Cargando...</p>
+        </div>
+        <div v-else-if="error" class="text-center text-danger">
+          <p>{{ error }}</p>
+        </div>
+        <div v-else-if="character" class="character-details container mt-4">
+          <h2 class="text-center mb-4">{{ character.name }}</h2>
+          <div class="row">
+            <div class="col-md-6">
+              <img :src="character.image" :alt="character.name" class="img-fluid rounded">
+            </div>
+            <div class="col-md-6">
+              <ul class="list-group">
+                <li class="list-group-item"><strong>Personaje:</strong> {{ character.name }}</li>
+                <li class="list-group-item"><strong>Especies:</strong> {{ character.species }}</li>
+                <li class="list-group-item"><strong>Estado:</strong> {{ character.status }}</li>
+                <li class="list-group-item"><strong>Dimensión:</strong> {{ character.origin.name }}</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
 
 
       <footer class="p-t-8">
@@ -102,8 +123,8 @@
       </footer>
   
 
-    <script type="module" src="details.html"></script>
-    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+      <script src="https://unpkg.com/vue@3/dist/vue.global.prod.js"></script>
+    <script src="../script/details.js"></script>
     
 </body>
 
