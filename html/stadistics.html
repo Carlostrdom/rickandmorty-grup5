@@ -77,16 +77,16 @@
                         </div>
                         <div v-else class="d-flex flex-wrap justify-content-center">
                             <div v-for="character in selectedCharacters" :key="character.id" class="p-2">
-                                <div class="card bg-secondary h-100">
+                                <div class="card bg-warning-subtle h-100">
                                     <img :src="character.image" class="card-img-top" :alt="character.name">
                                     <div class="card-body">
-                                        <h5 class="card-title">{{ character.name }}</h5>
+                                        <h5 class="card-title text-success">{{ character.name }}</h5>
                                         <p class="card-text"><strong>Especie:</strong> {{ character.species }}</p>
                                         <p class="card-text"><strong>Estado:</strong> {{ character.status }}</p>
                                         <div class="mb-2">
                                             <div>Inteligencia:</div>
                                             <div class="progress">
-                                                <div class="progress-bar"
+                                                <div class="progress-bar neonn"
                                                     :class="getProgressBarColor(character.intelligence)"
                                                     role="progressbar" :style="{ width: character.intelligence + '%' }"
                                                     :aria-valuenow="character.intelligence" aria-valuemin="0"
@@ -98,7 +98,7 @@
                                         <div class="mb-2">
                                             <div>Caos:</div>
                                             <div class="progress">
-                                                <div class="progress-bar"
+                                                <div class="progress-bar neon"
                                                     :class="getProgressBarColor(character.chaosLevel)"
                                                     role="progressbar" :style="{ width: character.chaosLevel + '%' }"
                                                     :aria-valuenow="character.chaosLevel" aria-valuemin="0"
@@ -110,7 +110,7 @@
                                         <div class="mb-2">
                                             <div>Popularidad:</div>
                                             <div class="progress">
-                                                <div class="progress-bar"
+                                                <div class="progress-bar neon1"
                                                     :class="getProgressBarColor(character.popularity)"
                                                     role="progressbar" :style="{ width: character.popularity + '%' }"
                                                     :aria-valuenow="character.popularity" aria-valuemin="0"
@@ -141,7 +141,7 @@
         <!-- Fin Modal de Personajes Seleccionados -->
 
         <div class="container">
-            <h2 class="mb-4 text-center rick-morty-title text-light">Comparación Interdimensional de Especies</h2>
+            <h2 class="d-flex mb-4 text-center rick-morty-title text-success">Comparación Interdimensional de Especies</h2>
 
             <div class="row">
                 <!-- Primera Tabla -->

@@ -90,26 +90,20 @@
             />
           </div>
           <div class="carousel-item">
-            <img
-              class="carrouselImg d-block w-100"
-              src="../assets/2.gif"
-              alt="..."
-            />
+            <img class="carrouselImg" src="../assets/2.gif" alt="..." />
           </div>
           <div class="carousel-item">
-            <img
-              class="carrouselImg d-block w-100"
-              src="../assets/3.gif"
-              alt="..."
-            />
+            <img class="carrouselImg" src="../assets/3.gif" alt="..." />
           </div>
           <div class="carousel-item">
-            <img
-              class="carrouselImg d-block w-100"
-              src="../assets/5.gif"
-              alt="..."
-            />
+            <img class="carrouselImg" src="../assets/5.gif" alt="..." />
           </div>
+          <audio id="carouselAudio" loop>
+            <source
+              src="../assets/Rick and Morty Theme_2.mp3"
+              type="audio/mpeg"
+            />
+          </audio>
         </div>
       </div>
 
@@ -117,17 +111,24 @@
         class="container-fluid d-flex justify-content-center align-items-center"
       >
         <div
-          class="w-80 rick-and-morty-font d-flex justify-content-center align-items-center p-4"
+          class="w-80 rick-and-morty-font d-flex justify-content-center align-items-center p-4 flex-column"
         >
-          <p>
-            Rick and Morty is a groundbreaking animated series that follows the
-            interdimensional adventures of Rick Sanchez, a genius yet reckless
-            scientist, and his anxious grandson, Morty Smith. Known for its
-            sharp wit, dark humor, and philosophical undertones, the show blends
-            absurd science fiction with relatable family dynamics. Through their
-            chaotic journeys across multiple realities, Rick and Morty explores
-            existential questions, societal critiques, and the human condition,
-            all while pushing the limits of animated storytelling.
+          <img
+            class="descriptionImg"
+            src="../assets/Description-6-9-2024.png"
+            alt=""
+          />
+          <p class="sintaxis">
+            Rick and Morty is an innovative animated series that chronicles the
+            unpredictable adventures of Rick Sanchez, a genius but morally
+            ambiguous scientist, and his well-meaning but often overwhelmed
+            grandson, Morty Smith. Combining sharp humor, dark satire, and
+            thought-provoking philosophical themes, the show masterfully blends
+            science fiction with everyday family life. As Rick and Morty travel
+            across dimensions and alternate realities, the series explores deep
+            existential questions, critiques modern society, and reveals the
+            absurdity of the universe—all while maintaining its trademark wit
+            and unpredictability.
           </p>
         </div>
       </div>
@@ -137,17 +138,23 @@
       <div class="container-fluid p-2">
         <!-- Barra de búsqueda y filtros -->
         <div
-          class="d-flex justify-content-between align-items-center bg-dark rounded-3 text-white mt-3 mb-3 p-3"
+          class="d-flex flex-md-row flex-column justify-content-between align-items-center bg-dark rounded-3 text-white mt-3 mb-3 p-3 gap-2"
         >
           <!-- Botón para alternar entre personajes y episodios -->
-          <button class="btn btn-outline-secondary me-2" @click="toggleData">
+          <button
+            class="Danger with contrasting color me-2"
+            @click="toggleData"
+          >
             Ver {{ isCharacters ? 'Episodios' : 'Personajes' }}
           </button>
 
           <!-- Filtros de estado y especies para personajes -->
-          <div v-if="isCharacters" class="d-flex align-items-center">
+          <div
+            v-if="isCharacters"
+            class="d-flex flex-md-row flex-column align-items-center gap-2"
+          >
             <!-- Checkboxes para estado -->
-            <label for="status-filter" class="text-white me-2"
+            <label for="status-filter" class="text-ligth fs-4 me-2"
               >Estado de Personajes:</label
             >
             <div class="form-check form-check-inline">
@@ -158,7 +165,7 @@
                 value="Alive"
                 v-model="statusFilter"
               />
-              <label class="form-check-label text-white" for="alive"
+              <label class="form-check-label text-success fs-4" for="alive"
                 >Vivo</label
               >
             </div>
@@ -170,18 +177,18 @@
                 value="Dead"
                 v-model="statusFilter"
               />
-              <label class="form-check-label text-white" for="dead"
+              <label class="form-check-label text-danger fs-4" for="dead"
                 >Muerto</label
               >
             </div>
 
             <!-- Dropdown para especies -->
-            <label for="species-dropdown" class="text-white me-2"
+            <label for="species-dropdown" class="text-info me-2"
               >Especies:</label
             >
             <button
               type="button"
-              class="btn btn-outline-secondary dropdown-toggle"
+              class="btn btn-outline-warning dropdown-toggle"
               data-bs-toggle="dropdown"
               aria-expanded="false"
             >
@@ -214,7 +221,7 @@
               aria-label="Search"
               v-model="textSearch"
             />
-            <button class="btn btn-outline-secondary bg-dark bg-gradient">
+            <button class="btn btn-outline-warning bg-dark bg-gradient">
               Search
             </button>
           </div>
@@ -245,178 +252,91 @@
           </span>
 
           <button
-            class="btn btn-primary m-2"
+            class="btn btn-success m-2"
             @click="fetchData(nextPage)"
             :disabled="!nextPage"
           >
             Siguiente
           </button>
         </div>
+      </div>
 
-        <!-- Sección de personajes -->
-        <div v-if="isCharacters" class="character-list">
-          <h2 class="text-center text-white">Personajes</h2>
+      <!-- Sección de personajes -->
+      <div v-if="isCharacters" class="character-list">
+        <h2 class="text-center text-white">Personajes</h2>
+        <div
+          class="gap-2 container-fluid d-flex mt-2 flex-wrap justify-content-center"
+        >
           <div
-            class="gap-2 container-fluid d-flex mt-2 flex-wrap justify-content-center"
+            v-for="character in filteredData"
+            :key="character.id"
+            class="card text-white bg-dark mb-3 cardContainer"
           >
-            <div
-              v-for="character in filteredData"
-              :key="character.id"
-              class="card text-white bg-dark mb-3"
-            >
-              <img
-                :src="character.image"
-                class="card-img-top caur-img"
-                :alt="character.name"
-              />
-              <div class="card-body">
+            <img
+              :src="character.image"
+              class="card-img-top caur-img"
+              :alt="character.name"
+            />
+            <div class="card-body">
+              <div class="textCard">
                 <h5 class="card-title">Personaje: {{ character.name }}</h5>
                 <p class="card-text">Especies: {{ character.species }}</p>
                 <p class="card-text">Estado: {{ character.status }}</p>
                 <p class="card-text">Dimensión: {{ character.origin.name }}</p>
-                <div class="d-flex justify-content-between align-items-center">
-                  <button
-                    @click="toggleSelection(character)"
-                    class="btn btn-secondary"
-                  >
-                    {{ isSelected(character) ? 'Deseleccionar' : 'Seleccionar'
-                    }}
-                  </button>
-                  <a
-                    :href="'details.html?id=' + character.id"
-                    class="btn btn-primary"
-                    >Perfil</a
-                  >
-                </div>
               </div>
-            </div>
-          </div>
-        </div>
 
-        <!-- Sección de episodios -->
-        <div v-else class="episode-list">
-          <h2 class="text-center text-white">Episodios</h2>
-          <div
-            class="gap-2 container-fluid d-flex mt-2 flex-wrap justify-content-center"
-          >
-            <div
-              v-for="episode in filteredData"
-              :key="episode.id"
-              class="card text-white bg-dark mb-3"
-            >
-              <img
-                :src="getEpisodeImage(episode.id)"
-                class="card-img-top"
-                :alt="episode.name || 'Episodio'"
-              />
-              <div class="card-body">
-                <h5 class="card-title">
-                  Episodio: {{ episode.name || 'Sin nombre' }}
-                </h5>
-                <p class="card-text">
-                  Temporada: {{ episode.episode || 'Desconocida' }}
-                </p>
-                <p class="card-text">
-                  Fecha de emisión: {{ episode.air_date || 'Desconocida' }}
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Modal para mostrar selecciones -->
-      <div
-        class="modal fade"
-        id="selectionsModal"
-        tabindex="-1"
-        aria-labelledby="selectionsModalLabel"
-        aria-hidden="true"
-      >
-        <div class="modal-dialog modal-lg">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title" id="selectionsModalLabel">
-                Personajes Seleccionados
-              </h5>
-              <button
-                type="button"
-                class="btn-close"
-                data-bs-dismiss="modal"
-                aria-label="Close"
-              ></button>
-            </div>
-            <div class="modal-body">
-              <div class="row">
-                <div
-                  v-for="character in selectedCharacters"
-                  :key="character.id"
-                  class="col-md-4 mb-3"
+              <div
+                class="d-flex justify-content-between align-items-center gap-2"
+              >
+                <p>Sígueme a mi</p>
+                <a
+                  :href="'./details.html?urlDetails='+character.url"
+                  class="btn btn-light"
+                  >Perfil</a
                 >
-                  <div class="card">
-                    <img
-                      :src="character.image"
-                      class="card-img-top"
-                      :alt="character.name"
-                    />
-                    <div class="card-body">
-                      <h5 class="card-title">{{ character.name }}</h5>
-                      <p class="card-text">Especie: {{ character.species }}</p>
-                      <button
-                        @click="toggleSelection(character)"
-                        class="btn btn-danger"
-                      >
-                        Deseleccionar
-                      </button>
-                    </div>
-                  </div>
-                </div>
+              </div>
+              <div class="d-flex justify-content-between container-fluid">
+                <button
+                  @click="toggleSelection(character)"
+                  class="btn btn-outline-warning"
+                >
+                  {{ isSelected(character) ? 'Deseleccionar' : 'Seleccionar' }}
+                </button>
               </div>
             </div>
           </div>
         </div>
       </div>
 
-      <!-- Botón para abrir el modal -->
-      <button
-        type="button"
-        class="btn btn-primary position-fixed bottom-0 end-0 m-3"
-        data-bs-toggle="modal"
-        data-bs-target="#selectionsModal"
-      >
-        Ver Selecciones
-      </button>
-      <!-- Botones de paginación -->
-      <div class="d-flex justify-content-center align-items-center mt-4">
-        <button
-          class="btn btn-primary m-2"
-          @click="fetchData(prevPage)"
-          :disabled="!prevPage"
+      <!-- Sección de episodios -->
+      <div v-else class="episode-list">
+        <h2 class="text-center text-white">Episodios</h2>
+        <div
+          class="gap-2 container-fluid d-flex mt-2 flex-wrap justify-content-center"
         >
-          Anterior
-        </button>
-
-        <!-- Enumeración de páginas y campo de entrada -->
-        <span class="text-white mx-2">
-          Página
-          <input
-            type="number"
-            v-model.number="currentPage"
-            min="1"
-            :max="totalPages"
-            @change="goToPage(currentPage)"
-            class="form-control form-control-sm d-inline-block w-auto"
-          />
-          de {{ totalPages }}
-        </span>
-
-        <button
-          class="btn btn-primary m-2"
-          @click="fetchData(nextPage)"
-          :disabled="!nextPage"
-        >
-          Siguiente
-        </button>
+          <div
+            v-for="episode in filteredData"
+            :key="episode.id"
+            class="card text-white bg-dark mb-3"
+          >
+            <img
+              :src="getEpisodeImage(episode.id)"
+              class="card-img-top"
+              :alt="episode.name || 'Episodio'"
+            />
+            <div class="card-body">
+              <h5 class="card-title">
+                Episodio: {{ episode.name || 'Sin nombre' }}
+              </h5>
+              <p class="card-text">
+                Temporada: {{ episode.episode || 'Desconocida' }}
+              </p>
+              <p class="card-text">
+                Fecha de emisión: {{ episode.air_date || 'Desconocida' }}
+              </p>
+            </div>
+          </div>
+        </div>
       </div>
     </main>
 
