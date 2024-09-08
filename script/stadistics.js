@@ -1,4 +1,6 @@
 const urlCharacters = "https://rickandmortyapi.com/api/character";
+const urlLocations = "https://rickandmortyapi.com/api/location";
+const urlEpisodes = "https://rickandmortyapi.com/api/episode";
 const { createApp } = Vue;
 
 createApp({
@@ -12,11 +14,15 @@ createApp({
             currentPage: 1,
             totalPages: 0,
             selectedCharacters: [],
+            locations: [],
+            episodes: [],
+            comparisonData: null,
         };
     },
     created() {
         this.loadFromLocalStorage();
         this.fetchRickAndMortyData();
+        this.fetchComparisonData();
     },
     methods: {
         fetchRickAndMortyData() {
@@ -122,6 +128,65 @@ createApp({
         },
         hasNoResults() {
             return this.filteredCharacters.length === 0 && this.textSearch !== "";
+        },
+        fetchComparisonData() {
+            this.fetchAllLocations();
+            this.fetchAllEpisodes();
+        },
+        fetchAllLocations() {
+            this.fetchAllPages(urlLocations, (data) => {
+                this.locations = this.locations.concat(data.results);
+                if (this.locations.length === data.info.count) {
+                    this.prepareComparisonData();
+                }
+            });
+        },
+        fetchAllEpisodes() {
+            this.fetchAllPages(urlEpisodes, (data) => {
+                this.episodes = this.episodes.concat(data.results);
+                if (this.episodes.length === data.info.count) {
+                    this.prepareComparisonData();
+                }
+            });
+        },
+        fetchAllPages(url, callback) {
+            fetch(url)
+                .then(response => response.json())
+                .then(data => {
+                    callback(data);
+                    if (data.info.next) {
+                        this.fetchAllPages(data.info.next, callback);
+                    }
+                })
+                .catch(error => console.error('Error fetching data:', error));
+        },
+        prepareComparisonData() {
+            if (this.locations.length > 0 && this.episodes.length > 0) {
+                const totalLocations = this.locations.length;
+                const totalEpisodes = this.episodes.length;
+                
+                const dimensionsCount = new Set(this.locations.map(l => l.dimension)).size;
+                const seasonsCount = new Set(this.episodes.map(e => e.episode.split('E')[0])).size;
+                
+                const mostPopulatedLocation = this.locations.reduce((max, location) => 
+                    location.residents.length > max.residents.length ? location : max, this.locations[0]
+                );
+                
+                const episodeWithMostCharacters = this.episodes.reduce((max, episode) => 
+                    episode.characters.length > max.characters.length ? episode : max, this.episodes[0]
+                );
+                
+                this.comparisonData = {
+                    totalLocations,
+                    totalEpisodes,
+                    dimensionsCount,
+                    seasonsCount,
+                    mostPopulatedLocation: mostPopulatedLocation.name,
+                    mostPopulatedLocationResidents: mostPopulatedLocation.residents.length,
+                    episodeWithMostCharacters: episodeWithMostCharacters.name,
+                    episodeWithMostCharactersCount: episodeWithMostCharacters.characters.length
+                };
+            }
         }
     },
     computed: {
@@ -143,14 +208,30 @@ createApp({
                 speciesData[species] = {
                     good: ((alive / speciesCount) * 100 || 0).toFixed(2),
                     bad: (((speciesCount - alive) / speciesCount) * 100 || 0).toFixed(2),
-                    avgIntelligence: this.calculateAverage(charactersOfSpecies, 'intelligence'),
-                    avgChaosLevel: this.calculateAverage(charactersOfSpecies, 'chaosLevel'),
-                    avgPopularity: this.calculateAverage(charactersOfSpecies, 'popularity'),
-                    avgDimensionsVisited: this.calculateAverage(charactersOfSpecies, 'dimensionsVisited'),
-                    percentageOfTotal: ((speciesCount / totalCharacters) * 100).toFixed(2)
+                    percentageOfTotal: totalCharacters > 0 ? ((speciesCount / totalCharacters) * 100).toFixed(2) : "-"
                 };
             });
             return speciesData;
+        },
+        locationEpisodeComparison() {
+            if (!this.comparisonData) return [];
+            return [
+                {
+                    category: 'Total',
+                    locations: this.comparisonData.totalLocations,
+                    episodes: this.comparisonData.totalEpisodes
+                },
+                {
+                    category: 'diversity',
+                    locations: `${this.comparisonData.dimensionsCount} dimensions`,
+                    episodes: `${this.comparisonData.seasonsCount} Seasons`
+                },
+                {
+                    category: 'More populated/with more characters',
+                    locations: `${this.comparisonData.mostPopulatedLocation} (${this.comparisonData.mostPopulatedLocationResidents} Residents)`,
+                    episodes: `${this.comparisonData.episodeWithMostCharacters} (${this.comparisonData.episodeWithMostCharactersCount} Characters)`
+                }
+            ];
         }
     }
 }).mount('#appStadistics');

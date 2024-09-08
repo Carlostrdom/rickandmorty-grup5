@@ -140,7 +140,7 @@
           <div class="modal-dialog modal-lg">
             <div class="modal-content">
               <div class="modal-header">
-                <h5 class="modal-title" id="selectionsModalLabel">Personajes Seleccionados</h5>
+                <h5 class="modal-title" id="selectionsModalLabel">Selected Characters</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
               </div>
               <div class="modal-body">
@@ -151,7 +151,7 @@
                       <div class="card-body">
                         <h5 class="card-title">{{ character.name }}</h5>
                         <p class="card-text">Especie: {{ character.species }}</p>
-                        <button @click="toggleSelection(character)" class="btn btn-danger">Deseleccionar</button>
+                        <button @click="toggleSelection(character)" class="btn btn-danger">Deselect</button>
                       </div>
                     </div>
                   </div>
@@ -169,7 +169,7 @@
             class="Danger with contrasting color me-2"
             @click="toggleData"
           >
-            Ver {{ isCharacters ? 'Episodios' : 'Personajes' }}
+          watch {{ isCharacters ? 'episodes' : 'Personajes' }}
           </button>
 
           <!-- Filtros de estado y especies para personajes -->
@@ -179,7 +179,7 @@
           >
             <!-- Checkboxes para estado -->
             <label for="status-filter" class="text-ligth fs-4 me-2"
-              >Estado de Personajes:</label
+              >Character Status:</label
             >
             <div class="form-check form-check-inline">
               <input
@@ -190,7 +190,8 @@
                 v-model="statusFilter"
               />
               <label class="form-check-label text-success fs-4" for="alive"
-                >Vivo</label
+                >
+                Alive</label
               >
             </div>
             <div class="form-check form-check-inline">
@@ -202,13 +203,13 @@
                 v-model="statusFilter"
               />
               <label class="form-check-label text-danger fs-4" for="dead"
-                >Muerto</label
+                >Dead</label
               >
             </div>
 
             <!-- Dropdown para especies -->
             <label for="species-dropdown" class="text-info me-2"
-              >Especies:</label
+              >Species:</label
             >
             <button
               type="button"
@@ -216,7 +217,7 @@
               data-bs-toggle="dropdown"
               aria-expanded="false"
             >
-              Seleccionar Especies
+              Select Species
             </button>
             <ul class="dropdown-menu" id="species-dropdown">
               <li v-for="species in allSpecies" :key="species">
@@ -259,12 +260,12 @@
             @click="fetchData(prevPage)"
             :disabled="!prevPage"
           >
-            Anterior
+          Previous
           </button>
 
           <!-- Enumeración de páginas y campo de entrada -->
           <span class="text-white mx-2">
-            Página
+            Page
             <input
               type="number"
               v-model.number="currentPage"
@@ -273,7 +274,7 @@
               @change="goToPage(currentPage)"
               class="form-control form-control-sm d-inline-block w-auto"
             />
-            de {{ totalPages }}
+            of {{ totalPages }}
           </span>
 
           <button
@@ -281,14 +282,14 @@
             @click="fetchData(nextPage)"
             :disabled="!nextPage"
           >
-            Siguiente
+          Next
           </button>
         </div>
       </div>
 
       <!-- Sección de personajes -->
       <div v-if="isCharacters" class="character-list">
-        <h2 class="text-center text-white">Personajes</h2>
+        <h2 class="text-center text-white">Character</h2>
         <div
           class="gap-2 container-fluid d-flex mt-2 flex-wrap justify-content-center"
         >
@@ -304,20 +305,20 @@
             />
             <div class="card-body">
               <div class="textCard">
-                <h5 class="card-title">Personaje: {{ character.name }}</h5>
-                <p class="card-text">Especies: {{ character.species }}</p>
-                <p class="card-text">Estado: {{ character.status }}</p>
+                <h5 class="card-title">character: {{ character.name }}</h5>
+                <p class="card-text">Species: {{ character.species }}</p>
+                <p class="card-text">State: {{ character.status }}</p>
                 <p class="card-text">Dimensión: {{ character.origin.name }}</p>
               </div>
 
               <div
                 class="d-flex justify-content-between align-items-center gap-2"
               >
-                <p>Sígueme a mi</p>
+                <p>Follow me</p>
                 <a
                   :href="'./details.html?urlDetails='+character.url"
                   class="btn btn-light"
-                  >Perfil</a
+                  >Profile</a
                 >
               </div>
               <div class="d-flex justify-content-between container-fluid">
@@ -325,7 +326,7 @@
                   @click="toggleSelection(character)"
                   class="btn btn-outline-warning"
                 >
-                  {{ isSelected(character) ? 'Deseleccionar' : 'Seleccionar' }}
+                  {{ isSelected(character) ? 'Deselect' : 'Select' }}
                 </button>
               </div>
             </div>
@@ -335,7 +336,7 @@
 
       <!-- Sección de episodios -->
       <div v-else class="episode-list">
-        <h2 class="text-center text-white">Episodios</h2>
+        <h2 class="text-center text-white">Episodes</h2>
         <div
           class="gap-2 container-fluid d-flex mt-2 flex-wrap justify-content-center"
         >
@@ -351,37 +352,37 @@
             />
             <div class="card-body">
               <h5 class="card-title">
-                Episodio: {{ episode.name || 'Sin nombre' }}
+                Episodes: {{ episode.name || 'Unnamed' }}
               </h5>
               <p class="card-text">
-                Temporada: {{ episode.episode || 'Desconocida' }}
+                Season: {{ episode.episode || 'Unknown' }}
               </p>
               <p class="card-text">
-                Fecha de emisión: {{ episode.air_date || 'Desconocida' }}
+                Air date: {{ episode.air_date || 'Unknown' }}
               </p>
             </div>
           </div>
         </div>
       </div>
       <button type="button" class="btn btn-primary position-fixed bottom-0 end-0 m-3" data-bs-toggle="modal" data-bs-target="#selectionsModal">
-        Ver Selecciones
+        See Selections
       </button>
 
               <!-- Botones de paginación -->
               <div class="d-flex justify-content-center align-items-center mt-4">
                 <button class="btn btn-primary m-2" @click="fetchData(prevPage)" :disabled="!prevPage">
-                  Anterior
+                  Previous
                 </button>
       
                 <!-- Enumeración de páginas y campo de entrada -->
                 <span class="text-white mx-2">
-                  Página
+                  Page
                   <input type="number" v-model.number="currentPage" min="1" :max="totalPages" @change="goToPage(currentPage)" class="form-control form-control-sm d-inline-block w-auto" />
-                  de {{ totalPages }}
+                  of {{ totalPages }}
                 </span>
       
                 <button class="btn btn-primary m-2" @click="fetchData(nextPage)" :disabled="!nextPage">
-                  Siguiente
+                  Next
                 </button>
               </div>
       </div>
