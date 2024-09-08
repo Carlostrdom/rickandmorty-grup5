@@ -1,118 +1,391 @@
 <!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>statistics</title>
-    <link
-      rel="shortcut icon"
-      href="./assets/Recursos_Amazing_Events_Task_1/favicon.png"
-      type="image/x-icon"
-    />
-    <link
-      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
-      rel="stylesheet"
-      integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
-      crossorigin="anonymous"
-    />
+<html lang="es">
 
-    <link rel="stylesheet" href="../style/style.css" />
-  </head>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pagina de inicio</title>
+    <link rel="stylesheet" href="/style/style.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
 
-  <body>
-    <header>
-      <nav class="navbar navbar-expand-md">
-        <div class="container-fluid d-flex">
-          <a class="navbar-brand" href="/index.html"
-            ><img
-              src="./assets/Recursos_Amazing_Events_Task_1/amazing_brand.png"
-              class="logo"
-              alt=""
-          /></a>
+<body>
+    <header class="position-relative">
+        <div id="navbar">
+            <nav class="navbar navbar-expand-md navbar-dark mb-4">
+                <div class="container-fluid d-flex">
+                    <a class="navbar-brand " href="#"><img class="logo" src="../assets/rickAndMortyLogo.png" alt=""></a>
+                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                        aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <div class="collapse navbar-collapse" id="navbarNav">
+                        <ul class="navbar-nav ms-auto">
+                            <li class="nav-item">
+                                <a class="nav-link" style="font-size: larger;" href="../html/index.html"><img
+                                        class="home" src="../assets/home-sin-animacion.png" alt=""></a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" style="font-size: larger;" href="../html/stadistics.html"><img
+                                        class="home" src="../assets/Stats-5-9-2024.png" alt=""></a>
+                            </li>
+                        </ul>
+                    </div>
 
-          <button
-            class="navbar-toggler"
-            type="button"
-            data-bs-toggle="collapse"
-            data-bs-target="#navbarNav"
-            aria-controls="navbarNav"
-            aria-expanded="false"
-            aria-label="Toggle navigation"
-          >
-            <span class="navbar-toggler-icon"></span>
-          </button>
+                </div>
+        </div>
+        </nav>
+        </div>
 
-          <div
-            class="collapse fw-semibold navbar-collapse justify-content-end"
-            id="navbarNav"
-          >
-            <div class="navbar-nav gap-1">
-              <a class="nav-item">
-                <a
-                  class="nav-link active text-white bg-dark bg-opacity-50 p-2 rounded"
-                  aria-current="page"
-                  href="./index.html"
-                  >HOME</a
-                >
-              </a>
-              <a class="nav-item">
-                <a
-                  class="nav-link text-white bg-dark bg-opacity-50 p-2 rounded"
-                  aria-current="page"
-                  href="../html/statistics.html"
-                  >STATISTICS</a
-                >
-              </a>
+
+        <div id="carouselExampleSlidesOnly" class="carousel slide " data-bs-ride="carousel" data-bs-interval="4000">
+            <div class="carousel-inner">
+                <div class="carousel-item active" data-bs-interval="4000">
+                    <img class="carrouselImg" src="../assets/epic-rick-and-morty.gif" class="d-block w-100" alt="img-carrousel">
+                </div>
+                <div class="carousel-item">
+                    <img class="carrouselImg" src="../assets/1.gif" class="d-block w-100" alt="img-carrousel">
+                </div>
+                <div class="carousel-item">
+                    <img class="carrouselImg" src="../assets/2.gif" alt="img-carrousel">
+                </div>
+                <div class="carousel-item">
+                    <img class="carrouselImg" src="../assets/3.gif" alt="img-carrousel">
+                </div>
+                <div class="carousel-item">
+                    <img class="carrouselImg" src="../assets/5.gif" alt="img-carrousel">
+                </div>
             </div>
-          </div>
         </div>
-      </nav>
     </header>
-    <main></main>
-    <footer
-      class="container-fluid d-flex bg-dark text-white justify-content-between mt-3 p-4"
-    >
-      <div class="container-fluid">
-        <div class="row">
-          <div class="col-lg-10 col-md-9 d-flex align-items-center">
-            <a class="navbar-brand ml-3 mr-3" href="/index.html">
-              <img
-                src="./assets/Recursos_Amazing_Events_Task_1/facebook.png"
-                class="logo"
-                alt="facebook"
-              />
-              Facebook
-            </a>
-            <a class="navbar-brand ml-3 mr-3" href="/index.html">
-              <img
-                src="./assets/Recursos_Amazing_Events_Task_1/instagram.png"
-                class="logo"
-                alt="instagram"
-              />
-              Instagram
-            </a>
-            <a class="navbar-brand ml-3" href="/index.html">
-              <img
-                src="./assets/Recursos_Amazing_Events_Task_1/whatsapp.png"
-                class="logo"
-                alt="whatsapp"
-              />
-              WhatsApp
-            </a>
-          </div>
-          <div
-            class="col-lg-2 col-md-3 d-flex align-items-center justify-content-end"
-          >
-            <h5 class="text-uppercase font-weight-bold">COHORT</h5>
-          </div>
+    <!-- main -->
+    <main class="container-fluid" id="appStadistics">
+        <!-- Modal de Personajes Seleccionados -->
+        <div class="modal fade" id="selectedCharactersModal" tabindex="-1"
+            aria-labelledby="selectedCharactersModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content bg-dark text-light">
+                    <div class="modal-header border-success">
+                        <h5 class="modal-title text-success" id="selectedCharactersModalLabel">Personajes Seleccionados
+                        </h5>
+                        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
+                            aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div v-if="selectedCharacters.length === 0" class="text-center">
+                            <p class="neon-text">No hay personajes seleccionados, por favor selecciona un personaje</p>
+                        </div>
+                        <div v-else class="d-flex flex-wrap justify-content-center">
+                            <div v-for="character in selectedCharacters" :key="character.id" class="p-2">
+                                <div class="card bg-secondary h-100">
+                                    <img :src="character.image" class="card-img-top" :alt="character.name">
+                                    <div class="card-body">
+                                        <h5 class="card-title">{{ character.name }}</h5>
+                                        <p class="card-text"><strong>Especie:</strong> {{ character.species }}</p>
+                                        <p class="card-text"><strong>Estado:</strong> {{ character.status }}</p>
+                                        <div class="mb-2">
+                                            <div>Inteligencia:</div>
+                                            <div class="progress">
+                                                <div class="progress-bar"
+                                                    :class="getProgressBarColor(character.intelligence)"
+                                                    role="progressbar" :style="{ width: character.intelligence + '%' }"
+                                                    :aria-valuenow="character.intelligence" aria-valuemin="0"
+                                                    aria-valuemax="100">
+                                                    {{ character.intelligence }}%
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="mb-2">
+                                            <div>Caos:</div>
+                                            <div class="progress">
+                                                <div class="progress-bar"
+                                                    :class="getProgressBarColor(character.chaosLevel)"
+                                                    role="progressbar" :style="{ width: character.chaosLevel + '%' }"
+                                                    :aria-valuenow="character.chaosLevel" aria-valuemin="0"
+                                                    aria-valuemax="100">
+                                                    {{ character.chaosLevel }}%
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="mb-2">
+                                            <div>Popularidad:</div>
+                                            <div class="progress">
+                                                <div class="progress-bar"
+                                                    :class="getProgressBarColor(character.popularity)"
+                                                    role="progressbar" :style="{ width: character.popularity + '%' }"
+                                                    :aria-valuenow="character.popularity" aria-valuemin="0"
+                                                    aria-valuemax="100">
+                                                    {{ character.popularity }}%
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <p class="card-text"><strong>Dimensiones Visitadas:</strong> {{
+                                            character.dimensionsVisited }}</p>
+                                        <button @click="toggleCharacterSelection(character)"
+                                            class="btn btn-danger btn-sm mt-2">Eliminar</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer border-success">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                        <button @click="clearSelectedCharacters" class="btn btn-warning"
+                            v-if="selectedCharacters.length">
+                            Limpiar selección
+                        </button>
+                    </div>
+                </div>
+            </div>
         </div>
-      </div>
+        <!-- Fin Modal de Personajes Seleccionados -->
+
+        <div class="container">
+            <h2 class="mb-4 text-center rick-morty-title text-light">Comparación Interdimensional de Especies</h2>
+
+            <div class="row">
+                <!-- Primera Tabla -->
+                <div class="col-12 col-md-6 mb-4">
+                    <div class="table-wrapper">
+                        <div class="table-responsive">
+                            <table class="table table-bordered table-striped text-center rick-morty-table">
+                                <thead>
+                                    <tr>
+                                        <th>Especie</th>
+                                        <th>Buenos</th>
+                                        <th>Malos</th>
+                                        <th>% del total</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr v-for="(stats, species) in speciesComparison" :key="species">
+                                        <td>{{ species }}</td>
+                                        <td>{{ stats.good }}%</td>
+                                        <td>{{ stats.bad }}%</td>
+                                        <td>{{ stats.percentageOfTotal }}%</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Segunda Tabla -->
+                <div class="col-12 col-md-6 mb-4">
+                    <div class="table-wrapper">
+                        <div class="table-responsive">
+                            <table class="table table-bordered table-striped text-center rick-morty-table">
+                                <thead>
+                                    <tr>
+                                        <th>Intel</th>
+                                        <th>Caos </th>
+                                        <th>Pop. </th>
+                                        <th>Dim. </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr v-for="(stats, species) in speciesComparison" :key="species">
+                                        <td>{{ stats.avgIntelligence }}%</td>
+                                        <td>{{ stats.avgChaosLevel }}%</td>
+                                        <td>{{ stats.avgPopularity }}%</td>
+                                        <td>{{ stats.avgDimensionsVisited }}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div
+            class="d-flex flex-column flex-lg-row justify-content-between align-items-center bg-dark rounded-3 text-white mt-3 mb-3 p-3">
+            <!-- Botón para ver seleccionados -->
+            <button class="btn btn-outline-secondary me-2 mb-3 mb-lg-0 w-100 w-lg-auto btn-sm" data-bs-toggle="modal"
+                data-bs-target="#selectedCharactersModal">
+                Ver Seleccionados ({{ selectedCharacters.length }})
+            </button>
+
+            <!-- Filtros de estado y especies para personajes -->
+            <div class="d-flex flex-column flex-lg-row align-items-center mb-3 mb-lg-0">
+                <!-- Checkboxes para estado -->
+                <label for="status-filter" class="text-white me-2 mb-2 mb-lg-0">Estado de Personajes:</label>
+                <div class="d-flex mb-2 mb-lg-0">
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="checkbox" id="alive" value="Alive"
+                            v-model="statusFilter" />
+                        <label class="form-check-label text-white" for="alive">Vivo</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="checkbox" id="dead" value="Dead" v-model="statusFilter" />
+                        <label class="form-check-label text-white" for="dead">Muerto</label>
+                    </div>
+                </div>
+
+                <!-- Dropdown para especies -->
+                <div class="d-flex align-items-center mb-2 mb-lg-0">
+                    <label for="species-dropdown" class="text-white me-2">Especies:</label>
+                    <button type="button" class="btn btn-outline-secondary dropdown-toggle btn-sm"
+                        data-bs-toggle="dropdown" aria-expanded="false">
+                        Seleccionar Especies
+                    </button>
+                    <ul class="dropdown-menu" id="species-dropdown">
+                        <li v-for="species in availableSpecies" :key="species">
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" :value="species" v-model="speciesFilter"
+                                    :id="'species-' + species" />
+                                <label class="form-check-label" :for="'species-' + species">
+                                    {{ species }}
+                                </label>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Barra de búsqueda (a la derecha) -->
+            <div class="input-group w-100 w-lg-auto">
+                <input type="text" class="form-control form-control-sm" placeholder="Search" aria-label="Search"
+                    v-model="textSearch" />
+                <button class="btn btn-outline-secondary bg-dark bg-gradient btn-sm">
+                    Search
+                </button>
+            </div>
+        </div>
+        <!-- Mensaje cuando no hay resultados -->
+        <div v-if="hasNoResults()" class="neon-busqueda neon-card text-center mt-4 rounded-3">
+            <h4 class="alert-heading neon-busqueda">¡Oh no!</h4>
+            <p>No se encontraron resultados para <strong>"{{ textSearch }}"</strong>.</p>
+            <p>Intenta con otros términos o ajusta tus filtros.</p>
+        </div>
+
+
+
+
+
+        <div class="d-flex justify-content-center align-items-center mb-4">
+            <button @click="goToPrevPage" class="btn btn-secondary me-2" :disabled="currentPage === 1">Anterior</button>
+            <div class="dropdown">
+                <button class="btn btn-secondary dropdown-toggle neon-text" type="button" id="pageDropdown"
+                    data-bs-toggle="dropdown" aria-expanded="false">
+                    Página {{ currentPage }} de {{ totalPages }}
+                </button>
+                <ul class="dropdown-menu" aria-labelledby="pageDropdown">
+                    <li v-for="page in totalPages" :key="page">
+                        <a class="dropdown-item" href="#" @click.prevent="goToSpecificPage(page)">
+                            {{ page }}
+                        </a>
+                    </li>
+                </ul>
+            </div>
+            <button @click="goToNextPage" class="btn btn-secondary ms-2"
+                :disabled="currentPage === totalPages">Siguiente</button>
+        </div>
+
+        <div class="d-flex flex-wrap justify-content-center">
+            <div v-for="character in filteredCharacters" :key="character.id" class="p-2">
+                <div class="card h-100 character-card">
+                    <img :src="character.image" :alt="character.name">
+                    <div class="card-body d-flex flex-column bg-dark text-white">
+                        <h5 class="card-title">{{ character.name }}</h5>
+                        <p class="card-text"><strong>Especie:</strong> {{ character.species }}</p>
+                        <p class="card-text"><strong>Estado:</strong> {{ character.status }}</p>
+
+                        <div class="mb-2">
+                            <div>Inteligencia:</div>
+                            <div class="progress">
+                                <div class="progress-bar" :class="getProgressBarColor(character.intelligence)"
+                                    role="progressbar" :style="{ width: character.intelligence + '%' }"
+                                    :aria-valuenow="character.intelligence" aria-valuemin="0" aria-valuemax="100">
+                                    {{ character.intelligence }}%
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mb-2">
+                            <div>Caos:</div>
+                            <div class="progress">
+                                <div class="progress-bar" :class="getProgressBarColor(character.chaosLevel)"
+                                    role="progressbar" :style="{ width: character.chaosLevel + '%' }"
+                                    :aria-valuenow="character.chaosLevel" aria-valuemin="0" aria-valuemax="100">
+                                    {{ character.chaosLevel }}%
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mb-2">
+                            <div>Popularidad:</div>
+                            <div class="progress">
+                                <div class="progress-bar" :class="getProgressBarColor(character.popularity)"
+                                    role="progressbar" :style="{ width: character.popularity + '%' }"
+                                    :aria-valuenow="character.popularity" aria-valuemin="0" aria-valuemax="100">
+                                    {{ character.popularity }}%
+                                </div>
+                            </div>
+                        </div>
+                        <p class="card-text"><strong>Dimensiones Visitadas:</strong> {{ character.dimensionsVisited
+                            }}</p>
+                        <button @click="toggleCharacterSelection(character)" class="btn mt-auto"
+                            :class="{ 'btn-primary': !isCharacterSelected(character), 'btn-danger': isCharacterSelected(character) }">
+                            {{ isCharacterSelected(character) ? 'Deseleccionar' : 'Seleccionar' }}
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="d-flex justify-content-center align-items-center mt-4">
+            <button @click="goToPrevPage" class="btn btn-secondary me-2" :disabled="currentPage === 1">Anterior</button>
+            <div class="dropdown">
+                <button class="btn btn-secondary dropdown-toggle neon-text" type="button" id="pageDropdown2"
+                    data-bs-toggle="dropdown" aria-expanded="false">
+                    Página {{ currentPage }} de {{ totalPages }}
+                </button>
+                <ul class="dropdown-menu" aria-labelledby="pageDropdown2" style="max-height: 200px; overflow-y: auto;">
+                    <li v-for="page in totalPages" :key="page">
+                        <a class="dropdown-item" href="#" @click.prevent="goToSpecificPage(page)">
+                            {{ page }}
+                        </a>
+                    </li>
+                </ul>
+            </div>
+            <button @click="goToNextPage" class="btn btn-secondary ms-2"
+                :disabled="currentPage === totalPages">Siguiente</button>
+        </div>
+        </div>
+        </div>
+    </main>
+    <footer class="p-t-8">
+        <div id="footer"
+            class="container-fluid navbar d-flex flex-md-row flex-column justify-content-between flex-wrap ">
+            <div class="d-flex gap-3 align-items-center justify-content-center  ">
+
+                <a target="_blank"
+                    href="https://www.primevideo.com/detail/Rick-and-Morty/0QG2DSIPHWFT11LTO37WHI8W9V"><img
+                        src="../assets/hbo-max-logo-1922879-removebg-preview.png" alt="HBO" class="social"></a>
+                <a target="_blank"
+                    href="https://www.max.com/co/es/shows/rick-and-morty/ab553cdc-e15d-4597-b65f-bec9201fd2dd"><img
+                        src="../assets/Amazon-Prime-Video-Icon.png" alt="prime icon" class="social"></a>
+                <a target="_blank" href="https://www.youtube.com/watch?v=7vo9vajbXnY"><img
+                        src="../assets/youtube-removebg-preview.png" alt="Youtube icon" class="social"
+                        href="https://www.youtube.com/watch?v=7vo9vajbXnY"></a>
+
+            </div>
+            <div class="gap-3 d-flex align-items-center justify-content-center">
+                <span>Gabriel Fernandez</span>
+                <span>Karina Gonzalez</span>
+                <span>Carlos Torreyes</span>
+                <span>Edison Madrid</span>
+            </div>
+            <div class="d-flex align-items-center p-2 justify-content-center">
+                <span>Cohort 5</span>
+            </div>
+
+
+        </div>
     </footer>
 
-    <script
-      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
-      integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
-      crossorigin="anonymous"
-    ></script>
-  </body>
+
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="/script/stadistics.js"></script>
+</body>
+
 </html>
