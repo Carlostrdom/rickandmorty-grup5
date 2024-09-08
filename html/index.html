@@ -20,13 +20,13 @@
   </head>
 
   <body>
-    <header class="container">
+    <header class="container-fluid p-0">
       <div id="navbar">
         <nav class="navbar navbar-expand-md navbar-dark mb-4">
           <div class="container-fluid d-flex">
-            <a class="navbar-brand" href="#"
-              ><img class="logo" src="../assets/rickAndMortyLogo.png" alt=""
-            /></a>
+            <a class="navbar-brand" href="#">
+              <img class="logo" src="../assets/rickAndMortyLogo.png" alt="" />
+            </a>
             <button
               class="navbar-toggler"
               type="button"
@@ -45,10 +45,7 @@
                     class="nav-link"
                     style="font-size: larger"
                     href="../html/index.html"
-                    ><img
-                      class="home"
-                      src="../assets/home-sin-animacion.png"
-                      alt=""
+                    ><img class="home" src="../assets/home-sin-animacion.png" alt=""
                   /></a>
                 </li>
                 <li class="nav-item">
@@ -56,10 +53,7 @@
                     class="nav-link"
                     style="font-size: larger"
                     href="../html/stadistics.html"
-                    ><img
-                      class="home"
-                      src="../assets/Stats-5-9-2024.png"
-                      alt=""
+                    ><img class="home" src="../assets/Stats-5-9-2024.png" alt=""
                   /></a>
                 </li>
               </ul>
@@ -67,14 +61,15 @@
           </div>
         </nav>
       </div>
-
+    
+      <!-- Carrusel -->
       <div
         id="carouselExampleSlidesOnly"
         class="carousel slide"
         data-bs-ride="carousel"
         data-bs-interval="4000"
       >
-        <div class="carousel-inner container-fluid">
+        <div class="carousel-inner">
           <div class="carousel-item active" data-bs-interval="4000">
             <img
               class="carrouselImg d-block w-100"
@@ -90,13 +85,25 @@
             />
           </div>
           <div class="carousel-item">
-            <img class="carrouselImg" src="../assets/2.gif" alt="..." />
+            <img
+              class="carrouselImg d-block w-100"
+              src="../assets/2.gif"
+              alt="..."
+            />
           </div>
           <div class="carousel-item">
-            <img class="carrouselImg" src="../assets/3.gif" alt="..." />
+            <img
+              class="carrouselImg d-block w-100"
+              src="../assets/3.gif"
+              alt="..."
+            />
           </div>
           <div class="carousel-item">
-            <img class="carrouselImg" src="../assets/5.gif" alt="..." />
+            <img
+              class="carrouselImg d-block w-100"
+              src="../assets/5.gif"
+              alt="..."
+            />
           </div>
           <audio id="carouselAudio" loop>
             <source
@@ -106,10 +113,8 @@
           </audio>
         </div>
       </div>
-
-      <div
-        class="container-fluid d-flex justify-content-center align-items-center"
-      >
+    
+      <div class="container-fluid d-flex justify-content-center align-items-center mt-4">
         <div
           class="w-80 rick-and-morty-font d-flex justify-content-center align-items-center p-4 flex-column"
         >
@@ -118,22 +123,22 @@
             src="../assets/Description-6-9-2024.png"
             alt=""
           />
-          <p class="sintaxis">
+          <p >
             Rick and Morty is an innovative animated series that chronicles the
-            unpredictable adventures of Rick Sanchez, a genius but morally
-            ambiguous scientist, and his well-meaning but often overwhelmed
-            grandson, Morty Smith. Combining sharp humor, dark satire, and
-            thought-provoking philosophical themes, the show masterfully blends
-            science fiction with everyday family life. As Rick and Morty travel
-            across dimensions and alternate realities, the series explores deep
-            existential questions, critiques modern society, and reveals the
-            absurdity of the universe—all while maintaining its trademark wit
-            and unpredictability.
+            unpredictable adventures of Rick Sanchez, a genius but morally ambiguous
+            scientist, and his well-meaning but often overwhelmed grandson, Morty
+            Smith. Combining sharp humor, dark satire, and thought-provoking
+            philosophical themes, the show masterfully blends science fiction with
+            everyday family life. As Rick and Morty travel across dimensions and
+            alternate realities, the series explores deep existential questions,
+            critiques modern society, and reveals the absurdity of the universe—all
+            while maintaining its trademark wit and unpredictability.
           </p>
         </div>
       </div>
     </header>
-
+    
+    
     <main id="appHome">
       <div class="container-fluid p-2">
         <div class="modal fade" id="selectionsModal" tabindex="-1" aria-labelledby="selectionsModalLabel" aria-hidden="true">

@@ -63,6 +63,7 @@
         </div>
     </header>
     <!-- main -->
+     <!--  llamamosos al componente de vue -->
     <main  id="appStadistics">
         <div class="container-fluid">
         <!-- Modal de Personajes Seleccionados -->
@@ -76,10 +77,15 @@
                         aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
+                    <!-- Si no hay personajes seleccionados, mostramos un mensaje -->
                     <div v-if="selectedCharacters.length === 0" class="text-center">
                         <p class="neon-text">No characters selected, please select a character</p>
+                        <img src="../assets/rick-sanchez" alt="">
                     </div>
+                    <!-- Si hay personajes seleccionados, mostramos una lista de personajes -->
                     <div v-else class="d-flex flex-wrap justify-content-center">
+                        <!-- Mostramos la información de cada personaje -->
+                         <!-- por cada interacion de personaje, creamos una tarjeta -->
                         <div v-for="character in selectedCharacters" :key="character.id" class="p-2">
                             <div class="card bg-warning-subtle h-100">
                                 <img :src="character.image" class="card-img-top" :alt="character.name">
@@ -266,11 +272,16 @@
                 :disabled="currentPage === totalPages">Next</button>
         </div>
         <!-- Message when no results are found -->
-        <div v-if="hasNoResults()" class="neon-busqueda bg-black neon-card text-center mt-4 rounded-3 ">
-            <h4 class="alert-heading neon-busqueda">Oh no!</h4>
-            <p>No results found for <strong>"{{ textSearch }}"</strong>.</p>
-            <p>Try with other terms or adjust your filters.</p>
+        <div v-if="hasNoResults()" class="busqueda bg-black neon-card text-center mt-4 rounded-3 position-relative">
+            <img src="/assets/rick-y-morty-arte-universo_3840x2160_xtrafondos.com.jpg" alt="No results" class="img-fluid img-top w-50" />
+            <div class="position-absolute  translate-middle busqueda">
+                <h4 class="busqueda">Oh no!</h4>
+                <p>No results found for <strong>"{{ textSearch }}"</strong>.</p>
+                <p>Try with other terms or adjust your filters.</p>
+            </div>
         </div>
+        
+        
         <!-- Sección de personajes -->
         <div class="character-list">
             <h2 class="text-center text-white">Characters</h2>
