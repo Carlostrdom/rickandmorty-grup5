@@ -20,7 +20,7 @@
   </head>
 
   <body>
-    <header class="position-relative">
+    <header class="container-fluid">
       <div id="navbar">
         <nav class="navbar navbar-expand-md navbar-dark mb-4">
           <div class="container-fluid d-flex">
@@ -337,6 +337,25 @@
             </div>
           </div>
         </div>
+      </div>
+
+              <!-- Botones de paginación -->
+              <div class="d-flex justify-content-center align-items-center mt-4">
+                <button class="btn btn-primary m-2" @click="fetchData(prevPage)" :disabled="!prevPage">
+                  Anterior
+                </button>
+      
+                <!-- Enumeración de páginas y campo de entrada -->
+                <span class="text-white mx-2">
+                  Página
+                  <input type="number" v-model.number="currentPage" min="1" :max="totalPages" @change="goToPage(currentPage)" class="form-control form-control-sm d-inline-block w-auto" />
+                  de {{ totalPages }}
+                </span>
+      
+                <button class="btn btn-primary m-2" @click="fetchData(nextPage)" :disabled="!nextPage">
+                  Siguiente
+                </button>
+              </div>
       </div>
     </main>
 
