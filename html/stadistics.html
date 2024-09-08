@@ -45,10 +45,10 @@
         <div id="carouselExampleSlidesOnly" class="carousel slide " data-bs-ride="carousel" data-bs-interval="4000">
             <div class="carousel-inner">
                 <div class="carousel-item active" data-bs-interval="4000">
-                    <img class="carrouselImg" src="../assets/epic-rick-and-morty.gif" class="d-block w-100" alt="img-carrousel">
+                    <img class="carrouselImg d-block w-100" src="../assets/epic-rick-and-morty.gif"  alt="img-carrousel">
                 </div>
                 <div class="carousel-item">
-                    <img class="carrouselImg" src="../assets/1.gif" class="d-block w-100" alt="img-carrousel">
+                    <img class="carrouselImg d-block w-100" src="../assets/1.gif" alt="img-carrousel">
                 </div>
                 <div class="carousel-item">
                     <img class="carrouselImg" src="../assets/2.gif" alt="img-carrousel">
@@ -108,13 +108,14 @@
                                     <div class="mb-2">
                                         <div>Chaos:</div>
                                         <div class="progress">
-                                            <div class="progress-bar neon"
-                                                :class="getProgressBarColor(character.chaosLevel)"
-                                                role="progressbar" :style="{ width: character.chaosLevel + '%' }"
-                                                :aria-valuenow="character.chaosLevel" aria-valuemin="0"
-                                                aria-valuemax="100">
-                                                {{ character.chaosLevel }}%
-                                            </div>
+                                            <progress class="neon"
+                                            :class="getProgressBarColor(character.chaosLevel)"
+                                            :value="character.chaosLevel"
+                                            max="100">
+                                    {{ character.chaosLevel }}%
+                                  </progress>
+                                  
+                                  
                                         </div>
                                     </div>
                                     <div class="mb-2">
