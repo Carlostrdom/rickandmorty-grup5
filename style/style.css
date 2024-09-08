@@ -174,3 +174,16 @@ footer {
   transition: width 0.4s ease;
   box-shadow: 0 0 5px rgba(255, 255, 255, 0.5), 0 0 10px rgba(255, 255, 255, 0.5);
 }
+
+.custom-table-wrapper {
+  width: 100%; 
+  overflow-x: auto; 
+  overflow-y: hidden; 
+  max-width: 1200px; 
+}
+
+.table {
+  width: 100%;
+  table-layout: fixed; 
+  word-wrap: break-word; 
+}

@@ -17,6 +17,7 @@ createApp({
             locations: [],
             episodes: [],
             comparisonData: null,
+            totalCharacters: 0,
         };
     },
     created() {
@@ -46,15 +47,15 @@ createApp({
                         ...character,
                         intelligence: this.getRandomStat(100),
                         chaosLevel: this.getRandomStat(100),
-                        popularity: this.getRandomStat(100),
-                        dimensionsVisited: this.getRandomStat(50)
+                        popularity: this.getRandomStat(100)
                     }));
                     this.totalPages = data.info.pages;
+                    this.totalCharacters = data.info.count;
                     this.updateAvailableSpecies();
                     this.saveToLocalStorage();
                 })
                 .catch(error => {
-                    console.error('Error al obtener los personajes:', error);
+                    console.error('Error fetching characters:', error);
                 });
         },
         updateAvailableSpecies() {
@@ -215,19 +216,36 @@ createApp({
         },
         locationEpisodeComparison() {
             if (!this.comparisonData) return [];
+
+            // Encontrar la especie más común
+            const speciesCounts = {};
+            let maxCount = 0;
+            let mostCommonSpecies = '';
+
+            this.characters.forEach(character => {
+                speciesCounts[character.species] = (speciesCounts[character.species] || 0) + 1;
+                if (speciesCounts[character.species] > maxCount) {
+                    maxCount = speciesCounts[character.species];
+                    mostCommonSpecies = character.species;
+                }
+            });
+
             return [
                 {
                     category: 'Total',
+                    characters: this.totalCharacters, 
                     locations: this.comparisonData.totalLocations,
                     episodes: this.comparisonData.totalEpisodes
                 },
                 {
-                    category: 'diversity',
+                    category: 'Diversity',
+                    characters: `${this.availableSpecies.length} species`,
                     locations: `${this.comparisonData.dimensionsCount} dimensions`,
                     episodes: `${this.comparisonData.seasonsCount} Seasons`
                 },
                 {
-                    category: 'More populated/with more characters',
+                    category: 'Most Populated/Featured',
+                    characters: `${mostCommonSpecies} (${maxCount})`,
                     locations: `${this.comparisonData.mostPopulatedLocation} (${this.comparisonData.mostPopulatedLocationResidents} Residents)`,
                     episodes: `${this.comparisonData.episodeWithMostCharacters} (${this.comparisonData.episodeWithMostCharactersCount} Characters)`
                 }
