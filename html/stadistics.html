@@ -251,17 +251,6 @@
                 </button>
             </div>
         </div>
-        <!-- Mensaje cuando no hay resultados -->
-        <div v-if="hasNoResults()" class="neon-busqueda neon-card text-center mt-4 rounded-3">
-            <h4 class="alert-heading neon-busqueda">¡Oh no!</h4>
-            <p>No se encontraron resultados para <strong>"{{ textSearch }}"</strong>.</p>
-            <p>Intenta con otros términos o ajusta tus filtros.</p>
-        </div>
-
-
-
-
-
         <div class="d-flex justify-content-center align-items-center mt-4">
             <button @click="goToPrevPage" class="btn btn-primary m-2 me-2" :disabled="currentPage === 1">Anterior</button>
             <span class="text-white mx-2">
@@ -271,12 +260,19 @@
             </span>
             <button @click="goToNextPage" class="btn btn-primary ms-2" :disabled="currentPage === totalPages">Siguiente</button>
         </div>
-
+         <!-- Mensaje cuando no hay resultados -->
+         <div v-if="hasNoResults()" class="neon-busqueda bg-black neon-card text-center mt-4 rounded-3 ">
+            <h4 class="alert-heading neon-busqueda">¡Oh no!</h4>
+            <p>No se encontraron resultados para <strong>"{{ textSearch }}"</strong>.</p>
+            <p>Intenta con otros términos o ajusta tus filtros.</p>
+        </div>
+<!-- Sección de personajes -->
         <div class="d-flex flex-wrap justify-content-center">
-            <div v-for="character in filteredCharacters" :key="character.id" class="p-2">
-                <div class="card h-100 character-card">
+            <div v-for="character in filteredCharacters" :key="character.id" 
+            class="card text-white bg-dark mb-3 cardContainer">
+                <div class="card h-100 card-img-top">
                     <img :src="character.image" :alt="character.name">
-                    <div class="card-body d-flex flex-column bg-dark text-white">
+                    <div class="card-body ">
                         <h5 class="card-title">{{ character.name }}</h5>
                         <p class="card-text"><strong>Especie:</strong> {{ character.species }}</p>
                         <p class="card-text"><strong>Estado:</strong> {{ character.status }}</p>
