@@ -12,14 +12,19 @@
 }
 
 .detailsContainer{
-    border-radius: 5%;
-    background-color: beige;
-}
+    border-radius: 10%;
+    background-color: rgb(229, 226, 235);
+    background-image: url(../assets/fondo\ card.jpg);  
+    transform: translateY(-5px);
+    background-repeat: no-repeat;
+    box-shadow: 0 0 15px rgb(30, 241, 83);
+   background-position: 100% 100%;
 
+}
 
 @media (max-width: 768px){
     .detailsImg{
-        width: 70vw;
+        width: 50vw;
         .meeseeks{
             width: 10vw;
 
@@ -33,4 +38,12 @@
         width: 60vw;
 
     }
+}
+.neonDescription{
+    color:rgb(196, 231, 139)
+   
+}
+.neonDescription1{
+    color: rgb(226, 64, 159);
+    
 }

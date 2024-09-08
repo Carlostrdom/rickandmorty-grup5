@@ -19,7 +19,7 @@
 
 <body>
     
-  <header class="position-relative">
+  <header class="container-fluid">
       <div id="navbar">
         <nav class="navbar navbar-expand-md navbar-dark mb-4">
           <div class="container-fluid d-flex">
@@ -78,24 +78,24 @@
     </div>
     <section class="gap-3 d-flex justify-content-center flex-md-row flex-column align-items-center">
       <img src="../assets/meeseeksIzquierda.png" class="meeseeks" alt="">
-      <div class="d-flex flex-md-row flex-column  gap-5 detailsContainer">
-        <div class="d-flex align-items-center justify-content-center"><img :src="character.image" class="detailsImg " alt=""></div>
+      <div class="d-flex flex-md-row flex-column gap-5 detailsContainer">
+        <div class="d-flex align-items-center justify-content-center "><img :src="character.image" class="detailsImg " alt=""></div>
         <div class="detailText d-flex flex-column justify-content-center align-items-center">
-          <h3 class="text-center neonDescription">{{character.name}}</h3>
-          <ul class="list-group p-4">
-            <li class=""><span class="neonDescription">Gender</span>{{character.gender}}</li>
-            <li class=""><span class="neonDescription">Origin</span>{{character.origin.name}}</li>
-            <li class=""><span class="neonDescription">Current location</span>{{character.location.name}}</li>
-            <li class=""><span class="neonDescription">Status</span>{{character.status}}</li>
-            <li class=""><span class="neonDescription">Species</span>{{character.species}}</li>
+          <h3 class="text-center fs-2 text bg-light-subtle">{{character.name}}</h3>
+          <ul class="list-group p-4 fs-2 text text-light">
+            <li class=""><span class="neonDescription fs-3 text">Gender</span>{{character.gender}}</li>
+            <li class=""><span class="neonDescription fs-3 text">Origin</span>{{character.origin.name}}</li>
+            <li class=""><span class="neonDescription fs-3 text">Current location</span>{{character.location.name}}</li>
+            <li class=""><span class="neonDescription fs-3 text">Status</span>{{character.status}}</li>
+            <li class=""><span class="neonDescription fs-3 text">Species</span>{{character.species}}</li>
           </ul>
         </div>
       </div>
       <img src="../assets/meeseeksDerecha.png"  class="meeseeks2" alt="">
     </section>
   </main>
-
-  <footer class="p-t-8">
+    
+     <footer class="p-t-8">
     <div id="footer" class="container-fluid navbar d-flex flex-md-row flex-column justify-content-between flex-wrap ">
       <div class="d-flex gap-3 align-items-center justify-content-center  ">
         
@@ -126,6 +126,7 @@
   ></script>
   <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
   <script type="module" src="../script/details.js"></script>
- 
+  
+
 </body>
 </html>
