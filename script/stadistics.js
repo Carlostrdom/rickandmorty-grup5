@@ -27,6 +27,10 @@ createApp({
             prevPage: null,            // URL de la página anterior (si existe)
             isCharacters: true,        // Bandera para determinar si se están mostrando personajes
             allSpecies: [],            // Lista completa de todas las especies de personajes
+            audio: {
+                alive: new Audio('../assets/sounds/woooooaah-199849.mp3'),
+                dead: new Audio('../assets/sounds/zombie-6851.mp3')
+            }
         };
     },
 
@@ -164,6 +168,13 @@ createApp({
         clearSelectedCharacters() {
             this.selectedCharacters = [];
             this.saveToLocalStorage();
+        },
+        playSound(action) {
+            // Reproduce el sonido correspondiente basado en la acción
+            const sound = this.audio[action];
+            if (sound) {
+                sound.play();
+            }
         },
 
         // Método para aplicar los filtros

@@ -218,11 +218,15 @@
                 <div class="d-flex mb-2 mb-lg-0">
                     <div class="form-check form-check-inline">
                         <input class="form-check-input " type="checkbox" id="alive" value="Alive"
-                            v-model="statusFilter" />
+                            v-model="statusFilter"
+                            @change="playSound('alive')" 
+                            />
+                            
                         <label class="form-check-label text-success" for="alive">Alive</label>
                     </div>
                     <div class="form-check form-check-inline">
-                        <input class="form-check-input " type="checkbox" id="dead" value="Dead" v-model="statusFilter" />
+                        <input class="form-check-input " type="checkbox" id="dead" value="Dead" v-model="statusFilter" 
+                        @change="playSound('dead')"/>
                         <label class="form-check-label text-danger" for="dead">Dead</label>
                     </div>
                 </div>
