@@ -24,7 +24,7 @@
       <div id="navbar">
         <nav class="navbar navbar-expand-md navbar-dark mb-4">
           <div class="container-fluid d-flex">
-            <a class="navbar-brand" href="#">
+            <a class="navbar-brand" href="../html/index.html">
               <img class="logo" src="../assets/rickAndMortyLogo.png" alt="" />
             </a>
             <button
@@ -45,7 +45,10 @@
                     class="nav-link"
                     style="font-size: larger"
                     href="../html/index.html"
-                    ><img class="home" src="../assets/home-sin-animacion.png" alt=""
+                    ><img
+                      class="home"
+                      src="../assets/home-sin-animacion.png"
+                      alt=""
                   /></a>
                 </li>
                 <li class="nav-item">
@@ -53,7 +56,10 @@
                     class="nav-link"
                     style="font-size: larger"
                     href="../html/stadistics.html"
-                    ><img class="home" src="../assets/Stats-5-9-2024.png" alt=""
+                    ><img
+                      class="home"
+                      src="../assets/Stats-5-9-2024.png"
+                      alt=""
                   /></a>
                 </li>
               </ul>
@@ -61,7 +67,7 @@
           </div>
         </nav>
       </div>
-    
+
       <!-- Carrusel -->
       <div
         id="carouselExampleSlidesOnly"
@@ -113,8 +119,10 @@
           </audio>
         </div>
       </div>
-    
-      <div class="container-fluid d-flex justify-content-center align-items-center mt-4">
+
+      <div
+        class="container-fluid d-flex justify-content-center align-items-center mt-4"
+      >
         <div
           class="w-80 rick-and-morty-font d-flex justify-content-center align-items-center p-4 flex-column"
         >
@@ -123,127 +131,185 @@
             src="../assets/Description-6-9-2024.png"
             alt=""
           />
-          <p >
+          <p class="text-success bg-dark border border-success rounded p-3">
             Rick and Morty is an innovative animated series that chronicles the
-            unpredictable adventures of Rick Sanchez, a genius but morally ambiguous
-            scientist, and his well-meaning but often overwhelmed grandson, Morty
-            Smith. Combining sharp humor, dark satire, and thought-provoking
-            philosophical themes, the show masterfully blends science fiction with
-            everyday family life. As Rick and Morty travel across dimensions and
-            alternate realities, the series explores deep existential questions,
-            critiques modern society, and reveals the absurdity of the universe—all
-            while maintaining its trademark wit and unpredictability.
+            unpredictable adventures of Rick Sanchez, a genius but morally
+            ambiguous scientist, and his well-meaning but often overwhelmed
+            grandson, Morty Smith. Combining sharp humor, dark satire, and
+            thought-provoking philosophical themes, the show masterfully blends
+            science fiction with everyday family life. As Rick and Morty travel
+            across dimensions and alternate realities, the series explores deep
+            existential questions, critiques modern society, and reveals the
+            absurdity of the universe—all while maintaining its trademark wit
+            and unpredictability.
           </p>
         </div>
       </div>
     </header>
-    
-    
+
     <main id="appHome">
       <div class="container-fluid p-2">
-        <div class="modal fade" id="selectionsModal" tabindex="-1" aria-labelledby="selectionsModalLabel" aria-hidden="true">
-          <div class="modal-dialog modal-lg">
-            <div class="modal-content">
-              <div class="modal-header">
-                <h5 class="modal-title" id="selectionsModalLabel">Selected Characters</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        <div
+          class="modal fade"
+          id="selectionsModal"
+          tabindex="-1"
+          aria-labelledby="selectionsModalLabel"
+          aria-hidden="true"
+        >
+          <div class="modal-dialog modal-lg text-success">
+            selectedCharacters
+            <div v-if="selectedCharacters.length === 0" class="text-center">
+              <p class="bg-info text-success">
+                No characters selected, please select a character
+              </p>
+              <img
+                class="w-50"
+                src="../assets/Rick and Morty.jpeg"
+                alt="imagen"
+              />
+            </div>
+            <div class="modal-content bg-dark text-light">
+              <div class="modal-header border-success">
+                <h5 class="modal-title text-success" id="selectionsModalLabel">
+                  Selected Characters
+                </h5>
+                <button
+                  type="button"
+                  class="btn-close bg-danger"
+                  data-bs-dismiss="modal"
+                  aria-label="Close"
+                ></button>
               </div>
               <div class="modal-body">
                 <div class="row">
-                  <div v-for="character in selectedCharacters" :key="character.id" class="col-md-4 mb-3">
+                  <div
+                    v-for="character in selectedCharacters"
+                    :key="character.id"
+                    class="col-md-4 mb-3"
+                  >
                     <div class="card">
-                      <img :src="character.image" class="card-img-top" :alt="character.name">
+                      <img
+                        :src="character.image"
+                        class="card-img-top"
+                        :alt="character.name"
+                      />
                       <div class="card-body">
                         <h5 class="card-title">{{ character.name }}</h5>
-                        <p class="card-text">Especie: {{ character.species }}</p>
-                        <button @click="toggleSelection(character)" class="btn btn-danger">Deselect</button>
+                        <p class="card-text">
+                          Especie: {{ character.species }}
+                        </p>
+                        <button
+                          @click="toggleSelection(character)"
+                          class="btn btn-danger"
+                        >
+                          Deselect
+                        </button>
                       </div>
                     </div>
                   </div>
                 </div>
               </div>
+              <div class="modal-footer border-success justify-content-evenly">
+                <button
+                  type="button"
+                  class="btn btn-secondary"
+                  data-bs-dismiss="modal"
+                >
+                  Close
+                </button>
+                <button
+                  @click="clearSelectedCharacters"
+                  class="btn btn-warning"
+                  v-if="selectedCharacters.length"
+                >
+                  Clear Selection
+                </button>
+              </div>
             </div>
           </div>
         </div>
+
         <!-- Barra de búsqueda y filtros -->
         <div
           class="d-flex flex-md-row flex-column justify-content-between align-items-center bg-dark rounded-3 text-white mt-3 mb-3 p-3 gap-2"
         >
           <!-- Botón para alternar entre personajes y episodios -->
-          <button
-            class="Danger with contrasting color me-2"
-            @click="toggleData"
-          >
-          watch {{ isCharacters ? 'episodes' : 'Personajes' }}
+          <button class="btn btn-danger me-2" @click="toggleData">
+            watch {{ isCharacters ? 'Episodes' : 'Characters' }}
           </button>
 
           <!-- Filtros de estado y especies para personajes -->
+          <!-- Sección de checkboxes con sonido -->
           <div
             v-if="isCharacters"
-            class="d-flex flex-md-row flex-column align-items-center gap-2"
+            class="d-flex flex-md-row flex-column align-items-center gap-3"
           >
             <!-- Checkboxes para estado -->
-            <label for="status-filter" class="text-ligth fs-4 me-2"
-              >Character Status:</label
-            >
-            <div class="form-check form-check-inline">
-              <input
-                class="form-check-input"
-                type="checkbox"
-                id="alive"
-                value="Alive"
-                v-model="statusFilter"
-              />
-              <label class="form-check-label text-success fs-4" for="alive"
-                >
-                Alive</label
-              >
-            </div>
-            <div class="form-check form-check-inline">
-              <input
-                class="form-check-input"
-                type="checkbox"
-                id="dead"
-                value="Dead"
-                v-model="statusFilter"
-              />
-              <label class="form-check-label text-danger fs-4" for="dead"
-                >Dead</label
-              >
+            <div class="d-flex align-items-center">
+              <label for="status-filter" class="text-light me-2">
+                Character Status:
+              </label>
+              <div class="form-check form-check-inline me-2">
+                <input
+                  class="form-check-input"
+                  type="checkbox"
+                  id="alive"
+                  value="Alive"
+                  v-model="statusFilter"
+                  @change="playSound('alive')"
+                />
+                <label class="form-check-label text-success" for="alive">
+                  Alive
+                </label>
+              </div>
+              <div class="form-check form-check-inline">
+                <input
+                  class="form-check-input"
+                  type="checkbox"
+                  id="dead"
+                  value="Dead"
+                  v-model="statusFilter"
+                  @change="playSound('dead')"
+                />
+                <label class="form-check-label text-danger" for="dead">
+                  Dead
+                </label>
+              </div>
             </div>
 
             <!-- Dropdown para especies -->
-            <label for="species-dropdown" class="text-info me-2"
-              >Species:</label
-            >
-            <button
-              type="button"
-              class="btn btn-outline-warning dropdown-toggle"
-              data-bs-toggle="dropdown"
-              aria-expanded="false"
-            >
-              Select Species
-            </button>
-            <ul class="dropdown-menu" id="species-dropdown">
-              <li v-for="species in allSpecies" :key="species">
-                <div class="form-check">
-                  <input
-                    class="form-check-input"
-                    type="checkbox"
-                    :value="species"
-                    v-model="speciesFilter"
-                    :id="'species-' + species"
-                  />
-                  <label class="form-check-label" :for="'species-' + species"
-                    >{{ species }}</label
-                  >
-                </div>
-              </li>
-            </ul>
+            <div class="d-flex align-items-center">
+              <label for="species-dropdown" class="text-info me-2">
+                Species:
+              </label>
+              <button
+                type="button"
+                class="btn btn-outline-warning dropdown-toggle me-2"
+                data-bs-toggle="dropdown"
+                aria-expanded="false"
+              >
+                Select Species
+              </button>
+              <ul class="dropdown-menu" id="species-dropdown">
+                <li v-for="species in allSpecies" :key="species">
+                  <div class="form-check">
+                    <input
+                      class="form-check-input"
+                      type="checkbox"
+                      :value="species"
+                      v-model="speciesFilter"
+                      :id="'species-' + species"
+                    />
+                    <label class="form-check-label" :for="'species-' + species">
+                      {{ species }}
+                    </label>
+                  </div>
+                </li>
+              </ul>
+            </div>
           </div>
-          
 
-          <!-- Barra de búsqueda (a la derecha) -->
+          <!-- Barra de búsqueda  -->
           <div class="input-group w-auto">
             <input
               type="text"
@@ -265,7 +331,7 @@
             @click="fetchData(prevPage)"
             :disabled="!prevPage"
           >
-          Previous
+            Previous
           </button>
 
           <!-- Enumeración de páginas y campo de entrada -->
@@ -287,7 +353,7 @@
             @click="fetchData(nextPage)"
             :disabled="!nextPage"
           >
-          Next
+            Next
           </button>
         </div>
       </div>
@@ -295,7 +361,18 @@
       <!-- Sección de personajes -->
       <div v-if="isCharacters" class="character-list">
         <h2 class="text-center text-white">Character</h2>
+        <div v-if="filteredData.length === 0" class="text-center text-white">
+          <p class="text-warning bg-dark p-3 rounded">
+            sorry No characters found.
+          </p>
+          <img
+            src="../assets/Rick and Morty.jpeg"
+            alt="No results"
+            class="mb-3"
+          />
+        </div>
         <div
+          v-else
           class="gap-2 container-fluid d-flex mt-2 flex-wrap justify-content-center"
         >
           <div
@@ -310,18 +387,17 @@
             />
             <div class="card-body">
               <div class="textCard">
-                <h5 class="card-title">character: {{ character.name }}</h5>
+                <h5 class="card-title">Character: {{ character.name }}</h5>
                 <p class="card-text">Species: {{ character.species }}</p>
                 <p class="card-text">State: {{ character.status }}</p>
-                <p class="card-text">Dimensión: {{ character.origin.name }}</p>
+                <p class="card-text">Dimension: {{ character.origin.name }}</p>
               </div>
-
               <div
                 class="d-flex justify-content-between align-items-center gap-2"
               >
                 <p>Follow me</p>
                 <a
-                  :href="'./details.html?urlDetails='+character.url"
+                  :href="'./details.html?urlDetails=' + character.url"
                   class="btn btn-light"
                   >Profile</a
                 >
@@ -331,7 +407,7 @@
                   @click="toggleSelection(character)"
                   class="btn btn-outline-warning"
                 >
-                  {{ isSelected(character) ? 'Deselect' : 'Select' }}
+                  {{ isSelected(character) ? '★' : '☆' }}
                 </button>
               </div>
             </div>
@@ -342,7 +418,18 @@
       <!-- Sección de episodios -->
       <div v-else class="episode-list">
         <h2 class="text-center text-white">Episodes</h2>
+        <div v-if="filteredData.length === 0" class="text-center text-white">
+          <p class="text-warning bg-dark p-3 rounded">
+            Sorry No Episodes found.
+          </p>
+          <img
+            src="../assets/Rick and Morty.jpeg"
+            alt="No results"
+            class="mb-3"
+          />
+        </div>
         <div
+          v-else
           class="gap-2 container-fluid d-flex mt-2 flex-wrap justify-content-center"
         >
           <div
@@ -353,11 +440,11 @@
             <img
               :src="getEpisodeImage(episode.id)"
               class="card-img-top"
-              :alt="episode.name || 'Episodio'"
+              :alt="episode.name || 'Episode'"
             />
             <div class="card-body">
               <h5 class="card-title">
-                Episodes: {{ episode.name || 'Unnamed' }}
+                Episode: {{ episode.name || 'Unnamed' }}
               </h5>
               <p class="card-text">
                 Season: {{ episode.episode || 'Unknown' }}
@@ -369,27 +456,47 @@
           </div>
         </div>
       </div>
-      <button type="button" class="btn btn-primary position-fixed bottom-0 end-0 m-3" data-bs-toggle="modal" data-bs-target="#selectionsModal">
+
+      <button
+        type="button"
+        class="btn btn-primary position-fixed bottom-0 end-0 m-3"
+        data-bs-toggle="modal"
+        data-bs-target="#selectionsModal"
+      >
         See Selections
       </button>
 
-              <!-- Botones de paginación -->
-              <div class="d-flex justify-content-center align-items-center mt-4">
-                <button class="btn btn-primary m-2" @click="fetchData(prevPage)" :disabled="!prevPage">
-                  Previous
-                </button>
-      
-                <!-- Enumeración de páginas y campo de entrada -->
-                <span class="text-white mx-2">
-                  Page
-                  <input type="number" v-model.number="currentPage" min="1" :max="totalPages" @change="goToPage(currentPage)" class="form-control form-control-sm d-inline-block w-auto" />
-                  of {{ totalPages }}
-                </span>
-      
-                <button class="btn btn-primary m-2" @click="fetchData(nextPage)" :disabled="!nextPage">
-                  Next
-                </button>
-              </div>
+      <!-- Botones de paginación -->
+      <div class="d-flex justify-content-center align-items-center mt-4">
+        <button
+          class="btn btn-primary m-2"
+          @click="fetchData(prevPage)"
+          :disabled="!prevPage"
+        >
+          Previous
+        </button>
+
+        <!-- Enumeración de páginas y campo de entrada -->
+        <span class="text-white mx-2">
+          Page
+          <input
+            type="number"
+            v-model.number="currentPage"
+            min="1"
+            :max="totalPages"
+            @change="goToPage(currentPage)"
+            class="form-control form-control-sm d-inline-block w-auto"
+          />
+          of {{ totalPages }}
+        </span>
+
+        <button
+          class="btn btn-primary m-2"
+          @click="fetchData(nextPage)"
+          :disabled="!nextPage"
+        >
+          Next
+        </button>
       </div>
     </main>
 

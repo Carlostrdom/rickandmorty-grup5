@@ -45,6 +45,7 @@ createApp({
             url.searchParams.set('page', this.currentPage);
             
             // Agregar filtros a la URL si están presentes
+
             if (this.statusFilter.length > 0) {
                 url.searchParams.set('status', this.statusFilter.join(','));
             }
@@ -245,18 +246,18 @@ createApp({
             if (this.locations.length > 0 && this.episodes.length > 0) {
                 const totalLocations = this.locations.length;
                 const totalEpisodes = this.episodes.length;
-                
+
                 const dimensionsCount = new Set(this.locations.map(l => l.dimension)).size;
                 const seasonsCount = new Set(this.episodes.map(e => e.episode.split('E')[0])).size;
-                
-                const mostPopulatedLocation = this.locations.reduce((max, location) => 
+
+                const mostPopulatedLocation = this.locations.reduce((max, location) =>
                     location.residents.length > max.residents.length ? location : max, this.locations[0]
                 );
-                
-                const episodeWithMostCharacters = this.episodes.reduce((max, episode) => 
+
+                const episodeWithMostCharacters = this.episodes.reduce((max, episode) =>
                     episode.characters.length > max.characters.length ? episode : max, this.episodes[0]
                 );
-                
+
                 this.comparisonData = {
                     totalLocations,
                     totalEpisodes,
@@ -275,7 +276,7 @@ createApp({
     computed: {
         // Propiedad  para filtrar los personajes
         filteredCharacters() {
-            return this.characters.filter(character => 
+            return this.characters.filter(character =>
                 (this.statusFilter.length === 0 || this.statusFilter.includes(character.status)) &&
                 (this.speciesFilter.length === 0 || this.speciesFilter.includes(character.species)) &&
                 (this.textSearch === "" || character.name.toLowerCase().includes(this.textSearch.toLowerCase()))
@@ -290,7 +291,7 @@ createApp({
                 const charactersOfSpecies = this.filteredCharacters.filter(c => c.species === species);
                 const speciesCount = charactersOfSpecies.length;
                 const alive = charactersOfSpecies.filter(c => c.status === "Alive").length;
-                
+
                 speciesData[species] = {
                     good: ((alive / speciesCount) * 100 || 0).toFixed(2),
                     bad: (((speciesCount - alive) / speciesCount) * 100 || 0).toFixed(2),
@@ -319,7 +320,7 @@ createApp({
             return [
                 {
                     category: 'Total',
-                    characters: this.totalCharacters, 
+                    characters: this.totalCharacters,
                     locations: this.comparisonData.totalLocations,
                     episodes: this.comparisonData.totalEpisodes
                 },
