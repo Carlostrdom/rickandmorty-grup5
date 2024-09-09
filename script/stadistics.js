@@ -1,35 +1,50 @@
+// URLs de la API de Rick and Morty
 const urlCharacters = "https://rickandmortyapi.com/api/character";
 const urlLocations = "https://rickandmortyapi.com/api/location";
 const urlEpisodes = "https://rickandmortyapi.com/api/episode";
+
+// Importación de la función createApp de Vue
 const { createApp } = Vue;
 
+// Creación de la aplicación Vue
 createApp({
+    // Función data() que retorna un objeto con el estado inicial de la aplicación
     data() {
         return {
-            characters: [],
-            textSearch: "",
-            statusFilter: [],
-            speciesFilter: [],
-            availableSpecies: [],
-            currentPage: 1,
-            totalPages: 0,
-            selectedCharacters: [],
-            locations: [],
-            episodes: [],
-            comparisonData: null,
-            totalCharacters: 0,
+            characters: [],            // Array para almacenar los personajes
+            textSearch: "",            // Texto para la búsqueda de personajes por nombre
+            statusFilter: [],          // Filtros de estado (vivo, muerto, etc.)
+            speciesFilter: [],         // Filtros de especies
+            availableSpecies: [],      // Lista de especies disponibles para filtrar
+            currentPage: 1,            // Página actual para la paginación
+            totalPages: 0,             // Número total de páginas
+            selectedCharacters: [],    // Array de personajes seleccionados por el usuario
+            locations: [],             // Array para almacenar las ubicaciones
+            episodes: [],              // Array para almacenar los episodios
+            comparisonData: null,      // Datos comparativos entre ubicaciones y episodios
+            totalCharacters: 0,        // Número total de personajes
+            nextPage: null,            // URL de la siguiente página (si existe)
+            prevPage: null,            // URL de la página anterior (si existe)
+            isCharacters: true,        // Bandera para determinar si se están mostrando personajes
+            allSpecies: [],            // Lista completa de todas las especies de personajes
         };
     },
+
+    // Método created() que se ejecuta cuando la instancia de Vue es creada
     created() {
-        this.loadFromLocalStorage();
-        this.fetchRickAndMortyData();
-        this.fetchComparisonData();
+        this.loadFromLocalStorage(); // Carga datos desde el localStorage si existen
+        this.fetchRickAndMortyData(); // Obtiene los datos iniciales de personajes
+        this.fetchComparisonData();   // Obtiene los datos de comparación (ubicaciones y episodios)
     },
+
+    // Objeto methods que contiene todos los métodos de la aplicación
     methods: {
+        // Método para obtener datos de personajes de Rick and Morty
         fetchRickAndMortyData() {
             const url = new URL(urlCharacters);
             url.searchParams.set('page', this.currentPage);
             
+            // Agregar filtros a la URL si están presentes
             if (this.statusFilter.length > 0) {
                 url.searchParams.set('status', this.statusFilter.join(','));
             }
@@ -40,54 +55,95 @@ createApp({
                 url.searchParams.set('name', this.textSearch);
             }
 
+            this.fetchData(url.toString());
+        },
+
+        // Método para realizar la petición fetch y procesar los datos
+        fetchData(url) {
+            this.speciesFilter = [];
             fetch(url)
                 .then(response => response.json())
                 .then(data => {
-                    this.characters = data.results.map(character => ({
-                        ...character,
-                        intelligence: this.getRandomStat(100),
-                        chaosLevel: this.getRandomStat(100),
-                        popularity: this.getRandomStat(100)
-                    }));
-                    this.totalPages = data.info.pages;
-                    this.totalCharacters = data.info.count;
-                    this.updateAvailableSpecies();
-                    this.saveToLocalStorage();
+                    if (this.isCharacters) {
+                        // Procesar datos de personajes
+                        this.characters = data.results.map(character => ({
+                            ...character,
+                            intelligence: this.getRandomStat(100),
+                            chaosLevel: this.getRandomStat(100),
+                            popularity: this.getRandomStat(100)
+                        }));
+                        this.nextPage = data.info.next;
+                        this.prevPage = data.info.prev;
+                        this.currentPage = parseInt(new URL(url).searchParams.get('page')) || 1;
+                        this.totalPages = data.info.pages;
+                        this.totalCharacters = data.info.count;
+                        this.allSpecies = [...new Set(this.characters.map(character => character.species))].sort();
+                        this.updateAvailableSpecies();
+                        this.saveToLocalStorage();
+                    } else {
+                        // Procesar datos de episodios
+                        this.episodes = data.results;
+                        this.nextPage = data.info.next;
+                        this.prevPage = data.info.prev;
+                        this.currentPage = parseInt(new URL(url).searchParams.get('page')) || 1;
+                        this.totalPages = Math.ceil(data.info.count / 20);
+                    }
                 })
                 .catch(error => {
-                    console.error('Error fetching characters:', error);
+                    console.error('Error fetching data:', error);
                 });
         },
+
+        // Método para actualizar la lista de especies disponibles
         updateAvailableSpecies() {
-            const uniqueSpecies = [...new Set(this.characters.map(char => char.species))];
-            this.availableSpecies = uniqueSpecies.sort();
+            this.availableSpecies = [...new Set(this.characters.map(char => char.species))].sort();
         },
+
+        // Método para ir a la siguiente página
         goToNextPage() {
-            if (this.currentPage < this.totalPages) {
-                this.currentPage++;
-                this.fetchRickAndMortyData();
+            if (this.nextPage) {
+                this.fetchData(this.nextPage);
             }
         },
+
+        // Método para ir a la página anterior
         goToPrevPage() {
-            if (this.currentPage > 1) {
-                this.currentPage--;
-                this.fetchRickAndMortyData();
+            if (this.prevPage) {
+                this.fetchData(this.prevPage);
             }
         },
-        goToSpecificPage(page) {
-            if (page > 0 && page <= this.totalPages) {
-                this.currentPage = page;
-                this.fetchRickAndMortyData();
+
+        // Método para ir a una página específica
+        goToPage(page) {
+            if (page >= 1 && page <= this.totalPages) {
+                const url = this.isCharacters 
+                    ? `${urlCharacters}?page=${page}` 
+                    : `${urlEpisodes}?page=${page}`;
+                this.fetchData(url);
             }
         },
+
+        // Método para ir a una página específica ingresada por el usuario
+        goToSpecificPage(event) {
+            const page = parseInt(event.target.value);
+            if (!isNaN(page) && page >= 1 && page <= this.totalPages) {
+                this.goToPage(page);
+            }
+        },
+
+        // Método para generar una estadística aleatoria
         getRandomStat(max) {
             return Math.floor(Math.random() * max) + 1;
         },
+
+        // Método para obtener el color de la barra de progreso basado en el valor
         getProgressBarColor(value) {
             if (value < 30) return 'bg-danger';
             if (value < 70) return 'bg-warning';
             return 'bg-success';
         },
+
+        // Método para alternar la selección de un personaje
         toggleCharacterSelection(character) {
             const index = this.selectedCharacters.findIndex(c => c.id === character.id);
             if (index > -1) {
@@ -97,26 +153,38 @@ createApp({
             }
             this.saveToLocalStorage();
         },
+
+        // Método para verificar si un personaje está seleccionado
         isCharacterSelected(character) {
             return this.selectedCharacters.some(c => c.id === character.id);
         },
+
+        // Método para limpiar la lista de personajes seleccionados
         clearSelectedCharacters() {
             this.selectedCharacters = [];
             this.saveToLocalStorage();
         },
+
+        // Método para aplicar los filtros
         applyFilters() {
             this.currentPage = 1;
             this.fetchRickAndMortyData();
         },
+
+        // Método para calcular el promedio de una estadística para un conjunto de personajes
         calculateAverage(characters, stat) {
             if (characters.length === 0) return 0;
             const sum = characters.reduce((total, character) => total + character[stat], 0);
             return (sum / characters.length).toFixed(2);
         },
+
+        // Método para guardar datos en el localStorage
         saveToLocalStorage() {
             localStorage.setItem('selectedCharacters', JSON.stringify(this.selectedCharacters));
             localStorage.setItem('currentPage', this.currentPage.toString());
         },
+
+        // Método para cargar datos desde el localStorage
         loadFromLocalStorage() {
             const savedCharacters = localStorage.getItem('selectedCharacters');
             if (savedCharacters) {
@@ -127,13 +195,19 @@ createApp({
                 this.currentPage = parseInt(savedPage);
             }
         },
+
+        // Método para verificar si no hay resultados en la búsqueda
         hasNoResults() {
             return this.filteredCharacters.length === 0 && this.textSearch !== "";
         },
+
+        // Método para obtener datos de comparación
         fetchComparisonData() {
             this.fetchAllLocations();
             this.fetchAllEpisodes();
         },
+
+        // Método para obtener todas las ubicaciones
         fetchAllLocations() {
             this.fetchAllPages(urlLocations, (data) => {
                 this.locations = this.locations.concat(data.results);
@@ -142,6 +216,8 @@ createApp({
                 }
             });
         },
+
+        // Método para obtener todos los episodios
         fetchAllEpisodes() {
             this.fetchAllPages(urlEpisodes, (data) => {
                 this.episodes = this.episodes.concat(data.results);
@@ -150,6 +226,8 @@ createApp({
                 }
             });
         },
+
+        // Método para obtener todas las páginas de una URL dada
         fetchAllPages(url, callback) {
             fetch(url)
                 .then(response => response.json())
@@ -161,6 +239,8 @@ createApp({
                 })
                 .catch(error => console.error('Error fetching data:', error));
         },
+
+        // Método para preparar los datos de comparación
         prepareComparisonData() {
             if (this.locations.length > 0 && this.episodes.length > 0) {
                 const totalLocations = this.locations.length;
@@ -190,7 +270,10 @@ createApp({
             }
         }
     },
+
+    // objeto computed contiene todas las propiedades computadas
     computed: {
+        // Propiedad  para filtrar los personajes
         filteredCharacters() {
             return this.characters.filter(character => 
                 (this.statusFilter.length === 0 || this.statusFilter.includes(character.status)) &&
@@ -198,6 +281,8 @@ createApp({
                 (this.textSearch === "" || character.name.toLowerCase().includes(this.textSearch.toLowerCase()))
             );
         },
+
+        // Propiedad  para comparar especies
         speciesComparison() {
             const speciesData = {};
             const totalCharacters = this.filteredCharacters.length;
@@ -214,10 +299,11 @@ createApp({
             });
             return speciesData;
         },
+
+        // Propiedad  para comparar ubicaciones y episodios
         locationEpisodeComparison() {
             if (!this.comparisonData) return [];
 
-            // Encontrar la especie más común
             const speciesCounts = {};
             let maxCount = 0;
             let mostCommonSpecies = '';
@@ -252,4 +338,5 @@ createApp({
             ];
         }
     }
+// Montaje de la aplicación Vue en el elemento con id 'appStadistics'
 }).mount('#appStadistics');
