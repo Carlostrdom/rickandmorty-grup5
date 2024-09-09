@@ -129,6 +129,10 @@ const app = createApp({
                 this.selectedCharacters = JSON.parse(saved);
             }
         },
+        clearSelectedCharacters() {
+            this.selectedCharacters = [];
+            this.saveToLocalStorage();
+        },
 
         playSound(action) {
             // Reproduce el sonido correspondiente basado en la acción

@@ -156,15 +156,26 @@
           aria-labelledby="selectionsModalLabel"
           aria-hidden="true"
         >
-          <div class="modal-dialog modal-lg">
-            <div class="modal-content">
-              <div class="modal-header">
-                <h5 class="modal-title" id="selectionsModalLabel">
+          <div class="modal-dialog modal-lg text-success">
+            selectedCharacters
+            <div v-if="selectedCharacters.length === 0" class="text-center">
+              <p class="bg-info text-success">
+                No characters selected, please select a character
+              </p>
+              <img
+                class="w-50"
+                src="../assets/Rick and Morty.jpeg"
+                alt="imagen"
+              />
+            </div>
+            <div class="modal-content bg-dark text-light">
+              <div class="modal-header border-success">
+                <h5 class="modal-title text-success" id="selectionsModalLabel">
                   Selected Characters
                 </h5>
                 <button
                   type="button"
-                  class="btn-close"
+                  class="btn-close bg-danger"
                   data-bs-dismiss="modal"
                   aria-label="Close"
                 ></button>
@@ -197,6 +208,22 @@
                     </div>
                   </div>
                 </div>
+              </div>
+              <div class="modal-footer border-success justify-content-evenly">
+                <button
+                  type="button"
+                  class="btn btn-secondary"
+                  data-bs-dismiss="modal"
+                >
+                  Close
+                </button>
+                <button
+                  @click="clearSelectedCharacters"
+                  class="btn btn-warning"
+                  v-if="selectedCharacters.length"
+                >
+                  Clear Selection
+                </button>
               </div>
             </div>
           </div>
@@ -380,7 +407,7 @@
                   @click="toggleSelection(character)"
                   class="btn btn-outline-warning"
                 >
-                  {{ isSelected(character) ? 'Deselect' : 'Select' }}
+                  {{ isSelected(character) ? '★' : '☆' }}
                 </button>
               </div>
             </div>

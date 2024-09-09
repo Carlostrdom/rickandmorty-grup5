@@ -241,4 +241,7 @@ footer {
 }
 
 
-
+.monster-text {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 700; /* Hace que la fuente se vea más gruesa y con más presencia */
+}
