@@ -17,7 +17,12 @@ const app = createApp({
             nextPage: null,
             prevPage: null,
             isCharacters: true, // Controla si estamos viendo personajes o episodios
-            selectedCharacters: []
+            selectedCharacters: [],
+            audio: {
+                alive: new Audio('../assets/sounds/woooooaah-199849.mp3'),
+                dead: new Audio('../assets/sounds/zombie-6851.mp3')
+            }
+
         };
     },
 
@@ -99,6 +104,7 @@ const app = createApp({
 
             return 'https://via.placeholder.com/300x200?text=Episode+' + episodeId;
         },
+
         toggleSelection(character) {
             const index = this.selectedCharacters.findIndex(c => c.id === character.id);
             if (index === -1) {
@@ -122,10 +128,17 @@ const app = createApp({
             if (saved) {
                 this.selectedCharacters = JSON.parse(saved);
             }
+        },
+
+        playSound(action) {
+            // Reproduce el sonido correspondiente basado en la acción
+            const sound = this.audio[action];
+            if (sound) {
+                sound.play();
+            }
         }
-        
-    }
-    ,
+    },
+
     computed: {
         filteredData() {
             const data = this.isCharacters ? this.characters : this.episodes;
@@ -147,5 +160,4 @@ const app = createApp({
             });
         }
     }
-
 }).mount('#appHome');
