@@ -156,12 +156,26 @@ footer {
 .cardContainer{
   width: 250px;
 }
-
-
+.card-title{
+  color:greenyellow;
+}
+.card-title1{
+  color:greenyellow;
+}
+.card-text1{
+  color: #0ff;
+}
+.card-text2{
+  color:#FF00FF
+}
+.card-text3{
+  color: aliceblue;
+}
 
 .descriptionImg{
   width: 250px;
 }
+
 
 .progress {
   height: 20px;
