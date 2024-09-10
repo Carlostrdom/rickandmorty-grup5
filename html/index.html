@@ -149,6 +149,7 @@
 
     <main id="appHome">
       <div class="container-fluid p-2">
+        <!-- Barra de filtrado modal -->
         <div
           class="modal fade"
           id="selectionsModal"
@@ -183,7 +184,10 @@
                   />
                 </div>
                 <!-- Si hay personajes seleccionados, mostramos una lista de personajes -->
-                <div v-else class="d-flex flex-wrap justify-content-center">
+                <div
+                  v-else
+                  class="d-flex flex-wrap gap-2 justify-content-center"
+                >
                   <div
                     v-for="character in selectedCharacters"
                     :key="character.id"
