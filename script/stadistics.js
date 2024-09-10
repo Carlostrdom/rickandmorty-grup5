@@ -15,13 +15,15 @@ createApp({
             episodeSeasonStats: {},
             speciesStatsBySpecies: {},
             availableSpecies: [],
-            availableGenders: []
+            availableGenders: [],
+            genderDistribution: {},
+            topLocations: [],
+            topEpisodes: []
         };
     },
 
     created() {
         this.fetchAllData();
-        
     },
 
     methods: {
@@ -31,9 +33,7 @@ createApp({
                 this.fetchLocations(),
                 this.fetchEpisodes()
             ]).then(() => {
-                this.calculateCharacterStatusStats();
-                this.calculateEpisodeSeasonStats();
-                this.calculateSpeciesDistribution();
+                this.calculateAllStats();
             });
         },
 
@@ -66,6 +66,17 @@ createApp({
             return fetchNext(url);
         },
 
+        calculateAllStats() {
+            this.calculateCharacterStatusStats();
+            this.calculateEpisodeSeasonStats();
+            this.calculateSpeciesDistribution();
+            this.calculateGenderDistribution();
+            this.calculateTopLocations();
+            this.calculateTopEpisodes();
+            this.calculateLocationTypeStats();
+            this.calculateDimensionStats();
+        },
+
         calculateCharacterStatusStats() {
             this.characterStatusStats = this.getDistribution(this.characters, 'status');
         },
@@ -89,7 +100,6 @@ createApp({
                 return acc;
             }, {});
 
-            // Ordenar las especies por total de personajes (de mayor a menor)
             this.speciesStatsBySpecies = Object.fromEntries(
                 Object.entries(this.speciesStatsBySpecies).sort((a, b) => b[1].total - a[1].total)
             );
@@ -98,11 +108,64 @@ createApp({
             this.availableGenders = [...new Set(this.characters.map(character => character.gender))].filter(Boolean);
         },
 
+        calculateGenderDistribution() {
+            this.genderDistribution = this.getDistribution(this.characters, 'gender');
+        },
+
+        calculateTopLocations() {
+            this.topLocations = this.locations
+                .sort((a, b) => b.residents.length - a.residents.length)
+                .slice(0, 5);
+        },
+
+        calculateTopEpisodes() {
+            this.topEpisodes = this.episodes
+                .sort((a, b) => b.characters.length - a.characters.length)
+                .slice(0, 5);
+        },
+
+        calculateLocationTypeStats() {
+            this.locationTypeStats = this.getDistribution(this.locations, 'type');
+        },
+
+        calculateDimensionStats() {
+            this.dimensionStats = this.getDistribution(this.locations, 'dimension');
+        },
+
         getDistribution(array, property) {
             return array.reduce((acc, item) => {
                 acc[item[property]] = (acc[item[property]] || 0) + 1;
                 return acc;
             }, {});
+        },
+
+        getMostPopulatedEpisode(season) {
+            return this.episodes
+                .filter(episode => episode.episode.startsWith(season))
+                .reduce((max, episode) => 
+                    episode.characters.length > max.characters.length ? episode : max
+                , this.episodes[0]);
+        },
+
+        getGenderColor(gender) {
+            const colors = {
+                'Male': '#4e73df',
+                'Female': '#e74a3b',
+                'Genderless': '#1cc88a',
+                'unknown': '#f6c23e'
+            };
+            return colors[gender] || '#858796';
+        }
+    },
+
+    computed: {
+        topFiveSpecies() {
+            return Object.entries(this.speciesStatsBySpecies)
+                .slice(0, 5)
+                .reduce((acc, [species, data]) => {
+                    acc[species] = data;
+                    return acc;
+                }, {});
         }
     }
 }).mount('#appStadistics');
