@@ -1,56 +1,67 @@
+// URLs base para las API de Rick and Morty
 const urlCharacters = "https://rickandmortyapi.com/api/character";
 const urlLocations = "https://rickandmortyapi.com/api/location";
 const urlEpisodes = "https://rickandmortyapi.com/api/episode";
 
+// Importamos la función createApp de Vue
 const { createApp } = Vue;
 
+// Creamos una nueva aplicación Vue
 createApp({
+    // Definimos el estado inicial de nuestra aplicación
     data() {
         return {
-            characters: [],
-            locations: [],
-            episodes: [],
-            characterStatusStats: {},
-            locationTypeStats: {},
-            episodeSeasonStats: {},
-            speciesStatsBySpecies: {},
-            availableSpecies: [],
-            availableGenders: [],
-            genderDistribution: {},
-            topLocations: [],
-            topEpisodes: [],
-            statusChart: null
+            characters: [],        // Array para almacenar todos los personajes
+            locations: [],         // Array para almacenar todas las ubicaciones
+            episodes: [],          // Array para almacenar todos los episodios
+            characterStatusStats: {}, // Objeto para almacenar estadísticas de estado de personajes
+            locationTypeStats: {},    // Objeto para almacenar estadísticas de tipos de ubicaciones
+            episodeSeasonStats: {},   // Objeto para almacenar estadísticas de temporadas de episodios
+            speciesStatsBySpecies: {}, // Objeto para almacenar estadísticas de especies
+            availableSpecies: [],     // Array para almacenar especies disponibles
+            availableGenders: [],     // Array para almacenar géneros disponibles
+            genderDistribution: {},   // Objeto para almacenar distribución de géneros
+            topLocations: [],         // Array para almacenar las 5 ubicaciones principales
+            topEpisodes: [],          // Array para almacenar los 5 episodios principales
+            statusChart: null         // Variable para almacenar el gráfico de estado de personajes
         };
     },
 
+    // Método que se ejecuta cuando se crea la instancia de Vue
     created() {
-        this.fetchAllData();
+        this.fetchAllData(); // Llamamos al método para obtener todos los datos
     },
 
+    // Definimos los métodos de nuestra aplicación
     methods: {
+        // Método para obtener todos los datos de la API
         fetchAllData() {
             Promise.all([
                 this.fetchCharacters(),
                 this.fetchLocations(),
                 this.fetchEpisodes()
             ]).then(() => {
-                this.calculateAllStats();
-                this.createStatusChart();
+                this.calculateAllStats(); // Calculamos todas las estadísticas
+                this.createStatusChart(); // Creamos el gráfico de estado de personajes
             });
         },
 
+        // Método para obtener todos los personajes
         fetchCharacters() {
             return this.fetchAllPages(urlCharacters, 'characters');
         },
 
+        // Método para obtener todas las ubicaciones
         fetchLocations() {
             return this.fetchAllPages(urlLocations, 'locations');
         },
 
+        // Método para obtener todos los episodios
         fetchEpisodes() {
             return this.fetchAllPages(urlEpisodes, 'episodes');
         },
 
+        // Método genérico para obtener todas las páginas de una API
         fetchAllPages(url, propertyName) {
             let allItems = [];
             const fetchNext = (nextUrl) => {
@@ -69,6 +80,7 @@ createApp({
             return fetchNext(url);
         },
 
+        // Método para calcular todas las estadísticas
         calculateAllStats() {
             this.calculateCharacterStatusStats();
             this.calculateEpisodeSeasonStats();
@@ -80,16 +92,18 @@ createApp({
             this.calculateDimensionStats();
         },
 
+        // Método para calcular las estadísticas de estado de los personajes
         calculateCharacterStatusStats() {
             this.characterStatusStats = this.getDistribution(this.characters, 'status');
         },
 
+        // Método para crear el gráfico de estado de los personajes
         createStatusChart() {
             const ctx = document.getElementById('characterStatusChart').getContext('2d');
             const data = Object.entries(this.characterStatusStats);
             const labels = data.map(([status]) => status);
             const values = data.map(([, count]) => count);
-            const colors = ['#28a745','#ffc107', '#dc3545' ]; // green for Alive, red for Dead, yellow for unknown
+            const colors = ['#28a745','#ffc107', '#dc3545'];
 
             this.statusChart = new Chart(ctx, {
                 type: 'doughnut',
@@ -123,7 +137,7 @@ createApp({
             });
         },
 
-
+        // Método para calcular las estadísticas de temporadas de episodios
         calculateEpisodeSeasonStats() {
             this.episodeSeasonStats = this.episodes.reduce((acc, episode) => {
                 const season = episode.episode.split('E')[0];
@@ -132,6 +146,7 @@ createApp({
             }, {});
         },
 
+        // Método para calcular la distribución de especies
         calculateSpeciesDistribution() {
             this.speciesStatsBySpecies = this.characters.reduce((acc, character) => {
                 const { species, status } = character;
@@ -143,6 +158,7 @@ createApp({
                 return acc;
             }, {});
 
+            // Ordenamos las especies por total de personajes (de mayor a menor)
             this.speciesStatsBySpecies = Object.fromEntries(
                 Object.entries(this.speciesStatsBySpecies).sort((a, b) => b[1].total - a[1].total)
             );
@@ -151,30 +167,36 @@ createApp({
             this.availableGenders = [...new Set(this.characters.map(character => character.gender))].filter(Boolean);
         },
 
+        // Método para calcular la distribución de géneros
         calculateGenderDistribution() {
             this.genderDistribution = this.getDistribution(this.characters, 'gender');
         },
 
+        // Método para calcular las 5 ubicaciones principales
         calculateTopLocations() {
             this.topLocations = this.locations
                 .sort((a, b) => b.residents.length - a.residents.length)
                 .slice(0, 5);
         },
 
+        // Método para calcular los 5 episodios principales
         calculateTopEpisodes() {
             this.topEpisodes = this.episodes
                 .sort((a, b) => b.characters.length - a.characters.length)
                 .slice(0, 5);
         },
 
+        // Método para calcular las estadísticas de tipos de ubicaciones
         calculateLocationTypeStats() {
             this.locationTypeStats = this.getDistribution(this.locations, 'type');
         },
 
+        // Método para calcular las estadísticas de dimensiones
         calculateDimensionStats() {
             this.dimensionStats = this.getDistribution(this.locations, 'dimension');
         },
 
+        // Método genérico para obtener la distribución de una propiedad en un array
         getDistribution(array, property) {
             return array.reduce((acc, item) => {
                 acc[item[property]] = (acc[item[property]] || 0) + 1;
@@ -182,6 +204,7 @@ createApp({
             }, {});
         },
 
+        // Método para obtener el episodio más poblado de una temporada
         getMostPopulatedEpisode(season) {
             return this.episodes
                 .filter(episode => episode.episode.startsWith(season))
@@ -190,6 +213,7 @@ createApp({
                 , this.episodes[0]);
         },
 
+        // Método para obtener el color correspondiente a un género
         getGenderColor(gender) {
             const colors = {
                 'Male': '#4e73df',
@@ -201,7 +225,9 @@ createApp({
         }
     },
 
+    // Definimos las propiedades computadas
     computed: {
+        // Propiedad computada para obtener las 5 especies principales
         topFiveSpecies() {
             return Object.entries(this.speciesStatsBySpecies)
                 .slice(0, 5)
@@ -211,4 +237,5 @@ createApp({
                 }, {});
         }
     }
+// Montamos la aplicación Vue en el elemento con id 'appStadistics'
 }).mount('#appStadistics');
