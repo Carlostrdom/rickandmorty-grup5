@@ -351,11 +351,11 @@
               :alt="character.name"
             />
             <div class="card-body">
-              <div class="textCard">
+              <div class="textCard text-center">
                 <h5 class="card-title">Character: {{ character.name }}</h5>
-                <p class="card-text">Species: {{ character.species }}</p>
-                <p class="card-text">State: {{ character.status }}</p>
-                <p class="card-text">Dimension: {{ character.origin.name }}</p>
+                <p class="card-text1">Species: {{ character.species }}</p>
+                <p class="card-text2">State: {{ character.status }}</p>
+                <p class="card-text3">Dimension: {{ character.origin.name }}</p>
               </div>
               <div
                 class="d-flex justify-content-between align-items-center gap-2"
@@ -383,7 +383,7 @@
       <!-- Sección de episodios -->
       <div v-else class="episode-list">
         <h2 class="text-center text-white">Episodes</h2>
-        <div v-if="filteredData.length === 0" class="text-center text-white">
+        <div v-if="filteredData.length === 0" class="text-center text-info">
           <p class="text-warning bg-dark p-3 rounded">
             Sorry No Episodes found.
           </p>
@@ -411,10 +411,10 @@
               <h5 class="card-title">
                 Episode: {{ episode.name || 'Unnamed' }}
               </h5>
-              <p class="card-text">
+              <p class="card-text1">
                 Season: {{ episode.episode || 'Unknown' }}
               </p>
-              <p class="card-text">
+              <p class="card-text2">
                 Air date: {{ episode.air_date || 'Unknown' }}
               </p>
             </div>

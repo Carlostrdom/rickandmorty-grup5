@@ -141,12 +141,26 @@ footer {
 .cardContainer{
   width: 250px;
 }
-
-
+.card-title{
+  color:greenyellow;
+}
+.card-title1{
+  color:greenyellow;
+}
+.card-text1{
+  color: #0ff;
+}
+.card-text2{
+  color:#FF00FF
+}
+.card-text3{
+  color: aliceblue;
+}
 
 .descriptionImg{
   width: 250px;
 }
+
 
 .progress {
   height: 20px;
@@ -242,46 +256,8 @@ footer {
   border-radius: 5px;
 }
 
-/* table */
-
-
-h3, h5 {
-  color: #00ff00; /* Color verde brillante */
-}
-
-.rick-table {
-  background-color: rgba(0, 0, 0, 0.8); /* Fondo negro semitransparente */
-  color: #00ffcc; /* Verde azulado brillante */
-  border-color: #ffcc00; /* Amarillo brillante */
-}
-
-.rick-table th {
-  background-color: #ff6347; /* Naranja Rick */
-  color: #ffffff;
-  font-weight: bold;
-}
-
-.rick-table tbody tr:hover {
-  background-color: #00ff00; /* Resplandor verde brillante */
-  color: #000000;
-}
-
-.progress-bar.bg-success {
-  background-color: #00ff00 !important; /* Verde brillante para vivos */
-}
-
-.progress-bar.bg-danger {
-  background-color: #ff0000 !important; /* Rojo brillante para muertos */
-}
-
-.progress-bar.bg-warning {
-  background-color: #ffff00 !important; /* Amarillo brillante para desconocidos */
-}
-
-.color-legend .badge {
-  width: 25px;
-  height: 25px;
-  display: inline-block;
+.dona{
+  margin-bottom: 70px;
 }
 
 

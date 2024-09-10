@@ -18,7 +18,8 @@ createApp({
             availableGenders: [],
             genderDistribution: {},
             topLocations: [],
-            topEpisodes: []
+            topEpisodes: [],
+            statusChart: null
         };
     },
 
@@ -34,6 +35,7 @@ createApp({
                 this.fetchEpisodes()
             ]).then(() => {
                 this.calculateAllStats();
+                this.createStatusChart();
             });
         },
 
@@ -81,6 +83,46 @@ createApp({
         calculateCharacterStatusStats() {
             this.characterStatusStats = this.getDistribution(this.characters, 'status');
         },
+
+        createStatusChart() {
+            const ctx = document.getElementById('characterStatusChart').getContext('2d');
+            const data = Object.entries(this.characterStatusStats);
+            const labels = data.map(([status]) => status);
+            const values = data.map(([, count]) => count);
+            const colors = ['#28a745','#ffc107', '#dc3545' ]; // green for Alive, red for Dead, yellow for unknown
+
+            this.statusChart = new Chart(ctx, {
+                type: 'doughnut',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        data: values,
+                        backgroundColor: colors,
+                        borderColor: 'rgba(255, 255, 255, 0.5)',
+                        borderWidth: 2
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: {
+                            position: 'bottom',
+                            labels: {
+                                color: 'white'
+                            }
+                        },
+                        title: {
+                            display: true,
+                            color: 'white',
+                            font: {
+                                size: 16
+                            }
+                        }
+                    }
+                }
+            });
+        },
+
 
         calculateEpisodeSeasonStats() {
             this.episodeSeasonStats = this.episodes.reduce((acc, episode) => {
