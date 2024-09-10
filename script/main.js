@@ -241,25 +241,6 @@ const app = createApp({
             this.saveCurrentState(); // Guarda el estado de la página actual
         },
 
-        // Vigilar cambios en textSearch y reiniciar la página a 1
-        textSearch(prev, next) {
-            this.currentPage = 1; // Cuando el texto de búsqueda cambia, se resetea la paginación
-        },
-
-        // Vigilar cambios en isCharacters y reiniciar la página a 1
-        isCharacters(prev, next) {
-            this.currentPage = 1; // Al cambiar entre personajes y episodios, se resetea la paginación
-        },
-
-        // Vigilar cambios en statusFilter y reiniciar la página a 1
-        statusFilter(prev, next) {
-            this.currentPage = 1; // Al cambiar el filtro de estado, se resetea la paginación
-        },
-
-        // Vigilar cambios en speciesFilter y reiniciar la página a 1
-        speciesFilter(prev, next) {
-            this.currentPage = 1; // Al cambiar el filtro de especies, se resetea la paginación
-        }
     }
 
 }).mount('#appHome');
