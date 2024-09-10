@@ -241,7 +241,35 @@ footer {
 }
 
 
-.monster-text {
-  font-family: 'Montserrat', sans-serif;
-  font-weight: 700; /* Hace que la fuente se vea más gruesa y con más presencia */
+
+.table {
+  background-color: rgba(0, 0, 0, 0.7);
 }
+
+.progress {
+  height: 25px;
+  background-color: #333;
+}
+
+.progress-bar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.9rem;
+  font-weight: bold;
+  text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.5);
+}
+
+.color-legend {
+  background-color: rgba(0, 0, 0, 0.7);
+  padding: 10px;
+  border-radius: 5px;
+}
+
+.color-legend .badge {
+  width: 20px;
+  height: 20px;
+  display: inline-block;
+  vertical-align: middle;
+}
+

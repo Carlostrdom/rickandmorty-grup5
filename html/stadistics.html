@@ -10,7 +10,7 @@
     type="image/x-icon"
   />
   <title>RICK AND MORTY</title>
-    <link rel="stylesheet" href="/style/style.css">
+    <link rel="stylesheet" href="../style/style.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 
@@ -65,322 +65,104 @@
     <!-- main -->
      <!--  llamamosos al componente de vue -->
     <main  id="appStadistics">
-        <div class="container-fluid">
-        <!-- Modal de Personajes Seleccionados -->
-        <div class="modal fade" id="selectedCharactersModal" tabindex="-1"
-        aria-labelledby="selectedCharactersModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-md">
-            <div class="modal-content bg-dark text-light">
-                <div class="modal-header border-success">
-                    <h5 class="modal-title text-success" id="selectedCharactersModalLabel">Selected Characters</h5>
-                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
-                        aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <!-- Si no hay personajes seleccionados, mostramos un mensaje -->
-                    <div v-if="selectedCharacters.length === 0" class="text-center">
-                        <p class="neon-text">No characters selected, please select a character</p>
-                        <img class="w-50" src="../assets/Rick and Morty.jpeg" alt="imagen">
-                    </div>
-                    <!-- Si hay personajes seleccionados, mostramos una lista de personajes -->
-                    <div v-else class="d-flex flex-wrap justify-content-center">
-                        <!-- por cada interacion de personaje, creamos una tarjeta -->
-                        <div v-for="character in selectedCharacters" :key="character.id" class="p-2">
-                            <div class="card bg-black h-100 text-white d-flex flex-column">
-                                <img :src="character.image" class="card-img-top caur-img" :alt="character.name">
-                                <div class="card-body d-flex flex-column">
-                                    <h5 class="card-title text-success">{{ character.name }}</h5>
-                                    <p class="card-text"><strong>Species:</strong> {{ character.species }}</p>
-                                    <p class="card-text"><strong>Status:</strong> {{ character.status }}</p>
-                                    <div class="mb-2">
-                                        <div>Intelligence:</div>
-                                        <div class="progress">
-                                            <div class="progress-bar neonn"
-                                                :class="getProgressBarColor(character.intelligence)"
-                                                role="progressbar" :style="{ width: character.intelligence + '%' }"
-                                                :aria-valuenow="character.intelligence" aria-valuemin="0"
-                                                aria-valuemax="100">
-                                                {{ character.intelligence }}%
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="mb-2">
-                                        <div>Caos:</div>
-                                        <div class="progress">
-                                            <div class="progress-bar"
-                                                :class="getProgressBarColor(character.chaosLevel)"
-                                                role="progressbar" :style="{ width: character.chaosLevel + '%' }"
-                                                :aria-valuenow="character.chaosLevel" aria-valuemin="0"
-                                                aria-valuemax="100">
-                                                {{ character.chaosLevel }}%
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="mb-2">
-                                        <div>Popularity:</div>
-                                        <div class="progress">
-                                            <div class="progress-bar neon1"
-                                                :class="getProgressBarColor(character.popularity)"
-                                                role="progressbar" :style="{ width: character.popularity + '%' }"
-                                                :aria-valuenow="character.popularity" aria-valuemin="0"
-                                                aria-valuemax="100">
-                                                {{ character.popularity }}%
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="mt-auto">
-                                        <button @click="toggleCharacterSelection(character)"
-                                            class="btn btn-danger btn-sm w-100">Remove</button>
-                                    </div>
-                                </div>
-                            </div>
+        <div  class="container-fluid d-flex flex-column align-items-center justify-content-center">
+            
+         
+            <!-- Tabla de Personajes por Estado -->
+            <div class="mb-4">
+                <h3 class="text-center text-success fs-5 mb-2">Character Status Distribution</h3>
+                <table class="table table-bordered table-striped table-hover table-sm text-center small mb-0">
+                    <thead>
+                        <tr>
+                            <th>Status</th>
+                            <th>Count</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr v-for="(count, status) in characterStatusStats" :key="status">
+                            <td>{{ status }}</td>
+                            <td>{{ count }}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+    
+        
+            <!-- Tabla de Distribución de Especies con Estado -->
+            <div class="species-distribution mb-4">
+                <h3 class="text-center text-primary fs-4 mb-3">Distribución de Especies con Estado</h3>
+                
+                <div class="color-legend mb-3">
+                    <h5 class="text-white">Leyenda:</h5>
+                    <div class="d-flex flex-wrap justify-content-start">
+                        <div class="me-3 mb-2">
+                            <span class="badge bg-success">&nbsp;</span>
+                            <span class="text-white ms-1">Vivos</span>
+                        </div>
+                        <div class="me-3 mb-2">
+                            <span class="badge bg-danger">&nbsp;</span>
+                            <span class="text-white ms-1">Muertos</span>
+                        </div>
+                        <div class="me-3 mb-2">
+                            <span class="badge bg-warning">&nbsp;</span>
+                            <span class="text-white ms-1">Desconocido</span>
                         </div>
                     </div>
                 </div>
-                <div class="modal-footer border-success justify-content-evenly">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button @click="clearSelectedCharacters" class="btn btn-warning"
-                        v-if="selectedCharacters.length">
-                        Clear Selection
-                    </button>
-                </div>
-            </div>
-        </div>
-    </div>
-        <!-- Fin Modal de Personajes Seleccionados -->
-        <div class="container-fluid d-flex flex-column align-items-center justify-content-center">
-            <h2 class="text-center rick-morty-title text-success fs-4 mb-2">All character information</h2>
-            <div class="container-fluid px-2 d-flex flex-column"></div>
-                <div class="custom-table-wrapper">
-                    <table class="table table-bordered table-striped text-center table-sm small mb-0">
+                
+                <div class="table-responsive">
+                    <table class="table table-dark table-striped table-hover">
                         <thead>
                             <tr>
-                                <th>Category</th>
-                                <th>Characters</th>
-                                <th>Locations</th>
-                                <th>Episodes</th>
+                                <th class="col-2">Especie</th>
+                                <th class="col-1 text-center d-none d-md-table-cell">Total</th>
+                                <th class="col-1 text-center d-none d-md-table-cell">Vivos</th>
+                                <th class="col-1 text-center d-none d-md-table-cell">Muertos</th>
+                                <th class="col-2 text-center d-none d-md-table-cell">Desconocidos</th>
+                                <th class="col-6">Distribución</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr v-for="row in locationEpisodeComparison" :key="row.category">
-                                <td>{{ row.category }}</td>
-                                <td>{{ row.characters || 'N/A' }}</td>
-                                <td>{{ row.locations }}</td>
-                                <td>{{ row.episodes }}</td>
+                            <tr v-for="(data, species) in speciesStatsBySpecies" :key="species">
+                                <td class="col-2">
+                                    {{ species }}
+                                    <div class="d-md-none">
+                                        <small>Total: {{ data.total }}</small>
+                                    </div>
+                                </td>
+                                <td class="col-1 text-center d-none d-md-table-cell">{{ data.total }}</td>
+                                <td class="col-1 text-center d-none d-md-table-cell">{{ data.alive }}</td>
+                                <td class="col-1 text-center d-none d-md-table-cell">{{ data.dead }}</td>
+                                <td class="col-1 text-center d-none d-md-table-cell">{{ data.unknown }}</td>
+                                <td class="col-6 progress-cell">
+                                    <div class="progress">
+                                        <div class="progress-bar bg-success" role="progressbar" 
+                                             :style="{ width: (data.alive / data.total * 100) + '%' }" 
+                                             :aria-valuenow="data.alive" aria-valuemin="0" :aria-valuemax="data.total">
+                                            {{ ((data.alive / data.total) * 100).toFixed(1) }}%
+                                        </div>
+                                        <div class="progress-bar bg-danger" role="progressbar" 
+                                             :style="{ width: (data.dead / data.total * 100) + '%' }" 
+                                             :aria-valuenow="data.dead" aria-valuemin="0" :aria-valuemax="data.total">
+                                            {{ ((data.dead / data.total) * 100).toFixed(1) }}%
+                                        </div>
+                                        <div class="progress-bar bg-warning" role="progressbar" 
+                                             :style="{ width: (data.unknown / data.total * 100) + '%' }" 
+                                             :aria-valuenow="data.unknown" aria-valuemin="0" :aria-valuemax="data.total">
+                                            {{ ((data.unknown / data.total) * 100).toFixed(1) }}%
+                                        </div>
+                                    </div>
+                                </td>
                             </tr>
                         </tbody>
                     </table>
                 </div>
             </div>
 
-            <div class="row g-2 d-flex align-items-center justify-content-center">
-                <div class="col-12 col-lg-6">
-                    <h2 class="text-center rick-morty-title text-success fs-4 mb-2">Interdimensional Species Comparison</h2>
-                    <div>
-                        <table class="table table-bordered table-striped text-center table-sm small mb-0">
-                            <thead>
-                                <tr>
-                                    <th class="p-1">Species</th>
-                                    <th class="p-1">Good</th>
-                                    <th class="p-1">Bad</th>
-                                    <th class="p-1">% of total</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr v-for="(stats, species) in speciesComparison" :key="species">
-                                    <td class="p-1">{{ species }}</td>
-                                    <td class="p-1">{{ stats.good }}%</td>
-                                    <td class="p-1">{{ stats.bad }}%</td>
-                                    <td class="p-1">{{ stats.percentageOfTotal === '-' ? '-' : stats.percentageOfTotal + '%' }}</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
-
-        </div>
-
-
-
-        <div
-            class="d-flex flex-column flex-lg-row justify-content-between align-items-center bg-dark rounded-3 text-white mt-3 mb-3 p-3">
-            <!-- Button to view selected characters -->
-            <button class="btn btn-warning me-2 mb-3 mb-lg-0  w-lg-auto btn-sm" data-bs-toggle="modal"
-                data-bs-target="#selectedCharactersModal">
-                View Selected ({{ selectedCharacters.length }})
-            </button>
-
-            <!-- Filters for character status and species -->
-            <div class="d-flex flex-column flex-lg-row align-items-center mb-3 mb-lg-0">
-                <!-- Checkboxes for status -->
-                <label for="status-filter" class="text-white me-2 mb-2 mb-lg-0">Character Status:</label>
-                <div class="d-flex mb-2 mb-lg-0">
-                    <div class="form-check form-check-inline">
-                        <input class="form-check-input " type="checkbox" id="alive" value="Alive"
-                            v-model="statusFilter"
-                            @change="playSound('alive')" 
-                            />
-                            
-                        <label class="form-check-label text-success" for="alive">Alive</label>
-                    </div>
-                    <div class="form-check form-check-inline">
-                        <input class="form-check-input " type="checkbox" id="dead" value="Dead" v-model="statusFilter" 
-                        @change="playSound('dead')"/>
-                        <label class="form-check-label text-danger" for="dead">Dead</label>
-                    </div>
-                </div>
-
-                <!-- Dropdown for species -->
-                <div class="d-flex align-items-center mb-2 mb-lg-0">
-                    <label for="species-dropdown" class="text-info me-2">Species:</label>
-                    <button
-              type="button"
-              class="btn btn-outline-warning dropdown-toggle"
-              data-bs-toggle="dropdown"
-              aria-expanded="false"
-            >
-              Select Species
-            </button>
-                    <ul class="dropdown-menu" id="species-dropdown">
-                        <li v-for="species in availableSpecies" :key="species">
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" :value="species" v-model="speciesFilter"
-                                    :id="'species-' + species" />
-                                <label class="form-check-label" :for="'species-' + species">
-                                    {{ species }}
-                                </label>
-                            </div>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-
-            <!-- Search bar (on the right) -->
-            <div class="input-group w-auto">
-                <input
-                  type="text"
-                  class="form-control form-control-sm"
-                  placeholder="Search"
-                  aria-label="Search"
-                  v-model="textSearch"
-                />
-                <button class="btn btn-outline-warning bg-dark bg-gradient">
-                  Search
-                </button>
-              </div>
-        </div>
-        <div class="d-flex justify-content-center align-items-center mt-4">
-            <button @click="goToPrevPage" class="btn btn-primary m-2 me-2"
-                :disabled="currentPage === 1">Previous</button>
-            <span class="text-white mx-2">
-                Page
-                <input
-              type="number"
-              v-model.number="currentPage"
-              min="1"
-              :max="totalPages"
-              @change="goToPage(currentPage)"
-              class="form-control form-control-sm d-inline-block w-auto"
-            />
-                of {{ totalPages }}
-            </span>
-            <button @click="goToNextPage" class="btn btn-primary ms-2"
-                :disabled="currentPage === totalPages">Next</button>
-        </div>
-        <!-- Message when no results are found -->
-
-        <div class="container">
-            <div class="row justify-content-center">
-                <div class="col-12 col-md-8">
-                    <div v-if="hasNoResults()" class="busqueda bg-black neon-card text-center mt-4 rounded-3 d-flex flex-column">
-                        <div class="image-container">
-                            <img src="/assets/rick-y-morty-arte-universo_3840x2160_xtrafondos.com.jpg" alt="No results" class="img-fluid w-100" />
-                        </div>
-                        <div class="text-container d-flex flex-column align-items-center p-3">
-                            <h4 class="busqueda">Oh no!</h4>
-                            <p>No results found for <strong>"{{ textSearch }}"</strong>.</p>
-                            <p>Try with other terms or adjust your filters.</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            
         </div>
         
-        
-        <!-- Sección de personajes -->
-        <div class="character-list">
-            <h2 class="text-center text-white">Characters</h2>
-            <div class="gap-2 container-fluid d-flex mt-2 flex-wrap justify-content-center">
-                <div v-for="character in filteredCharacters" :key="character.id"
-                    class="card text-white bg-dark mb-3 cardContainer">
-                    <img :src="character.image" class="card-img-top caur-img" :alt="character.name" />
-                    <div class="card-body">
-                        <div class="textCard">
-                            <h5 class="card-title">Character: {{ character.name }}</h5>
-                            <p class="card-text">Species: {{ character.species }}</p>
-                            <p class="card-text">Status: {{ character.status }}</p>
-                            <p class="card-text">Dimension: {{ character.origin.name }}</p>
-                        </div>
-
-                        <div class="mb-2">
-                            <div>Inteligencia:</div>
-                            <div class="progress">
-                                <div class="progress-bar" :class="getProgressBarColor(character.intelligence)"
-                                    role="progressbar" :style="{ width: character.intelligence + '%' }"
-                                    :aria-valuenow="character.intelligence" aria-valuemin="0" aria-valuemax="100">
-                                    {{ character.intelligence }}%
-                                </div>
-                            </div>
-                        </div>
-                        <div class="mb-2">
-                            <div>Caos:</div>
-                            <div class="progress">
-                                <div class="progress-bar" :class="getProgressBarColor(character.chaosLevel)"
-                                    role="progressbar" :style="{ width: character.chaosLevel + '%' }"
-                                    :aria-valuenow="character.chaosLevel" aria-valuemin="0" aria-valuemax="100">
-                                    {{ character.chaosLevel }}%
-                                </div>
-                            </div>
-                        </div>
-                        <div class="mb-2">
-                            <div>Popularidad:</div>
-                            <div class="progress">
-                                <div class="progress-bar" :class="getProgressBarColor(character.popularity)"
-                                    role="progressbar" :style="{ width: character.popularity + '%' }"
-                                    :aria-valuenow="character.popularity" aria-valuemin="0" aria-valuemax="100">
-                                    {{ character.popularity }}%
-                                </div>
-                            </div>
-                        </div>
-                        <div class="d-flex justify-content-center container-fluid">
-                            <button @click="toggleCharacterSelection(character)" class="btn btn-outline-warning">
-                                {{ isCharacterSelected(character) ? '★' : '☆' }}
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="d-flex justify-content-center align-items-center mt-4">
-            <button @click="goToPrevPage" class="btn btn-primary m-2 me-2"
-                :disabled="currentPage === 1">Previous</button>
-            <span class="text-white mx-2">
-                Page
-                <input
-              type="number"
-              v-model.number="currentPage"
-              min="1"
-              :max="totalPages"
-              @change="goToPage(currentPage)"
-              class="form-control form-control-sm d-inline-block w-auto"
-            />
-                of {{ totalPages }}
-            </span>
-            <button @click="goToNextPage" class="btn btn-primary ms-2"
-                :disabled="currentPage === totalPages">Next</button>
-        </div>
+       
         
     </div>
     </main>
