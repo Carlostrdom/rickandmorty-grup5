@@ -4,14 +4,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link
-    rel="shortcut icon"
-    href="../assets/icons8-rick-sanchez-100.png"
-    type="image/x-icon"
-  />
-  <title>RICK AND MORTY</title>
+    <link rel="shortcut icon" href="../assets/icons8-rick-sanchez-100.png" type="image/x-icon" />
+    <title>RICK AND MORTY</title>
     <link rel="stylesheet" href="../style/style.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
 </head>
 
 <body>
@@ -36,7 +33,6 @@
                             </li>
                         </ul>
                     </div>
-
                 </div>
             </nav>
         </div>
@@ -45,7 +41,7 @@
         <div id="carouselExampleSlidesOnly" class="carousel slide " data-bs-ride="carousel" data-bs-interval="4000">
             <div class="carousel-inner">
                 <div class="carousel-item active" data-bs-interval="4000">
-                    <img class="carrouselImg d-block w-100" src="../assets/epic-rick-and-morty.gif"  alt="img-carrousel">
+                    <img class="carrouselImg d-block w-100" src="../assets/epic-rick-and-morty.gif" alt="img-carrousel">
                 </div>
                 <div class="carousel-item">
                     <img class="carrouselImg d-block w-100" src="../assets/1.gif" alt="img-carrousel">
@@ -63,62 +59,168 @@
         </div>
     </header>
     <!-- main -->
-     <!--  llamamosos al componente de vue -->
-    <main  id="appStadistics">
-        <div  class="container-fluid d-flex flex-column align-items-center justify-content-center">
-    
-        
-            <!-- Tabla de Personajes por Estado -->
-            <div class="mb-4">
-                <h3 class="text-center text-success fs-5 mb-2">Character Status Distribution</h3>
-                <table class="table table-bordered table-striped table-hover table-sm text-center small mb-0">
-                    <thead>
-                        <tr>
-                            <th>Status</th>
-                            <th>Count</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr v-for="(count, status) in characterStatusStats" :key="status">
-                            <td>{{ status }}</td>
-                            <td>{{ count }}</td>
-                        </tr>
-                    </tbody>
-                </table>
+    <!--  llamamosos al componente de vue -->
+    <main id="appStadistics">
+        <div class="container-fluid d-flex flex-column align-items-center justify-content-center">
+
+            <!-- Tabla de Personajes por ubicaciones -->
+            <div  class="container-fluid py-4 ">
+                <h1 class="text-center rick-morty-title mb-4">Estadísticas de Rick and Morty</h1>
+
+                <div class="row justify-content-center">
+                    <!-- Top 5 Ubicaciones -->
+                    <div class="col-lg-4 col-md-6 d-flex ">
+                        <div class="card-stats bg-dark text-white w-100">
+                            <div class="card-header bg-primary text-white">
+                                <h5 class="card-title mb-0 text-center">Top 5 Locations</h5>
+                            </div>
+                            <div class="card-body">
+                                <ol class="list-group list-group-flush list-group-numbered">
+                                    <li v-for="location in topLocations" :key="location.id"
+                                        class="list-group-item bg-dark text-white d-flex justify-content-between align-items-center">
+                                        <div class="ms-2 me-auto">
+                                            <div class="fw-bold">{{ location.name }}</div>
+                                            {{ location.type }}
+                                        </div>
+                                        <span class="badge bg-primary rounded-pill">{{ location.residents.length }}
+                                            residents</span>
+                                    </li>
+                                </ol>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Top 5 Episodios -->
+                    <div class="col-lg-4 col-md-6 d-flex ">
+                        <div class="card-stats bg-dark text-white w-100">
+                            <div class="card-header bg-success text-white">
+                                <h5 class="card-title mb-0 text-center">Top 5 Episode</h5>
+                            </div>
+                            <div class="card-body">
+                                <ol class="list-group list-group-flush list-group-numbered">
+                                    <li v-for="episode in topEpisodes" :key="episode.id"
+                                        class="list-group-item bg-dark text-white d-flex justify-content-between align-items-center">
+                                        <div class="ms-2 me-auto">
+                                            <div class="fw-bold">{{ episode.name }}</div>
+                                            {{ episode.episode }}
+                                        </div>
+                                        <span class="badge bg-success rounded-pill">{{ episode.characters.length }}
+                                            Characters</span>
+                                    </li>
+                                </ol>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Distribución de Géneros -->
+                    <div class="col-lg-4 col-md-6 d-flex ">
+                        <div class="card-stats bg-dark text-white w-100">
+                            <div class="card-header bg-info text-white">
+                                <h5 class="card-title mb-0 text-center">Gender Distribution</h5>
+                            </div>
+                            <div class="card-body">
+                                <ul class="list-group list-group-flush">
+                                    <li v-for="(count, gender) in genderDistribution" :key="gender"
+                                        class="list-group-item bg-dark text-white">
+                                        <div class="d-flex justify-content-between align-items-center">
+                                            <h6 class="mb-0">{{ gender }}</h6>
+                                            <span>{{ count }} ({{ ((count / characters.length) * 100).toFixed(1)
+                                                }}%)</span>
+                                        </div>
+                                        <div class="progress mt-2" style="height: 20px;">
+                                            <div class="progress-bar" role="progressbar"
+                                                :style="{ width: (count / characters.length * 100) + '%', backgroundColor: getGenderColor(gender) }"
+                                                :aria-valuenow="count" aria-valuemin="0"
+                                                :aria-valuemax="characters.length">
+                                            </div>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                     
+                </div>
             </div>
-    
-        
-            <!-- Tabla de Distribución de Especies con Estado -->
-<div class="mb-4">
-    <h3 class="text-center text-primary fs-5 mb-2">Distribución de Especies con Estado</h3>
-    <table class="table table-bordered table-striped table-hover table-sm text-center small mb-0">
-        <thead>
-            <tr>
-                <th>Species</th>
-                <th>Count</th>
-                <th>Alive</th>
-                <th>Dead</th>
-                <th>Unknown</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr v-for="(data, species) in speciesStatsBySpecies" :key="species">
-                <td>{{ species }}</td>
-                <td>{{ data.total }}</td>
-                <td>{{ data.alive }}</td>
-                <td>{{ data.dead }}</td>
-                <td>{{ data.unknown }}</td>
-            </tr>
-        </tbody>
-    </table>
-</div>
+
+
+            <div class="col-12 col-md-4 dona">
+                <h1 class="text-center rick-morty-title  mb-4">Character Status Distribution</h1>
+                <div class="">
+                    <canvas id="characterStatusChart"></canvas>
+                </div>
+            </div>
 
             
-        </div>
-        
-       
-        
-    </div>
+            <div class="species-distribution mb-4">
+                <h3 class="text-center rick-morty-title fs-4 ">Distribución de Especies con Estado</h3>
+
+                <div class="color-legend ">
+                    <h5 class="text-white">Leyenda:</h5>
+                    <div class="d-flex flex-wrap justify-content-start">
+                        <div class="me-3 mb-2">
+                            <span class="badge bg-success">&nbsp;</span>
+                            <span class="text-white ms-1">Alive</span>
+                        </div>
+                        <div class="me-3 mb-2">
+                            <span class="badge bg-danger">&nbsp;</span>
+                            <span class="text-white ms-1">Dead</span>
+                        </div>
+                        <div class="me-3 mb-2">
+                            <span class="badge bg-warning">&nbsp;</span>
+                            <span class="text-white ms-1">unknown</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="table-responsive">
+                    <table class="table table-dark table-striped table-hover rick-table">
+                        <thead>
+                            <tr>
+                                <th class="col-2">Species</th>
+                                <th class="col-1 text-center d-none d-md-table-cell">Total</th>
+                                <th class="col-1 text-center d-none d-md-table-cell">Alive</th>
+                                <th class="col-1 text-center d-none d-md-table-cell">Deads</th>
+                                <th class="col-2 text-center d-none d-md-table-cell">unknowns</th>
+                                <th class="col-6">Distribution</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr v-for="(data, species) in speciesStatsBySpecies" :key="species">
+                                <td class="col-2">
+                                    {{ species }}
+                                    <div class="d-md-none">
+                                        <small>Total: {{ data.total }}</small>
+                                    </div>
+                                </td>
+                                <td class="col-1 text-center d-none d-md-table-cell">{{ data.total }}</td>
+                                <td class="col-1 text-center d-none d-md-table-cell">{{ data.alive }}</td>
+                                <td class="col-1 text-center d-none d-md-table-cell">{{ data.dead }}</td>
+                                <td class="col-1 text-center d-none d-md-table-cell">{{ data.unknown }}</td>
+                                <td class="col-6 progress-cell">
+                                    <div class="progress">
+                                        <div class="progress-bar bg-success" role="progressbar"
+                                            :style="{ width: (data.alive / data.total * 100) + '%' }"
+                                            :aria-valuenow="data.alive" aria-valuemin="0" :aria-valuemax="data.total">
+                                            {{ ((data.alive / data.total) * 100).toFixed(1) }}%
+                                        </div>
+                                        <div class="progress-bar bg-danger" role="progressbar"
+                                            :style="{ width: (data.dead / data.total * 100) + '%' }"
+                                            :aria-valuenow="data.dead" aria-valuemin="0" :aria-valuemax="data.total">
+                                            {{ ((data.dead / data.total) * 100).toFixed(1) }}%
+                                        </div>
+                                        <div class="progress-bar bg-warning" role="progressbar"
+                                            :style="{ width: (data.unknown / data.total * 100) + '%' }"
+                                            :aria-valuenow="data.unknown" aria-valuemin="0" :aria-valuemax="data.total">
+                                            {{ ((data.unknown / data.total) * 100).toFixed(1) }}%
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
     </main>
     <footer class="p-t-8">
         <div id="footer"
@@ -154,6 +256,7 @@
     <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="/script/stadistics.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </body>
 
 </html>
