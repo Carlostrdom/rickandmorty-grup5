@@ -127,7 +127,12 @@ footer {
   background-position: 100% 100%;
 } 
 
-
+.card-stats:hover{
+  transform: translateY(-5px);
+  box-shadow: 0 0 15px rgb(30, 241, 83);
+  background-repeat: no-repeat;
+  background-position: 100% 100%;
+}
 .textCard{
   height: 200px;
   color: #31d8e4;
@@ -191,24 +196,24 @@ footer {
 /* Estilo de los títulos */
 .rick-morty-title {
   color: #00ff00; /* Verde neon estilo Rick y Morty */
-  text-shadow: 2px 2px #ff00ff; /* Sombra estilo psicodélico */
+  text-shadow: 2px 2px #ddd0dd; /* Sombra estilo psicodélico */
   font-family: 'Luckiest Guy', cursive; /* Fuente estilo cómic/cartoon */
 }
 
 /* Estilo de la tabla */
 .table {
-  background-color: rgba(255, 255, 255, 0.1); /* Fondo semi-transparente para la tabla */
+  background-color: rgba(93, 80, 80, 0.1); /* Fondo semi-transparente para la tabla */
   border: 2px solid #00ff00; /* Borde verde neon */
 }
 
 .table th, .table td {
-  color: #fff;
-  border: 2px solid #ff00ff; /* Borde morado psicodélico */
+  color: #eb1313;
+  border: 2px solid #0f0e0f; /* Borde morado psicodélico */
 }
 
 .table thead th {
-  background-color: #00ff00; /* Fondo verde neon para el encabezado */
-  color: #000;
+  background-color: #090e09; /* Fondo verde neon para el encabezado */
+  color: #fff9f9;
   text-transform: uppercase;
 }
 
@@ -235,6 +240,48 @@ footer {
   background-color: rgba(0, 0, 0, 0.7);
   padding: 10px;
   border-radius: 5px;
+}
+
+/* table */
+
+
+h3, h5 {
+  color: #00ff00; /* Color verde brillante */
+}
+
+.rick-table {
+  background-color: rgba(0, 0, 0, 0.8); /* Fondo negro semitransparente */
+  color: #00ffcc; /* Verde azulado brillante */
+  border-color: #ffcc00; /* Amarillo brillante */
+}
+
+.rick-table th {
+  background-color: #ff6347; /* Naranja Rick */
+  color: #ffffff;
+  font-weight: bold;
+}
+
+.rick-table tbody tr:hover {
+  background-color: #00ff00; /* Resplandor verde brillante */
+  color: #000000;
+}
+
+.progress-bar.bg-success {
+  background-color: #00ff00 !important; /* Verde brillante para vivos */
+}
+
+.progress-bar.bg-danger {
+  background-color: #ff0000 !important; /* Rojo brillante para muertos */
+}
+
+.progress-bar.bg-warning {
+  background-color: #ffff00 !important; /* Amarillo brillante para desconocidos */
+}
+
+.color-legend .badge {
+  width: 25px;
+  height: 25px;
+  display: inline-block;
 }
 
 

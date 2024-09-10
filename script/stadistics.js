@@ -60,6 +60,7 @@ createApp({
                             return fetchNext(data.info.next);
                         } else {
                             this[propertyName] = allItems;
+                            console.log(this[propertyName]);
                         }
                     });
             };

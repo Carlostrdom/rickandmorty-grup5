@@ -69,12 +69,12 @@
             
             <!-- Tabla de Personajes por ubicaciones -->
             <div id="appStadistics" class="container-fluid py-4">
-                <h1 class="text-center text-primary mb-4">Estadísticas de Rick and Morty</h1>
+                <h1 class="text-center rick-morty-title mb-4">Estadísticas de Rick and Morty</h1>
             
                 <div class="row justify-content-center">
                     <!-- Top 5 Ubicaciones -->
                     <div class="col-lg-4 col-md-6 d-flex mb-4">
-                        <div class="card bg-dark text-white w-100">
+                        <div class="card-stats bg-dark text-white w-100">
                             <div class="card-header bg-primary text-white">
                                 <h5 class="card-title mb-0 text-center">Top 5 Ubicaciones</h5>
                             </div>
@@ -94,7 +94,7 @@
             
                     <!-- Top 5 Episodios -->
                     <div class="col-lg-4 col-md-6 d-flex mb-4">
-                        <div class="card bg-dark text-white w-100">
+                        <div class="card-stats bg-dark text-white w-100">
                             <div class="card-header bg-success text-white">
                                 <h5 class="card-title mb-0 text-center">Top 5 Episodios</h5>
                             </div>
@@ -113,8 +113,8 @@
                     </div>
             
                     <!-- Distribución de Géneros -->
-                    <div class="col-lg-4 col-md-6 d-flex mb-4">
-                        <div class="card bg-dark text-white w-100">
+                    <div class="col-lg-4 col-md-6 d-flex ">
+                        <div class="card-stats bg-dark text-white w-100">
                             <div class="card-header bg-info text-white">
                                 <h5 class="card-title mb-0 text-center">Distribución de Géneros</h5>
                             </div>
@@ -138,31 +138,10 @@
                     </div>
                 </div>
             </div>
-            
-         
-            <!-- Tabla de Personajes por Estado -->
-            <div class="mb-4">
-                <h3 class="text-center text-success fs-5 mb-2">Character Status Distribution</h3>
-                <table class="table table-bordered table-striped table-hover table-sm text-center small mb-0">
-                    <thead>
-                        <tr>
-                            <th>Status</th>
-                            <th>Count</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr v-for="(count, status) in characterStatusStats" :key="status">
-                            <td>{{ status }}</td>
-                            <td>{{ count }}</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-            <!-- Tabla de Distribución de Especies con Estado -->
             <div class="species-distribution mb-4">
-                <h3 class="text-center text-primary fs-4 mb-3">Distribución de Especies con Estado</h3>
+                <h3 class="text-center rick-morty-title fs-4 ">Distribución de Especies con Estado</h3>
                 
-                <div class="color-legend mb-3">
+                <div class="color-legend ">
                     <h5 class="text-white">Leyenda:</h5>
                     <div class="d-flex flex-wrap justify-content-start">
                         <div class="me-3 mb-2">
@@ -181,7 +160,7 @@
                 </div>
                 
                 <div class="table-responsive">
-                    <table class="table table-dark table-striped table-hover">
+                    <table class="table table-dark table-striped table-hover rick-table">
                         <thead>
                             <tr>
                                 <th class="col-2">Especie</th>
@@ -228,9 +207,28 @@
                     </table>
                 </div>
             </div>
-
             
-        </div>
+         
+            <!-- Tabla de Personajes por Estado -->
+            <div class="mb-4">
+                <h3 class="text-center text-success fs-5 mb-2">Character Status Distribution</h3>
+                <table class="table table-bordered table-striped  table-sm text-center small mb-0">
+                    <thead>
+                        <tr>
+                            <th>Status</th>
+                            <th>Count</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr v-for="(count, status) in characterStatusStats" :key="status">
+                            <td>{{ status }}</td>
+                            <td>{{ count }}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <!-- Tabla de Distribución de Especies con Estado -->
+            
 
     </main>
     <footer class="p-t-8">
