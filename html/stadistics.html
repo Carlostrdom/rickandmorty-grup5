@@ -12,6 +12,7 @@
   <title>RICK AND MORTY</title>
     <link rel="stylesheet" href="../style/style.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  
 </head>
 
 <body>
@@ -69,14 +70,14 @@
             
             <!-- Tabla de Personajes por ubicaciones -->
             <div id="appStadistics" class="container-fluid py-4">
-                <h1 class="text-center text-primary mb-4">Estadísticas de Rick and Morty</h1>
+                <h1 class="text-center text-primary mb-4">Rick and Morty Stadistics</h1>
             
                 <div class="row justify-content-center">
                     <!-- Top 5 Ubicaciones -->
                     <div class="col-lg-4 col-md-6 d-flex mb-4">
                         <div class="card bg-dark text-white w-100">
                             <div class="card-header bg-primary text-white">
-                                <h5 class="card-title mb-0 text-center">Top 5 Ubicaciones</h5>
+                                <h5 class="card-title mb-0 text-center">Top 5 Locations</h5>
                             </div>
                             <div class="card-body">
                                 <ol class="list-group list-group-flush list-group-numbered">
@@ -85,7 +86,7 @@
                                             <div class="fw-bold">{{ location.name }}</div>
                                             {{ location.type }}
                                         </div>
-                                        <span class="badge bg-primary rounded-pill">{{ location.residents.length }} residentes</span>
+                                        <span class="badge bg-primary rounded-pill">{{ location.residents.length }} residents</span>
                                     </li>
                                 </ol>
                             </div>
@@ -96,7 +97,7 @@
                     <div class="col-lg-4 col-md-6 d-flex mb-4">
                         <div class="card bg-dark text-white w-100">
                             <div class="card-header bg-success text-white">
-                                <h5 class="card-title mb-0 text-center">Top 5 Episodios</h5>
+                                <h5 class="card-title mb-0 text-center">Top 5 Episode</h5>
                             </div>
                             <div class="card-body">
                                 <ol class="list-group list-group-flush list-group-numbered">
@@ -105,7 +106,7 @@
                                             <div class="fw-bold">{{ episode.name }}</div>
                                             {{ episode.episode }}
                                         </div>
-                                        <span class="badge bg-success rounded-pill">{{ episode.characters.length }} personajes</span>
+                                        <span class="badge bg-success rounded-pill">{{ episode.characters.length }} Characters</span>
                                     </li>
                                 </ol>
                             </div>
@@ -116,7 +117,7 @@
                     <div class="col-lg-4 col-md-6 d-flex mb-4">
                         <div class="card bg-dark text-white w-100">
                             <div class="card-header bg-info text-white">
-                                <h5 class="card-title mb-0 text-center">Distribución de Géneros</h5>
+                                <h5 class="card-title mb-0 text-center">Gender Distribution</h5>
                             </div>
                             <div class="card-body">
                                 <ul class="list-group list-group-flush">
@@ -140,42 +141,33 @@
             </div>
             
          
-            <!-- Tabla de Personajes por Estado -->
-            <div class="mb-4">
-                <h3 class="text-center text-success fs-5 mb-2">Character Status Distribution</h3>
-                <table class="table table-bordered table-striped table-hover table-sm text-center small mb-0">
-                    <thead>
-                        <tr>
-                            <th>Status</th>
-                            <th>Count</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr v-for="(count, status) in characterStatusStats" :key="status">
-                            <td>{{ status }}</td>
-                            <td>{{ count }}</td>
-                        </tr>
-                    </tbody>
-                </table>
+            <!-- dona de Personajes por Estado -->
+            <div class="col-12 col-md-4  dona">
+                <h1 class="text-center text-primary mb-4">Character Status Distribution</h1>
+                <div class="">
+                    <canvas id="characterStatusChart"></canvas>
+                </div>
             </div>
             <!-- Tabla de Distribución de Especies con Estado -->
-            <div class="species-distribution mb-4">
-                <h3 class="text-center text-primary fs-4 mb-3">Distribución de Especies con Estado</h3>
+            <div class="species-distribution ">
+
+
+                <h1 class="text-center text-primary fs-4 ">Distribution of Species with Status</h1>
                 
                 <div class="color-legend mb-3">
                     <h5 class="text-white">Leyenda:</h5>
                     <div class="d-flex flex-wrap justify-content-start">
                         <div class="me-3 mb-2">
                             <span class="badge bg-success">&nbsp;</span>
-                            <span class="text-white ms-1">Vivos</span>
+                            <span class="text-white ms-1">Alive</span>
                         </div>
                         <div class="me-3 mb-2">
                             <span class="badge bg-danger">&nbsp;</span>
-                            <span class="text-white ms-1">Muertos</span>
+                            <span class="text-white ms-1">Dead</span>
                         </div>
                         <div class="me-3 mb-2">
                             <span class="badge bg-warning">&nbsp;</span>
-                            <span class="text-white ms-1">Desconocido</span>
+                            <span class="text-white ms-1">unknown</span>
                         </div>
                     </div>
                 </div>
@@ -184,12 +176,12 @@
                     <table class="table table-dark table-striped table-hover">
                         <thead>
                             <tr>
-                                <th class="col-2">Especie</th>
+                                <th class="col-2">Species</th>
                                 <th class="col-1 text-center d-none d-md-table-cell">Total</th>
-                                <th class="col-1 text-center d-none d-md-table-cell">Vivos</th>
-                                <th class="col-1 text-center d-none d-md-table-cell">Muertos</th>
-                                <th class="col-2 text-center d-none d-md-table-cell">Desconocidos</th>
-                                <th class="col-6">Distribución</th>
+                                <th class="col-1 text-center d-none d-md-table-cell">Alive</th>
+                                <th class="col-1 text-center d-none d-md-table-cell">Deads</th>
+                                <th class="col-2 text-center d-none d-md-table-cell">unknowns</th>
+                                <th class="col-6">Distribution</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -267,6 +259,7 @@
     <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="/script/stadistics.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </body>
 
 </html>
