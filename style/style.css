@@ -227,13 +227,13 @@ footer {
 
 .table thead th {
   background-color: #090e09; /* Fondo verde neon para el encabezado */
-  color: #fff9f9;
+  color: #e82828;
   text-transform: uppercase;
 }
 
 
 .table {
-  background-color: rgba(0, 0, 0, 0.7);
+  background-color: rgba(165, 25, 25, 0.7);
 }
 
 .progress {
