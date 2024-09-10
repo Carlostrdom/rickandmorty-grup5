@@ -41,7 +41,8 @@ footer {
 }
 .neon-text{
   text-shadow: 0 0 5px #0ff, 0 0 10px #0ff, 0 0 15px #ff00de, 0 0 20px #ff00de;}
-.neon-busqueda{
+.busqueda{
+  color: white;
   text-shadow: 0 0 5px #0ff, 0 0 10px #0ff, 0 0 15px #ff00de, 0 0 20px #ff00de;
 }
 .checkbox {
@@ -155,12 +156,26 @@ footer {
 .cardContainer{
   width: 250px;
 }
-
-
+.card-title{
+  color:greenyellow;
+}
+.card-title1{
+  color:greenyellow;
+}
+.card-text1{
+  color: #0ff;
+}
+.card-text2{
+  color:#FF00FF
+}
+.card-text3{
+  color: aliceblue;
+}
 
 .descriptionImg{
   width: 250px;
 }
+
 
 .progress {
   height: 20px;
@@ -186,4 +201,61 @@ footer {
   width: 100%;
   table-layout: fixed; 
   word-wrap: break-word; 
+}
+
+/* clases para no resultados. */
+
+.img-top {
+  max-height: 150px; /* Ajusta la altura máxima de la imagen */
+  object-fit: cover; /* Asegura que la imagen cubra el área sin distorsionarse */
+}
+
+.position-relative {
+  position: relative; /* Necesario para posicionar el texto sobre la imagen */
+}
+
+.position-absolute {
+  position: absolute; /* Posiciona el texto sobre la imagen */
+  top: 30%;
+  left: 50%;
+  transform: translate(-50%, -50%); /* Centra el texto horizontal y verticalmente */
+}
+
+
+/* Estilo de los títulos */
+.rick-morty-title {
+  color: #00ff00; /* Verde neon estilo Rick y Morty */
+  text-shadow: 2px 2px #ff00ff; /* Sombra estilo psicodélico */
+  font-family: 'Luckiest Guy', cursive; /* Fuente estilo cómic/cartoon */
+}
+
+/* Estilo de la tabla */
+.table {
+  background-color: rgba(255, 255, 255, 0.1); /* Fondo semi-transparente para la tabla */
+  border: 2px solid #00ff00; /* Borde verde neon */
+}
+
+.table th, .table td {
+  color: #fff;
+  border: 2px solid #ff00ff; /* Borde morado psicodélico */
+}
+
+.table thead th {
+  background-color: #00ff00; /* Fondo verde neon para el encabezado */
+  color: #000;
+  text-transform: uppercase;
+}
+
+.custom-table-wrapper {
+  width: 100%;
+  overflow-x: auto;
+  margin-bottom: 1.5rem;
+  border-radius: 10px;
+  box-shadow: 0px 4px 10px rgba(0, 255, 0, 0.3); 
+}
+
+
+.monster-text {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 700; /* Hace que la fuente se vea más gruesa y con más presencia */
 }
